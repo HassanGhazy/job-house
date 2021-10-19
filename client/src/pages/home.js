@@ -1,7 +1,8 @@
 import React from 'react';
-import imageJob from '../img/job.png';
-import company from '../img/company.png';
+import '../style/bootstrapmin.css';
+import '../style/carousel.css';
 const Home = () => {
+
     return <main>
             <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
                 <ol className="carousel-indicators">
@@ -11,7 +12,7 @@ const Home = () => {
                 </ol>
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        <svg className="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><img  alt="job-ring" width="100%" height="100%" src={require('../img/job-ring.png')} /></svg>
+                       <img  alt="job-ring" width="100%" height="100%" src={require('../img/job-ring.png').default} />
     
                         <div className="container">
                             <div className="carousel-caption text-start">
@@ -22,7 +23,8 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="carousel-item">
-                        <svg className="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><img alt="company" width="100%" height="100%" src={company} /></svg>
+                            <img alt="company" width="100%" height="100%" src={require('../img/company.png').default} />
+                           
     
                         <div className="container">
                             <div className="carousel-caption">
@@ -33,7 +35,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="carousel-item">
-                        <svg className="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><img alt="talent" width="100%" height="50%" src={require('../img/talent.png')} /></svg>
+                        <img alt="talent" width="100%" height="50%" src={require('../img/talent.png').default} />
     
                         <div className="container">
                             <div className="carousel-caption text-end">
@@ -64,10 +66,8 @@ const Home = () => {
                             and graduates, explore all available skills and hunt the right talent.</p>
                     </div>
                     <div className="col-md-5 order-md-1">
-                        <svg className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <img width="100%" height="100%" alt="job" src={imageJob}/>
-                        </svg>
+                           <img width="100%" height="100%" alt="job" src={require('../img/job.png').default}/>
+                       
                     </div>
                 </div>
     
@@ -82,10 +82,7 @@ const Home = () => {
                             on different parameters, and of course he or she can apply for those opportunities. After he applies for a certain job or internship, he can track the status of his application and review the response he got.</p>
                     </div>
                     <div className="col-md-5 order-md-1">
-                        <svg className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <img width="100%"  alt="jobs" height="100%" src={require('../img/jobs.jpg')} />
-                        </svg>
+                        <img width="100%"  alt="jobs" height="100%" src={require('../img/jobs.jpg').default} />
                     </div>
                 </div>
     
@@ -99,10 +96,9 @@ const Home = () => {
                             sent as a response to their listings. They can reject an application or set up an interview with the applicant in order to continue with the hiring process outside the platform.</p>
                     </div>
                     <div className="col-md-5 order-md-1">
-                        <svg className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="0" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <img alt="Talent Bottom" title="Talent Bottom" width="100%" height="100%" src='../img/talent-bottom.jpg'/>
-                        </svg>
+                        
+                            <img alt="Talent Bottom" title="Talent Bottom" width="100%" height="100%" src={require('../img/talent-bottom.jpg').default}/>
+                      
                     </div>
                 </div>
             </div>   

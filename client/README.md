@@ -6,6 +6,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+## Befor run this project
+
+You must be installed all of these libraries {express, sequelize, mysql2, body-parser, cors, jsonwebtoken, bcryptjs}, you can do
+that by write "npm install"
+and you must be have folder config from api folder and client folder 
+
 ### `npm start`
 
 Runs the app in the development mode.\

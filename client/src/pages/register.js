@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../style/register.css';
 const Register = () => {
     return  <main style={{marginTop: 100,marginBottom: 75}}>
     <div className="login-wrap">

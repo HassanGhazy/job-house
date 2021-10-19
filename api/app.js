@@ -1,8 +1,11 @@
-const express = require('express')
-const app = express()
-const port = 3001
-const merchant_model = require('./admin_modal')
-app.use(express.json())
+const express = require('express');
+
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const app = express();
+const port = 3001;
+const merchant_model = require('./admin_modal');
+app.use(express.json());
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
@@ -11,8 +14,17 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', (req, res) => {
-    res.status(200).send();
+  res.json({ message: "Welcome to Devil Api." });
 })
+
+var corsOptions = {
+  origin: "http://localhost:3000"
+};
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors(corsOptions));
+
 
 
 app.get('/student', (req, res) => {
