@@ -1,0 +1,60 @@
+ul {
+    margin: 0!important;
+    padding: 0!important;
+    border: 0!important;
+    width: 100%!important;
+    height: auto!important;
+    overflow: hidden!important;
+    font-family: sans-serif!important;
+}
+
+.nav {
+    display: flex !important;
+    margin: 0.3rem!important;
+    border: 1px solid #e5e5e5!important;
+    padding: 1rem 4rem 1rem 4rem!important;
+    justify-content: space-between!important;
+    background-color: white!important;
+    align-items: center!important;
+    /*  podendo usar o margin para estilizar onde quiser o menu, no meu caso, quero ele sem encostar nas laterais para que possamos ver o destaque dele do restante da tela  */
+}
+
+.navButtons {
+    display: flex;
+    align-items: center;
+    height: 30px;
+}
+
+.navButtons ul {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem!important;
+    list-style-type: none;
+}
+
+.navButtons ul li:hover {
+    text-decoration: underline;
+}
+
+nav.nav .buttonsLogin {
+    display: flex;
+    gap: 1rem!important;
+    align-items: center;
+}
+
+nav.nav .buttonsLogin button {
+    min-width: 60px!important;
+    min-height: 30px!important;
+    border: none!important;
+    border-radius: 0.3rem!important;
+    width: 80px!important;
+    height: 30px!important;
+    color: white!important;
+    background-color: #61a5c2!important;
+}
+
+li,
+a,
+a:hover {
+    text-decoration: none !important;
+}

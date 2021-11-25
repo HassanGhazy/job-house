@@ -1,5 +1,4 @@
-import { Row, Col } from "antd";
-import { withTranslation } from "react-i18next";
+import { Row, Col} from "antd";
 import { SvgIcon } from "../../../common/SvgIcon";
 import { Button } from "../../../common/Button";
 import { ContentBlockProps } from "../types";
@@ -16,7 +15,6 @@ const RightBlock = ({
   content,
   button,
   icon,
-  t,
   id,
 }: ContentBlockProps) => {
   
@@ -26,26 +24,26 @@ const RightBlock = ({
       behavior: "smooth",
     });
   };
+
   return (
     <RightBlockContainer>
       <Fade direction="right">
         <Row justify="space-between" align="middle" id={id}>
           <Col lg={11} md={11} sm={11} xs={24}>
             <ContentWrapper>
-              <h6>{t(title)}</h6>
-              <Content>{t(content)}</Content>
+              <h6>{title}</h6>
+              <Content>{content}</Content>
               <ButtonWrapper>
                 {typeof button === "object" &&
                   button.map((item: any, id: number) => {
-                    console.log(id,item);
                     return (
                       <Button
                         key={id}
                         color={item.color}
                         fixedWidth={true}
-                        onClick={() => id === 0 ?  window.location.href =('/browse-page.html') : scrollTo("about")}
+                        onClick={() => id === 0 ?  window.location.href="/browse-job" : scrollTo("about")}
                       >
-                        {t(item.title)}
+                        {item.title}
                       </Button>
                     );
                   })}
@@ -61,4 +59,4 @@ const RightBlock = ({
   );
 };
 
-export default withTranslation()(RightBlock);
+export default RightBlock;

@@ -2,14 +2,18 @@ import { lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import HeaderJob from "../components/HeaderJob";
 import routes from "./config";
 import { Styles } from "../styles/styles";
 
+const Headers =()=> (window.location.href === "/" || window.location.href === "http://localhost:3000/") ? <Header /> : <HeaderJob />;
+const Footers =()=> (window.location.href === "/" || window.location.href === "http://localhost:3000/") ? <Footer /> : <></>;
 const Router = () => {
+  console.log(window.location.href);
   return (
     <Suspense fallback={null}>
       <Styles />
-      <Header />
+      <Headers/>
       <Switch>
         {routes.map((routeItem) => {
           return (
@@ -22,7 +26,7 @@ const Router = () => {
           );
         })}
       </Switch>
-      <Footer />
+      <Footers />
     </Suspense>
   );
 };

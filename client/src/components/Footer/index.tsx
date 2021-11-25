@@ -66,7 +66,7 @@ const Footer = () => {
                 {"Contact"}
               </Large>
            
-                <Large to="browse-page.html">
+                <Large to="/browse-job">
                 {"Jobs"}
               </Large>
           

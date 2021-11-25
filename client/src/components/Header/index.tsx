@@ -1,31 +1,16 @@
-import { useState } from "react";
-import { Row, Col, Drawer } from "antd";
-import { withTranslation } from "react-i18next";
+import { Row} from "antd";
 import Container from "../../common/Container";
 import { SvgIcon } from "../../common/SvgIcon";
 import { Button } from "../../common/Button";
 import {
   HeaderSection,
   LogoContainer,
-  Burger,
   NotHidden,
-  Menu,
   CustomNavLinkSmall,
-  Label,
-  Outline,
   Span,
 } from "./styles";
 
-const Header = ({ t }: any) => {
-  const [visible, setVisibility] = useState(false);
-
-  const showDrawer = () => {
-    setVisibility(!visible);
-  };
-
-  const onClose = () => {
-    setVisibility(!visible);
-  };
+const HeaderJob = () => {
 
   const MenuItem = () => {
     const scrollTo = (id: string) => {
@@ -33,25 +18,23 @@ const Header = ({ t }: any) => {
       element.scrollIntoView({
         behavior: "smooth",
       });
-      setVisibility(false);
     };
-    return (
-      <>
-        <CustomNavLinkSmall onClick={() => scrollTo("about")}>
-          <Span>{t("About")}</Span>
+    return (<>
+     <CustomNavLinkSmall onClick={() => window.location.href="about.html"}>
+          <Span>{"About"}</Span>
         </CustomNavLinkSmall>
-        <CustomNavLinkSmall onClick={() => scrollTo("mission")}>
-          <Span>{t("Mission")}</Span>
+        <CustomNavLinkSmall onClick={() => window.location.href="about.html"}>
+          <Span>{"Mission"}</Span>
         </CustomNavLinkSmall>
         <CustomNavLinkSmall onClick={() => scrollTo("product")}>
-          <Span>{t("Product")}</Span>
+          <Span>{"Product"}</Span>
         </CustomNavLinkSmall>
         <CustomNavLinkSmall
           style={{ width: "180px" }}
           onClick={() => scrollTo("contact")}
         >
           <Span>
-            <Button>{t("Contact")}</Button>
+            <Button>{"Contact"}</Button>
           </Span>
         </CustomNavLinkSmall>
       </>
@@ -68,26 +51,10 @@ const Header = ({ t }: any) => {
           <NotHidden>
             <MenuItem />
           </NotHidden>
-          <Burger onClick={showDrawer}>
-            <Outline />
-          </Burger>
         </Row>
-        <Drawer closable={false} visible={visible} onClose={onClose}>
-          <Col style={{ marginBottom: "2.5rem" }}>
-            <Label onClick={onClose}>
-              <Col span={12}>
-                <Menu>Menu</Menu>
-              </Col>
-              <Col span={12}>
-                <Outline />
-              </Col>
-            </Label>
-          </Col>
-          <MenuItem />
-        </Drawer>
       </Container>
     </HeaderSection>
   );
 };
 
-export default withTranslation()(Header);
+export default HeaderJob;
