@@ -1,0 +1,12 @@
+{
+    "title": "Job House for developers & startups",
+    "text": "Recruitment platform, it aims to connect students and graduates to the careers they seek and in turn help corporates and organizations fill gaps in the talent and skills they need.",
+    "button": [{
+            "title": "Explore"
+        },
+        {
+            "title": "Learn more",
+            "color": "#fff"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "title": "Light, fast & responsive",
+    "text": "For a student or a graduate: Job House offers the chance to explore companies and look for internships or job opportunities. For corporates and organizations",
+    "section": [{
+            "title": "Why Student or a graduate?",
+            "content": " Job House offers the possibility to reach out to students and graduates.",
+            "icon": "notes.svg"
+        },
+        {
+            "title": "Why Company?",
+            "content": "explore all available skills and hunt the right talent.",
+            "icon": "notes.svg"
+        }
+    ]
+}
