@@ -3,8 +3,10 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
-const port = 8080;
-const merchant_model = require('./admin_modal');
+const port = 8000;
+const candidate = require('./controllers/candidate');
+const company = require('./controllers/company');
+const job = require('./controllers/job');
 app.use(express.json());
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -25,27 +27,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors(corsOptions));
 
+app.get('/api/student', candidate.getAllCandidates);
+app.get('/api/student/:id', candidate.findCandidateById);
+
+app.get('/api/company', company.getAllCompanies);
+app.get('/api/company/:id', company.findCompanyById);
+
+app.get('/api/job', job.getAllJobs);
+app.get('/api/job/:id', job.findJobById);
 
 
-app.get('/api/student', (req, res) => {
-    merchant_model.getStudents()
-        .then(response => {
-            res.status(200).send(response);
-        })
-        .catch(error => {
-            res.status(500).send(error);
-        })
-})
-
-app.get('/company', (req, res) => {
-    merchant_model.getCompanies()
-        .then(response => {
-            res.status(200).send(response);
-        })
-        .catch(error => {
-            res.status(500).send(error);
-        })
-})
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)

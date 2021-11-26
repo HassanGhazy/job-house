@@ -1,6 +1,7 @@
 export default interface StudentData {
     std_id?: any | null,
     name: string,
+    description: string,
     email: string,
     country: string,
     city: string,

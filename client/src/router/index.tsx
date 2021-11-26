@@ -9,7 +9,6 @@ import { Styles } from "../styles/styles";
 const Headers =()=> (window.location.href === "/" || window.location.href === "http://localhost:3000/") ? <Header /> : <HeaderJob />;
 const Footers =()=> (window.location.href === "/" || window.location.href === "http://localhost:3000/") ? <Footer /> : <></>;
 const Router = () => {
-  console.log(window.location.href);
   return (
     <Suspense fallback={null}>
       <Styles />

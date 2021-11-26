@@ -10,11 +10,9 @@ ul {
 
 .nav {
     display: flex !important;
-    margin: 0.3rem!important;
-    border: 1px solid #e5e5e5!important;
     padding: 1rem 4rem 1rem 4rem!important;
     justify-content: space-between!important;
-    background-color: white!important;
+    background-color: #333!important;
     align-items: center!important;
     /*  podendo usar o margin para estilizar onde quiser o menu, no meu caso, quero ele sem encostar nas laterais para que possamos ver o destaque dele do restante da tela  */
 }
@@ -30,6 +28,7 @@ ul {
     align-items: center;
     gap: 2.5rem!important;
     list-style-type: none;
+    font-size: 13px;
 }
 
 .navButtons ul li:hover {
@@ -57,4 +56,8 @@ li,
 a,
 a:hover {
     text-decoration: none !important;
+}
+
+.nav li a {
+    color: aliceblue;
 }

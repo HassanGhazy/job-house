@@ -20,14 +20,14 @@ const HeaderJob = () => {
       });
     };
     return (<>
-     <CustomNavLinkSmall onClick={() => window.location.href="about.html"}>
+     <CustomNavLinkSmall onClick={() => scrollTo("about")}>
           <Span>{"About"}</Span>
         </CustomNavLinkSmall>
-        <CustomNavLinkSmall onClick={() => window.location.href="about.html"}>
+        <CustomNavLinkSmall onClick={() => scrollTo("mission")}>
           <Span>{"Mission"}</Span>
         </CustomNavLinkSmall>
         <CustomNavLinkSmall onClick={() => scrollTo("product")}>
-          <Span>{"Product"}</Span>
+          <Span>{"Work"}</Span>
         </CustomNavLinkSmall>
         <CustomNavLinkSmall
           style={{ width: "180px" }}
