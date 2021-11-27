@@ -1,0 +1,19 @@
+.container {
+    margin-top: 20px;
+}
+
+div {
+    margin-bottom: 10px;
+}
+
+label {
+    padding-left: 10px;
+}
+
+input[type='checkbox'] {
+    margin-left: 10px;
+}
+
+img {
+    height: 12em;
+}
