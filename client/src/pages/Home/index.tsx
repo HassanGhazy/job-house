@@ -5,7 +5,7 @@ import AboutContent from "../../content/AboutContent.json";
 import MissionContent from "../../content/MissionContent.json";
 import ProductContent from "../../content/ProductContent.json";
 import ContactContent from "../../content/ContactContent.json";
-// import '../../components/Team/style.css'
+import '../../components/Team/style.css'
 
 const Contact = lazy(() => import("../../components/ContactForm"));
 const MiddleBlock = lazy(() => import("../../components/MiddleBlock"));
@@ -54,6 +54,10 @@ const Home = () => {
         icon="waving.svg"
         id="product"
       />
+      <div style={{backgroundColor: "#212529",borderRadius: ".25rem"}}>
+            <h2 style={{color: "#fff",paddingLeft: 20}}>Our Team</h2>
+      </div>
+      
       <Team/>
       <Contact
         title={ContactContent.title}

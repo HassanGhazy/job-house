@@ -1,10 +1,17 @@
 
-function TeamMember(props : any) {
+(function () {
+    const link = document.createElement("link");
+    link.href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css";
+    link.rel = "stylesheet";
+    document.body.appendChild(link);
+})();
+
+const TeamMember = (props: any) => {
     return (
         <div className="col-md-4 col-sm-6 border">
             <div className="card">
                 <div className="card-header">
-                    <img style={{ maxWidth: '100%' }} src={props.info.img} alt='icon of image' />
+                    {/* <img style={{ maxWidth: '100%' }} src={require(props.info.img).default} alt={props.info.name} /> */}
                 </div>
                 <div className="card-body">
                     <h2>{props.info.name}</h2>
@@ -13,7 +20,6 @@ function TeamMember(props : any) {
                     <div>{props.info.email}</div>
                 </div>
             </div>
-
         </div>
     )
 }
