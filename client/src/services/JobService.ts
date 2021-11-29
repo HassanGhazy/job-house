@@ -22,7 +22,7 @@ const remove = (id: any) => {
 };
 
 const findByName = (name: string) => {
-  return http.get<Array<JobData>>(`/job?name=${name}`);
+  return http.get<Array<JobData>>(`/search/job?name=${name}`);
 };
 
 const JobService = {

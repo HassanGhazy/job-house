@@ -7,7 +7,7 @@ import routes from "./config";
 import { Styles } from "../styles/styles";
 //const Headers =()=> (window.location.href === "http://localhost:3000/candidate-profile" || window.location.href === "http://localhost:3000/company-profile"  || window.location.href === "http://localhost:3000/browse-job") ? <HeaderJob /> :  <Header /> ;
 import '../services/login';
-import SuperTokens, { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react"; 
+import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react"; 
 
 
 const Headers =()=> (window.location.href === "/" || window.location.href === "http://localhost:3000/") ? <Header /> : <HeaderJob />;

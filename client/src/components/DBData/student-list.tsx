@@ -6,8 +6,6 @@ import { Row} from "antd";
 // import NoPhoto from '../../../public/img/No-Image.png';
 const StudentsList: React.FC = () => {
   const [tutorials, setTutorials] = useState<Array<ITutorialData>>([]);
-  const [currentTutorial, setCurrentTutorial] = useState<ITutorialData | null>(null);
-  const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const [searchTitle, setSearchTitle] = useState<string>("");
 
   useEffect(() => {
@@ -29,15 +27,8 @@ const StudentsList: React.FC = () => {
         console.log(e);
       });
   };
-  const refreshList = () => {
-    retrieveTutorials();
-    setCurrentTutorial(null);
-    setCurrentIndex(-1);
-  };
-  const setActiveTutorial = (tutorial: ITutorialData, index: number) => {
-    setCurrentTutorial(tutorial);
-    setCurrentIndex(index);
-  };
+
+
 
 
   const findByTitle = () => {
@@ -45,8 +36,6 @@ const StudentsList: React.FC = () => {
     TutorialDataService.findByName(searchTitle)
       .then((response: any) => {
         setTutorials(response.data);
-        setCurrentTutorial(null);
-        setCurrentIndex(-1);
         console.log(response.data);
         console.log(response.data);
         console.log(response.data);
@@ -82,7 +71,7 @@ const StudentsList: React.FC = () => {
         <ul className="cards">
           {tutorials &&
             tutorials.map((student, index) => (
-                <li onClick={() => setActiveTutorial(student, index)} key={index}>
+                <li key={index}>
                   <a id={student.std_id} href={'/candidate-profile/' + student.std_id} className="card">
                       <img src={student.image ?? require('../../img/No-Image.png').default} className="card__image" alt={student.name} />
                       <div className="card__overlay">

@@ -1,5 +1,5 @@
 import SuperTokens from "supertokens-auth-react";
-import ThirdPartyEmailPassword, { Github, Google, Facebook, Apple } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
+import ThirdPartyEmailPassword, { Github, Google, Facebook } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import Session from "supertokens-auth-react/recipe/session";
 
 SuperTokens.init({

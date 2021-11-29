@@ -42,9 +42,30 @@ const getAllCandidatesWithPage = async (req, res) => {
 
 const findCandidateById = async (req, res) => {
     const id = req.params.id;
+    console.log('id',id);
     try {
         const response = await new Promise(function (resolve, reject) {
             pool.query('SELECT * FROM student where std_id = $1', [id], (error, results, q) => {
+                if (error) {
+                    reject(error);
+                }
+                resolve(results.rows.map(e => {
+                    const { password, ...res } = e;
+                    return res;
+                }));
+            });
+        });
+        res.status(200).send(response);
+    } catch (error_1) {
+        res.status(500).send(error_1);
+    }
+};
+
+const findCandidateByName = async (req, res) => {
+    const name = req.query.name;
+    try {
+        const response = await new Promise(function (resolve, reject) {
+            pool.query('SELECT * FROM student where name like $1 limit 20', ['%' + name + '%'], (error, results, q) => {
                 if (error) {
                     reject(error);
                 }
@@ -463,9 +484,10 @@ const deleteSkillFromCurrentCandidate = async (req, res) => {
 };
 
 const getSkillSingleProject = async (req, res) => {
+    const id = req.params.id;
     try {
         const response = await new Promise(function (resolve, reject) {
-            pool.query('select * from skill_project natural join project_std', (error, results) => {
+            pool.query('select * from skill_project natural join project_std where std_id = $1',[id], (error, results) => {
                 if (error) {
                     reject(error);
                 }
@@ -503,12 +525,8 @@ const addSkillsToCurrentProject = async (req, res) => {
         res.status(500).send(error_1);
     }
 
-
     pool.query('insert into skill_project values ($1, $2)', [name, skillsIds], (err, results, q) => {
 
-        console.log(err);
-        console.log(results);
-        console.log(q);
         if (err) {
             return res.status(400).json({ message: `Error Adding new Skill to Prject ${name}!`, error: err });
         }
@@ -543,5 +561,6 @@ module.exports = {
     deleteSkillFromCurrentCandidate,
     addSkillsToCurrentProject,
     getSkillSingleProject,
+    findCandidateByName
 
 }

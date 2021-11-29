@@ -22,7 +22,7 @@ const remove = (id: any) => {
 };
 
 const findByName = (name: string) => {
-  return http.get<Array<StudentData>>(`/student?name=${name}`);
+  return http.get<Array<StudentData>>(`/search/student/?name=${name}`);
 };
 
 const StudentService = {
