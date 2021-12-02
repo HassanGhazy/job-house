@@ -132,7 +132,7 @@ const changePasswordCurrentCandidate = async (req, res) => {
         new_password: req.body.new_password
     };
 
-    if (!currCandidate.new_password ||!currCandidate.old_password ) {
+    if (!currCandidate.new_password || !currCandidate.old_password) {
         return res.status(400).json({ message: 'Please include a student password' });
     }
     const response = await new Promise(function (resolve, reject) {
@@ -145,7 +145,7 @@ const changePasswordCurrentCandidate = async (req, res) => {
         });
     });
     const password = response.password;
-    if(md5(currCandidate.old_password) != password){
+    if (md5(currCandidate.old_password) != password) {
         return res.status(400).json({ message: 'The Password doesn\'t match' });
     }
     const query = "UPDATE student SET password = $1 WHERE std_id = $2";
@@ -254,12 +254,13 @@ const getsingleProject = async (req, res) => {
 
 const deleteProjectFromCurrentCandidate = async (req, res) => {
     const id = req.params.id;
+    const name = req.params.name;
     const currCandidate = {
         std_id: req.params.id,
         ...req.body,
     };
-    const query = "DELETE FROM project_std WHERE std_id = $1";
-    pool.query(query, [id], (err, result) => {
+    const query = "DELETE FROM project_std WHERE std_id = $1 and name_proj = $2";
+    pool.query(query, [id, name], (err, result) => {
         if (err) {
             return res.status(400).json({ message: `Error deleteing project with the id ${currCandidate.std_id}!`, error: err });
         }
@@ -368,12 +369,13 @@ const getSingleEducateFromCurrentCandidadate = async (req, res) => {
 
 const deleteEducateFromCurrentCandidate = async (req, res) => {
     const id = req.params.id;
+    const std_id = req.params.std_id;
     const currCandidate = {
         std_id: req.params.id,
         ...req.body,
     };
-    const query = "DELETE FROM education WHERE edu_id = $1";
-    pool.query(query, [id], (err, result) => {
+    const query = "DELETE FROM education WHERE edu_id = $1 and std_id = $2";
+    pool.query(query, [id, std_id], (err, result) => {
         if (err) {
             return res.status(400).json({ message: `Error deleteing Educate with the id ${id}!`, error: err });
         }
@@ -383,6 +385,7 @@ const deleteEducateFromCurrentCandidate = async (req, res) => {
 
 const updateCurrentEducateForCandidate = (req, res) => {
     const id = req.params.id;
+    const std_id = req.params.std_id;
     const currEducate = {
         ...req.body,
     };
@@ -392,9 +395,9 @@ const updateCurrentEducateForCandidate = (req, res) => {
         return res.status(400).json({ message: 'Please include a Educate university_major' });
     }
 
-    const query = "UPDATE education SET degree = $1, university_major = $2 WHERE edu_id = $3;";
-    console.log(currEducate);
-    pool.query(query, [currEducate.degree, currEducate.university_major, id], (err, result) => {
+    const query = "UPDATE education SET degree = $1, university_major = $2 WHERE edu_id = $3 and std_id = $4";
+
+    pool.query(query, [currEducate.degree, currEducate.university_major, id, std_id], (err, result) => {
         if (err) {
 
             return res.status(400).json({ message: `Error updating Educate with id ${id}!`, error: err });
@@ -462,6 +465,25 @@ const addNewSkillToCurrentCandidate = async (req, res) => {
     });
 };
 
+const getAllSkillsTitleToCurrentCandidate = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const response = await new Promise(function (resolve, reject) {
+            pool.query('select title from skill natural join skill_std where std_id = $1 ', [id], (error, results) => {
+                if (error) {
+                    reject(error);
+                }
+                resolve(results.rows.map(e => {
+                    const { ...res } = e;
+                    return res;
+                }));
+            });
+        });
+        res.status(200).send(response);
+    } catch (error_1) {
+        res.status(500).send(error_1);
+    }
+}
 
 const getAllSkillsToCurrentCandidate = async (req, res) => {
     const id = req.params.id;
@@ -483,16 +505,39 @@ const getAllSkillsToCurrentCandidate = async (req, res) => {
     }
 }
 
+const checkPassword = async (req, res) => {
+    const id = req.params.id;
+    const pass = {
+        ...req.body
+    }
+    try {
+        const response = await new Promise(function (resolve, reject) {
+            pool.query('select password from student where std_id = $1 ', [id], (error, results) => {
+                if (error) {
+                    reject(error);
+                }
+                if(md5(pass.password) === results.rows[0].password){
+                    res.status(200).send({"message" : true});
+
+                } else {
+                    res.status(200).send({"message" : false});
+                }
+            });
+        });
+    } catch (error_1) {
+        res.status(500).send(error_1);
+    }
+}
+
 const deleteSkillFromCurrentCandidate = async (req, res) => {
-    const currSkillsCandidate = {
-        ...req.body,
-    };
-    const query = "DELETE FROM skill_std WHERE skill_id = $1";
-    pool.query(query, [currSkillsCandidate.skill_id], (err, result) => {
+    const id = req.params.id;
+    const skillId = req.params.skillId;
+    const query = "DELETE FROM skill_std WHERE skill_id = $1 and std_id = $2";
+    pool.query(query, [skillId,id], (err, result) => {
         if (err) {
             return res.status(400).json({ message: `Error deleteing Skill with the id ${id}!`, error: err });
         }
-        res.json({ message: `The Skill has been deleted successfully!`, left: currSkillsCandidate });
+        res.json({ message: `The Skill has been deleted successfully!`});
     });
 };
 
@@ -569,12 +614,14 @@ module.exports = {
     updateCurrentEducateForCandidate,
     getAllSkills,
     addNewSkillToCurrentCandidate,
+    getAllSkillsTitleToCurrentCandidate,
     getAllSkillsToCurrentCandidate,
     getSingleSkillFromCurrentCandidadate,
     deleteSkillFromCurrentCandidate,
     addSkillsToCurrentProject,
     getSkillSingleProject,
     findCandidateByName,
-    changePasswordCurrentCandidate
+    changePasswordCurrentCandidate,
+    checkPassword
 
 }

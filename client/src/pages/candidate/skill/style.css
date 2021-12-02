@@ -1,0 +1,33 @@
+.container {
+    margin: 30px auto;
+  }
+  
+  .select {
+    width: 95%;
+    height: 200px;
+  }
+  
+  .select option {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .skill {
+    padding: 6px 30px;
+    margin: 10px;
+    background: #d4d3d3;
+    display: inline-block;
+    border-radius: 100px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    text-align: center;
+    color: #000;
+  }
+
+  #custom-button {
+    border-style: none;
+    background: none;
+    cursor: pointer
+  }

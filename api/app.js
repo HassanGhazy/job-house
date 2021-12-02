@@ -48,6 +48,7 @@ app.get('/api/student/:id/project/:name', candidate.getsingleProject);
 app.get('/api/student/:id/project/', candidate.getAllProjectsToCurrentCandidate);
 app.get('/api/student/:id/education/', candidate.getCurrentCandidadateEducate);
 app.get('/api/student/:id/education/:eduId', candidate.getSingleEducateFromCurrentCandidadate);
+app.get('/api/student/:id/skill/title', candidate.getAllSkillsTitleToCurrentCandidate);
 app.get('/api/student/:id/skill/:skillId', candidate.getSingleSkillFromCurrentCandidadate);
 app.get('/api/student/:id/skill/', candidate.getAllSkillsToCurrentCandidate);
 app.get('/api/student/:id', candidate.findCandidateById);
@@ -57,15 +58,17 @@ app.post('/api/student/project/skill/:name', candidate.addSkillsToCurrentProject
 app.post('/api/student/:id/project', candidate.addNewProjectToCurrentCandidate);
 app.post('/api/student/:id/education/', candidate.addNewEducationToCurrentCandidate);
 app.post('/api/student/:id/skill', candidate.addNewSkillToCurrentCandidate);
+app.post('/api/student/:id/password', candidate.checkPassword);
+
 
 app.put('/api/student/project/:name', candidate.updateCurrentProjectForCandidate);
-app.put('/api/student/education/:id', candidate.updateCurrentEducateForCandidate);
+app.put('/api/student/:std_id/education/:id', candidate.updateCurrentEducateForCandidate);
 app.put('/api/student/password/:id', candidate.changePasswordCurrentCandidate);
 app.put('/api/student/:id', candidate.updateCurrentCandidate);
 
-app.delete('/api/student/project/:id', candidate.deleteProjectFromCurrentCandidate);
-app.delete('/api/student/education/:id', candidate.deleteEducateFromCurrentCandidate);
-app.delete('/api/student/skill/:id', candidate.deleteSkillFromCurrentCandidate);
+app.delete('/api/student/:id/project/:name', candidate.deleteProjectFromCurrentCandidate);
+app.delete('/api/student/:std_id/education/:id', candidate.deleteEducateFromCurrentCandidate);
+app.delete('/api/student/:id/skill/:skillId', candidate.deleteSkillFromCurrentCandidate);
 app.delete('/api/student/:id', candidate.deleteCurrentCandidate);
 
 app.get('/api/skill', candidate.getAllSkills);
