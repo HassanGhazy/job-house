@@ -10,12 +10,12 @@ const routes = [
     component: "browseJob",
   },
   {
-    path: ["/candidate-profile"],
+    path: ["/candidate-profile/:id?"],
     exact: true,
-    component: "candidate-profile",
+    component: "candidate/candidate-profile",
   },
   {
-    path: ["/company-profile"],
+    path: ["/company-profile/:id"],
     exact: true,
     component: "company-profile",
   },

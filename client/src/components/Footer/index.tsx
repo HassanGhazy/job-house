@@ -41,18 +41,21 @@ const Footer = () => {
           <Row justify="space-between">
             <Col lg={10} md={10} sm={12} xs={12}>
               <Language>{"Contact"}</Language>
-              <Large to="contact-us.html">{"Tell us everything"}</Large>
+
+              <Large>
+                <a onClick={() => window.location.href = "contact-us.html"} href="contact-us.html" >Tell us everything</a>
+              </Large>
               <Para>
                 {`Do you have any question? Feel free to reach out.`}
               </Para>
             </Col>
             <Col lg={8} md={8} sm={12} xs={12}>
               <Title>{"Policy"}</Title>
-              <Large to="privacy.html" left="true">
-                {"Application Security"}
+              <Large key="privacy.html" left="true">
+                <a onClick={() => window.location.href = "privacy.html"} href="privacy.html" >Application Security</a>
               </Large>
-              <Large left="true" key="terms.html" to="/terms.html">
-                {"Application Trems"}
+              <Large left="true" key="terms.html" >
+                <a onClick={() => window.location.href = "terms.html"} href="terms.html" >Application Trems</a>
               </Large>
             </Col>
           </Row>
@@ -60,18 +63,16 @@ const Footer = () => {
             <Col lg={8} md={8} sm={12} xs={12}>
               <Title>{"Company"}</Title>
               <Large to="about.html">
-                {"About"}
+                <a onClick={() => window.location.href = "about.html"} href="about.html" >About</a>
               </Large>
-              <Large left="false" to="/contact-us.html">
-                {"Contact"}
+              <Large left="false">
+                <a onClick={() => window.location.href = "contact-us.html"} href="contact-us.html" >Contact</a>
               </Large>
-           
-                <Large to="/browse-job">
-                {"Jobs"}
+
+              <Large to="/browse-job">
+                <a onClick={() => window.location.href = "/browse-job"} href="/browse-job" >Jobs</a>
               </Large>
-          
             </Col>
-            
           </Row>
         </Container>
       </FooterSection>

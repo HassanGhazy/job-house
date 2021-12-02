@@ -60,6 +60,7 @@ app.post('/api/student/:id/skill', candidate.addNewSkillToCurrentCandidate);
 
 app.put('/api/student/project/:name', candidate.updateCurrentProjectForCandidate);
 app.put('/api/student/education/:id', candidate.updateCurrentEducateForCandidate);
+app.put('/api/student/password/:id', candidate.changePasswordCurrentCandidate);
 app.put('/api/student/:id', candidate.updateCurrentCandidate);
 
 app.delete('/api/student/project/:id', candidate.deleteProjectFromCurrentCandidate);

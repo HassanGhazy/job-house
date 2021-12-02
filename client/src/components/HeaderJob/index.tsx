@@ -11,6 +11,7 @@ const Header = () => {
               <li><a href="/">HOME</a></li>
               <li><a href="about.html">ABOUT US</a></li>
               <li><a href="contact-us.html">CONTACTS</a></li>
+              <li><a href="/browse-job">Browse Job</a></li>
             </ul>
           </div>
           <div className="buttonsLogin">

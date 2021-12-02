@@ -12,7 +12,7 @@ const MiddleBlock = lazy(() => import("../../components/MiddleBlock"));
 const Container = lazy(() => import("../../common/Container"));
 const ScrollToTop = lazy(() => import("../../common/ScrollToTop"));
 const ContentBlock = lazy(() => import("../../components/ContentBlock"));
-const Team = lazy(() => import("../../components/Team/team"));
+// const Team = lazy(() => import("../../components/Team/team"));
 
 
 const Home = () => {
@@ -54,11 +54,11 @@ const Home = () => {
         icon="waving.svg"
         id="product"
       />
-      <div style={{backgroundColor: "#212529",borderRadius: ".25rem"}}>
+      {/* <div style={{backgroundColor: "#212529",borderRadius: ".25rem"}}>
             <h2 style={{color: "#fff",paddingLeft: 20}}>Our Team</h2>
       </div>
       
-      <Team/>
+      <Team/> */}
       <Contact
         title={ContactContent.title}
         content={ContactContent.text}

@@ -2,6 +2,8 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import TutorialDataService from "../../services/StudentService";
 import ITutorialData from '../../types/student';
 import { Row} from "antd";
+import { Link } from "react-router-dom";
+// import CandidateProfile from '../../pages/candidate-profile';
 // import { Link } from "react-router-dom";
 // import NoPhoto from '../../../public/img/No-Image.png';
 const StudentsList: React.FC = () => {
@@ -21,7 +23,6 @@ const StudentsList: React.FC = () => {
     TutorialDataService.getAll()
       .then((response: any) => {
         setTutorials(response.data);
-        console.log(response.data);
       })
       .catch((e: Error) => {
         console.log(e);
@@ -32,13 +33,9 @@ const StudentsList: React.FC = () => {
 
 
   const findByTitle = () => {
-    console.log("Clicked Search");
     TutorialDataService.findByName(searchTitle)
       .then((response: any) => {
         setTutorials(response.data);
-        console.log(response.data);
-        console.log(response.data);
-        console.log(response.data);
       })
       .catch((e: Error) => {
         console.log(e);
@@ -67,12 +64,13 @@ const StudentsList: React.FC = () => {
           </div>
         </div>
       </div>
+      
       <div className="col-md-16">
         <ul className="cards">
           {tutorials &&
             tutorials.map((student, index) => (
-                <li key={index}>
-                  <a id={student.std_id} href={'/candidate-profile/' + student.std_id} className="card">
+                <li key={student.std_id+ student.name + index}>
+                  <Link id={student.std_id} to={'/candidate-profile/' + student.std_id} className="card">
                       <img src={student.image ?? require('../../img/No-Image.png').default} className="card__image" alt={student.name} />
                       <div className="card__overlay">
                       <div className="card__header">
@@ -88,51 +86,14 @@ const StudentsList: React.FC = () => {
                           <a className="card__description" href={student.cv ?? '#'}>{student.cv == null ? "The CV is not available" : 'CV'}</a>
                       </Row>
                       </div>
-                  </a>      
+                  </Link>      
                 </li>  
             
             ))}
             </ul>
      
       </div>
-     
-      {/* <div className="col-md-6">
-        {currentTutorial ? (
-          <div>
-            <h4>Tutorial</h4>
-            <div>
-              <label>
-                <strong>Title:</strong>
-              </label>{" "}
-              {currentTutorial.email}
-            </div>
-            <div>
-              <label>
-                <strong>Description:</strong>
-              </label>{" "}
-              {currentTutorial.gender}
-            </div>
-            <div>
-              <label>
-                <strong>Status:</strong>
-              </label>{" "}
-              {currentTutorial.birthday}
-            </div>
 
-            <Link
-              to={"/student/" + currentTutorial.std_id}
-              className="badge badge-warning"
-            >
-              Edit
-            </Link>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a Tutorial...</p>
-          </div>
-        )}
-      </div> */}
     </div>
   );
 };

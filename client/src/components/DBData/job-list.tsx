@@ -63,7 +63,7 @@ const StudentsList: React.FC = () => {
           {tutorials &&
             tutorials.map((job, index) => (
                 <li>
-                  <a id={job.job_id + ''} href={'/candidate-profile/' + job.job_id} className="card">
+                  <a id={job.job_id + ':' + job.job_title} href={'/candidate-profile/' + job.job_id} className="card">
                       <img src={job.image ?? require('../../img/No-Image.png').default} className="card__image" alt={job.job_title} />
                       <div className="card__overlay">
                       <div className="card__header">

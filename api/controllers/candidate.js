@@ -23,7 +23,7 @@ const getAllCandidatesWithPage = async (req, res) => {
     const offset = req.params.page * 20;
     try {
         const response = await new Promise(function (resolve, reject) {
-            pool.query('SELECT * FROM student limit 20 offset $1', [offset] ,(error, results) => {
+            pool.query('SELECT * FROM student limit 20 offset $1', [offset], (error, results) => {
                 if (error) {
                     reject(error);
                 }
@@ -42,11 +42,11 @@ const getAllCandidatesWithPage = async (req, res) => {
 
 const findCandidateById = async (req, res) => {
     const id = req.params.id;
-    console.log('id',id);
     try {
         const response = await new Promise(function (resolve, reject) {
             pool.query('SELECT * FROM student where std_id = $1', [id], (error, results, q) => {
                 if (error) {
+                    console.log(error);
                     reject(error);
                 }
                 resolve(results.rows.map(e => {
@@ -114,29 +114,10 @@ const updateCurrentCandidate = (req, res) => {
         return res.status(400).json({ message: 'Please include a student name' });
     } else if (!currCandidate.email) {
         return res.status(400).json({ message: 'Please include a student email' });
-    } else if (!currCandidate.password) {
-        return res.status(400).json({ message: 'Please include a student password' });
-    } else if (!currCandidate.description) {
-        return res.status(400).json({ message: 'Please include a student description' });
-    } else if (!currCandidate.country) {
-        return res.status(400).json({ message: 'Please include a student country' });
-    } else if (!currCandidate.city) {
-        return res.status(400).json({ message: 'Please include a student city' });
-    } else if (!currCandidate.phone) {
-        return res.status(400).json({ message: 'Please include a student phone' });
-    } else if (!currCandidate.gender) {
-        return res.status(400).json({ message: 'Please include a student gender' });
-    } else if (!currCandidate.birthday) {
-        return res.status(400).json({ message: 'Please include a student birthday' });
-    } else if (!currCandidate.image) {
-        return res.status(400).json({ message: 'Please include a student image' });
-    } else if (!currCandidate.cv) {
-        return res.status(400).json({ message: 'Please include a student cv' });
     }
+    const query = "UPDATE student SET name = $1, description = $2, email = $3, country = $4, city = $5, phone = $6, gender = $7, birthday = $8, image = $9, cv = $10 WHERE std_id = $11;";
 
-    const query = "UPDATE student SET name = $1, description = $2, email = $3, password = $4, country = $5, city = $6, phone = $7, gender = $8, birthday = $9, image = $10, cv = $11 WHERE std_id = $12;";
-
-    pool.query(query, [currCandidate.name, currCandidate.description ?? req.body.description, currCandidate.email, currCandidate.password, currCandidate.country ?? req.body.country, currCandidate.city, currCandidate.phone, currCandidate.gender !== undefined ? (currCandidate.gender.toLowerCase() === 'male') ? 'M' : 'F' : null, currCandidate.birthday, currCandidate.image, currCandidate.cv, currCandidate.std_id], (err, result) => {
+    pool.query(query, [currCandidate.name, currCandidate.description ?? req.body.description, currCandidate.email, currCandidate.country ?? req.body.country, currCandidate.city, currCandidate.phone, currCandidate.gender !== undefined ? (currCandidate.gender.toLowerCase() === 'male') ? 'M' : 'F' : null, currCandidate.birthday, currCandidate.image, currCandidate.cv, currCandidate.std_id], (err, result) => {
         if (err) {
             return res.status(400).json({ message: `Error updating student with id ${currCandidate.std_id}!`, error: err });
         }
@@ -144,6 +125,37 @@ const updateCurrentCandidate = (req, res) => {
     });
 };
 
+const changePasswordCurrentCandidate = async (req, res) => {
+
+    const currCandidate = {
+        old_password: req.body.old_password,
+        new_password: req.body.new_password
+    };
+
+    if (!currCandidate.new_password ||!currCandidate.old_password ) {
+        return res.status(400).json({ message: 'Please include a student password' });
+    }
+    const response = await new Promise(function (resolve, reject) {
+        pool.query('select password from student where std_id = $1', [req.params.id], (error, results) => {
+            if (error) {
+                console.log('error', error)
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    });
+    const password = response.password;
+    if(md5(currCandidate.old_password) != password){
+        return res.status(400).json({ message: 'The Password doesn\'t match' });
+    }
+    const query = "UPDATE student SET password = $1 WHERE std_id = $2";
+    pool.query(query, [md5(currCandidate.new_password), req.params.id], (err, result) => {
+        if (err) {
+            return res.status(400).json({ message: `Error updating password with id ${req.params.id}!`, error: err });
+        }
+        res.json({ message: `The password of the Student with the id ${req.params.id} was updated!`, currCandidate: currCandidate });
+    });
+};
 
 const deleteCurrentCandidate = (req, res) => {
 
@@ -166,6 +178,7 @@ const getAllProjects = async (req, res) => {
         const response = await new Promise(function (resolve, reject) {
             pool.query('SELECT * FROM project_std', (error, results) => {
                 if (error) {
+                    console.log('error', error)
                     reject(error);
                 }
                 resolve(results.rows.map(e => {
@@ -223,7 +236,7 @@ const getsingleProject = async (req, res) => {
 
     try {
         const response = await new Promise(function (resolve, reject) {
-            pool.query('SELECT * FROM project_std where name_proj = $1 and std_id = $2', [name,id], (error, results, q) => {
+            pool.query('SELECT * FROM project_std where name_proj = $1 and std_id = $2', [name, id], (error, results, q) => {
                 if (error) {
                     reject(error);
                 }
@@ -337,7 +350,7 @@ const getSingleEducateFromCurrentCandidadate = async (req, res) => {
     const edu_id = req.params.eduId;
     try {
         const response = await new Promise(function (resolve, reject) {
-            pool.query('SELECT * FROM education where std_id = $1 and edu_id = $2', [std_id,edu_id], (error, results, q) => {
+            pool.query('SELECT * FROM education where std_id = $1 and edu_id = $2', [std_id, edu_id], (error, results, q) => {
                 if (error) {
                     reject(error);
                 }
@@ -415,7 +428,7 @@ const getSingleSkillFromCurrentCandidadate = async (req, res) => {
     const skill_id = req.params.skillId;
     try {
         const response = await new Promise(function (resolve, reject) {
-            pool.query('select title from skill_std natural join skill where std_id = $1 and skill_id = $2', [std_id,skill_id], (error, results, q) => {
+            pool.query('select title from skill_std natural join skill where std_id = $1 and skill_id = $2', [std_id, skill_id], (error, results, q) => {
                 if (error) {
                     reject(error);
                 }
@@ -487,7 +500,7 @@ const getSkillSingleProject = async (req, res) => {
     const id = req.params.id;
     try {
         const response = await new Promise(function (resolve, reject) {
-            pool.query('select * from skill_project natural join project_std where std_id = $1',[id], (error, results) => {
+            pool.query('select * from skill_project natural join project_std where std_id = $1', [id], (error, results) => {
                 if (error) {
                     reject(error);
                 }
@@ -510,7 +523,7 @@ const addSkillsToCurrentProject = async (req, res) => {
     };
     let skillsIds = 0;
     try {
-       await new Promise(function (resolve, reject) {
+        await new Promise(function (resolve, reject) {
             pool.query('select skill_id from skill where title = $1', [skills.title], (error, results) => {
                 if (error) {
                     reject(error);
@@ -561,6 +574,7 @@ module.exports = {
     deleteSkillFromCurrentCandidate,
     addSkillsToCurrentProject,
     getSkillSingleProject,
-    findCandidateByName
+    findCandidateByName,
+    changePasswordCurrentCandidate
 
 }

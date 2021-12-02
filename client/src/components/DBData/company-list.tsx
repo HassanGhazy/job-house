@@ -2,11 +2,8 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import TutorialDataService from "../../services/CompanyService";
 import ITutorialData from '../../types/company';
 import { Row} from "antd";
-// import { Link } from "react-router-dom";
 const CompaniesList: React.FC = () => {
   const [tutorials, setTutorials] = useState<Array<ITutorialData>>([]);
-//   const [currentTutorial, setCurrentTutorial] = useState<ITutorialData | null>(null);
-//   const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const [searchTitle, setSearchTitle] = useState<string>("");
 
   useEffect(() => {
@@ -39,9 +36,6 @@ const CompaniesList: React.FC = () => {
     TutorialDataService.findByName(searchTitle)
       .then((response: any) => {
         setTutorials(response.data);
-        // setCurrentTutorial(null);
-        // setCurrentIndex(-1);
-        console.log(response.data);
       })
       .catch((e: Error) => {
         console.log(e);

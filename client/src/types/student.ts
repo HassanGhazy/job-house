@@ -3,11 +3,13 @@ export default interface StudentData {
     name: string,
     description: string,
     email: string,
+    password: string,
     country: string,
     city: string,
-    phone: number,
+    phone: string,
     gender: string,
     birthday: string,
     image: string,
     cv: string,
   }
+  
