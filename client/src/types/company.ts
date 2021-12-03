@@ -6,7 +6,7 @@ export default interface CompanyData {
     country: string,
     city: string,
     street: string,
-    phone: number,
+    phone: string,
     website: string,
     description: string,
     video: string,

@@ -125,29 +125,19 @@ const updateCurrentCompany = (req, res) => {
         return res.status(400).json({ message: 'Please include a Company name' });
     } else if (!currCompany.email) {
         return res.status(400).json({ message: 'Please include a Company email' });
-    } else if (!currCompany.password) {
-        return res.status(400).json({ message: 'Please include a Company password' });
     } else if (!currCompany.country) {
         return res.status(400).json({ message: 'Please include a Company country' });
     } else if (!currCompany.city) {
         return res.status(400).json({ message: 'Please include a Company city' });
-    } else if (!currCompany.street) {
-        return res.status(400).json({ message: 'Please include a Company street' });
     } else if (!currCompany.phone) {
         return res.status(400).json({ message: 'Please include a Company phone' });
-    } else if (!currCompany.website) {
-        return res.status(400).json({ message: 'Please include a Company website' });
     } else if (!currCompany.description) {
         return res.status(400).json({ message: 'Please include a Company description' });
-    } else if (!currCompany.video) {
-        return res.status(400).json({ message: 'Please include a Company video' });
-    } else if (!currCompany.logo) {
-        return res.status(400).json({ message: 'Please include a Company logo' });
     }
 
-    const query = "UPDATE company SET name = $1, email = $2, password = $3, country = $4, city = $5, street = $6, phone = $7, website = $8, description = $9, video = $10, logo = $11 WHERE comp_id = $12;";
+    const query = "UPDATE company SET name = $1, email = $2, country = $3, city = $4, street = $5, phone = $6, website = $7, description = $8, video = $9, logo = $10 WHERE comp_id = $11;";
 
-    pool.query(query, [currCompany.name, currCompany.email, currCompany.password, currCompany.country, currCompany.city, currCompany.street, currCompany.phone, currCompany.website, currCompany.description, currCompany.video, currCompany.logo, currCompany.comp_id], (err, result) => {
+    pool.query(query, [currCompany.name, currCompany.email, currCompany.country, currCompany.city, currCompany.street, currCompany.phone, currCompany.website, currCompany.description, currCompany.video, currCompany.logo, currCompany.comp_id], (err, result) => {
         if (err) {
             return res.status(400).json({ message: `Error updating Company with id ${currCompany.comp_id}!`, error: err });
         }
@@ -197,7 +187,7 @@ const getSkillSingleJobToCurrentComapny = async (req, res) => {
     const jobId = req.params.jobId;
     try {
         const response = await new Promise(function (resolve, reject) {
-            pool.query('SELECT * FROM skill_request where comp_id = $1 and job_id = $2', [id,jobId], (error, results) => {
+            pool.query('SELECT * FROM skill_request natural join skill where comp_id = $1 and job_id = $2', [id,jobId], (error, results) => {
                 if (error) {
                     reject(error);
                 }
@@ -253,8 +243,8 @@ const addNewJobToCurrentCompany = (req, res) => {
         return res.status(400).json({ message: 'Please include a salary' });
     } 
 
-    const query = "insert into job_offer VALUES ($1, Default, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)";
-    pool.query(query, [id, newJob.job_title, newJob.description, newJob.date_submit, newJob.status, newJob.image, newJob.salary, newJob.views, newJob.unique_view, newJob.button_apply, newJob.job_type ], (err, result) => {
+    const query = "insert into job_offer VALUES ($1, Default, $2, $3, $4, $5, $6, $7, $8)";
+    pool.query(query, [id, newJob.job_title, newJob.description, newJob.date_submit, newJob.status, newJob.salary, newJob.views, newJob.button_apply ], (err, result) => {
 
         if (err) {
             return res.status(400).json({ message: 'Error adding job!', error: err });
@@ -284,16 +274,17 @@ const addSkillToJobToCurrentCompany = (req, res) => {
     });
 };
 
-const deleteAllSkillOfCurrentJob = (req, res) => {
+const deleteSkillOfCurrentJob = (req, res) => {
     const id = req.params.id;
     const jobId = req.params.jobId;
-    const query = "DELETE FROM skill_request WHERE comp_id = $1 and job_id = $2";
+    const skillId = req.params.skillId;
+    const query = "DELETE FROM skill_request WHERE comp_id = $1 and job_id = $2 and skill_id = $3";
 
-    pool.query(query, [id,jobId], (err, result) => {
+    pool.query(query, [id,jobId,skillId], (err, result) => {
         if (err) {
             return res.status(400).json({ message: `Error deleteing The Skills from the company with the id ${id}!` ,error : err});
         }
-        res.json({ message: `All the Skills for the company with the id ${id} was deleted successfully!`});
+        res.json({ message: `Skills ${skillId} for the company with the id ${id} was deleted successfully!`});
     });
 };
 
@@ -336,7 +327,7 @@ const updateCurrentJobFromCompany = (req, res) => {
     const jobId = req.params.jobId;
 
     const currJob = {
-        comp_id: req.params.id,
+        comp_id: id,
         ...req.body,
     };
 
@@ -352,9 +343,9 @@ const updateCurrentJobFromCompany = (req, res) => {
         return res.status(400).json({ message: 'Please include a salary' });
     } 
 
-    const query = "UPDATE job_offer SET job_title = $1, description = $2, date_submit = $3, status = $4, salary = $5 WHERE comp_id = $6 and job_id = $7;";
+    const query = "UPDATE job_offer SET job_title = $1, description = $2, date_submit = $3, status = $4, salary = $5, image = $8, job_type = $9 WHERE comp_id = $6 and job_id = $7;";
 
-    pool.query(query, [currJob.job_title, currJob.description, currJob.date_submit, currJob.status, currJob.salary,id, jobId], (err, result) => {
+    pool.query(query, [currJob.job_title, currJob.description, currJob.date_submit, currJob.status, currJob.salary,id, jobId, currJob.image, currJob.job_type], (err, result) => {
         if (err) {
             return res.status(400).json({ message: `Error updating Job with id ${id}!`, error: err });
         }
@@ -375,7 +366,7 @@ module.exports = {
     addNewJobToCurrentCompany,
     getSkillSingleJobToCurrentComapny,
     addSkillToJobToCurrentCompany,
-    deleteAllSkillOfCurrentJob,
+    deleteSkillOfCurrentJob,
     getTitleSkillFromSingleJobToCurrentComapny,
     deleteJobFromCurrentCompany,
     updateCurrentJobFromCompany,

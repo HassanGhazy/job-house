@@ -4,7 +4,7 @@ import CandidateService from "../../services/StudentService";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Swal from 'sweetalert2';
-import success from './my-swal';
+import success from '../global-widget/my-swal';
 
 type IDParams = { id: string };
 const DangerZoneComp = (props: IDParams) => {

@@ -1,67 +1,213 @@
 
-const CompanyProfile = () => {
-    return  <>
-    <div className="card-block">
-        <div className="m-b-25"> <img
-                src="https://www.nordicjobsworldwide.com/wp-content/uploads/2018/02/company-culture-min-1030x692-1030x692.jpg"
-                className="img" alt="logo"/>
-        </div>
-    </div>
+import { useState, useEffect } from "react";
+import CompanyService from "../../services/CompanyService";
+import CompanyData from '../../types/company';
+import { RouteComponentProps } from "react-router-dom";
+import success from '../global-widget/my-swal';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { Row, Col } from "antd";
+import JobComp from "./job";
+import SkillJobComp from "./skill/skill-job";
+import Skill from "../global-widget/skill";
+
+type ID = { id: string };
+const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
+    const id = match.params.id;
+    const initialCompanyState = {
+        comp_id: null,
+        name: "",
+        email: "",
+        password: "",
+        country: "",
+        city: "",
+        street: "",
+        phone: "",
+        website: "",
+        description: "",
+        video: "",
+        logo: "",
+    };
+
+    const [currentCompany, setCurrentCompany] = useState<CompanyData>(initialCompanyState);
 
 
-    <div className="card-block">
-        <h3 className="m-b-20 p-b-5 b-b-default f-w-600 ">Company Information </h3>
+    const getCompany = (id: string) => {
+        CompanyService.get(id)
+            .then((response: any) => {
+                setCurrentCompany(response.data[0]);
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            });
+    };
+
+
+    const updateCompany = () => {
+        CompanyService.update(currentCompany.comp_id, currentCompany)
+            .then((response: any) => {
+                success();
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            });
+    };
+
+    useEffect(() => {
+        getCompany(id);
+    }, [id])
+
+    return <>
         <div>
-            <div>
-                <p className="text-muted m-b-10 f-w-600">Company Name</p>
-                <input type="text" placeholder="Name Of Company"/>
-                <br/>
-                <hr/>
-            </div>
+            {currentCompany ? (
+                <div className="edit-form">
+
+                    <p style={{ textAlign: "center" }}>Welcome Back {currentCompany.name ?? "sir"}</p>
+                    <hr />
+                    <br />
+                    <div style={{ width: "30%", float: "left" }}>
+                        <p>Logo</p>
+                        <img style={{ width: 300, height: 300 }} src={currentCompany.logo ?? require('../../img/No-Image.png').default} alt={currentCompany.name} />
+                        <p>Video</p>
+
+                        {<video src={currentCompany.video}></video>}
+                    </div>
+
+                    <div style={{ width: "69%", float: "right" }}>
+                        <p>Company Details</p>
+                        <form>
+
+                            <Col>
+                                <Row justify="space-around" align="middle">
+                                    <TextField
+
+                                        style={{ width: 400 }}
+                                        id="email"
+                                        label="Email"
+                                        value={currentCompany.email}
+                                        onChange={e => setCurrentCompany({ ...currentCompany, email: e.target.value ?? "" })}
+                                    />
+                                    <TextField
+                                        style={{ width: 400 }}
+                                        id="Name"
+                                        label="Name"
+                                        value={currentCompany.name}
+                                        onChange={e => setCurrentCompany({ ...currentCompany, name: e.target.value ?? "" })}
+                                    />
+
+                                </Row>
+                                <br />
+                                <Row justify="space-around" align="middle">
+                                    <TextField
+                                        style={{ width: 400 }}
+                                        id="description"
+                                        label="Description"
+                                        value={currentCompany.description}
+                                        onChange={e => setCurrentCompany({ ...currentCompany, description: e.target.value ?? "" })}
+                                    />
+
+                                    <TextField
+                                        style={{ width: 400 }}
+                                        id="logo"
+                                        label="Logo"
+                                        value={currentCompany.logo}
+                                        onChange={e => setCurrentCompany({ ...currentCompany, logo: e.target.value ?? "" })}
+
+                                    />
+
+                                </Row>
+                                <br />
+                                <Row justify="space-around" align="middle">
+                                    <TextField
+                                        style={{ width: 400 }}
+                                        id="country"
+                                        label="Country"
+                                        value={currentCompany.country}
+                                        onChange={e => setCurrentCompany({ ...currentCompany, country: e.target.value ?? "" })}
+                                    />
+
+                                    <TextField
+                                        style={{ width: 400 }}
+                                        id="city"
+                                        label="City"
+                                        value={currentCompany.city}
+                                        onChange={e => setCurrentCompany({ ...currentCompany, city: e.target.value ?? "" })}
+
+                                    />
+
+                                </Row>
+                                <br />
+                                <Row justify="space-around" align="middle">
+
+                                    <TextField
+                                        style={{ width: 400 }}
+                                        id="street"
+                                        label="Street"
+                                        value={currentCompany.street}
+                                        onChange={e => setCurrentCompany({ ...currentCompany, street: e.target.value ?? "" })}
+
+                                    />
+                                    <TextField
+                                        style={{ width: 400 }}
+                                        id="phone"
+                                        label="Phone"
+                                        value={currentCompany.phone}
+                                        onChange={e => setCurrentCompany({ ...currentCompany, phone: e.target.value ?? "" })}
+                                    />
 
 
-            <div>
-                <p className="text-muted m-b-10 f-w-600">Company Details</p>
-                <textarea name="Text1" cols={40} rows={5} placeholder="Details about the company and its available jobs ... etc."></textarea>
-                <br/>
-                <hr/>
-            </div>
+                                </Row>
+                                <br />
+                                <Row justify="space-around" align="middle">
 
+                                    <TextField
+                                        style={{ width: 400 }}
+                                        id="website"
+                                        label="Website"
+                                        value={currentCompany.website}
+                                        onChange={e => setCurrentCompany({ ...currentCompany, website: e.target.value ?? "" })}
 
-            <div>
-                <p className="text-muted m-b-10 f-w-600">Location</p>
-                <input type="text" placeholder="Location"/>
-                <br/>
-                <hr/>
-            </div>
+                                    />
+                                    <TextField
+                                        style={{ width: 400 }}
+                                        id="video"
+                                        label="Video"
+                                        value={currentCompany.video}
+                                        onChange={e => setCurrentCompany({ ...currentCompany, video: e.target.value ?? "" })}
 
+                                    />
+                                </Row>
+                            </Col>
+                            <br />
+                            <Col key="updateCandidateCol">
+                                <Row key="updateCandidateRow" align="middle">
+                                    <div style={{ paddingLeft: "4%" }}></div>
+                                    <Button key="updateCandidate" onClick={updateCompany} variant="contained" color="success">
+                                        Update
+                                    </Button>
+                                </Row>
+                            </Col>
+                        </form>
+                        <br />
+                        <JobComp id={id} />
+                        <SkillJobComp id={id} />
+                        <Skill id={id} />
+                        
+                    </div>
 
-            <div>
-                <p className="text-muted m-b-10 f-w-600">Email</p>
-                <input type="email" placeholder="sample@gmail.com"/>
-                <br/>
-                <hr/>
-            </div>
+                </div>
 
+            ) : (
+                <div>
+                    <br />
+                    <p style={{ textAlign: "center" }}>No Data Found For The Current Company</p>
+                    <p style={{ textAlign: "center" }}>Maybe Deleted Or There are some issues with the url</p>
 
-            <div>
-                <p className="text-muted m-b-10 f-w-600">Phone</p>
-                <input type="tel" id="phone" name="phone" placeholder="012-345-6789"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>
-                <br/>
-                <hr/>
-            </div>
-
-
-            <div>
-                <p className="text-muted m-b-10 f-w-600">Website</p>
-                <input type="url" placeholder="link Of website"/>
-
-            </div>
+                </div>
+            )}
         </div>
 
-    </div>
-    </> ;
-  };
-  
-  export default CompanyProfile;
+    </>;
+};
+
+export default CompanyProfile;

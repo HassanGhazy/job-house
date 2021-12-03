@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import CandidateService from "../../../services/StudentService";
-import './style.css';
+import GlobalService from "../../../services/GlobalService";
+import '../../global-widget/style.css';
 import Button from '@mui/material/Button';
-import success from '../my-swal';
+import success from '../../global-widget/my-swal';
 import SkillStudentData from "../../../types/skill-std";
 import TextField from '@mui/material/TextField';
 import Swal from 'sweetalert2';
@@ -38,15 +39,15 @@ const SkillComp = (props: IDParams) => {
     title: "",
   }];
 
-  const [skillData, setSkillData] = useState(initialSkillState);
   const [skillCandidate, setSkillCandidate] = useState(initialSkillCandidateState);
   const [newSkill, setNewSkill] = useState(initialnewSkillState);
   const [selectedSkill, setSelectedSkill] = useState(initialSelectedSkillState);
+  const [skillData, setSkillData] = useState(initialSkillState);
   const [search, setSearch] = useState("");
 
   const getSkill = () => {
 
-    CandidateService.getAllSkill()
+    GlobalService.getAllSkill()
       .then((response: any) => {
         setSkillData(response.data);
       })

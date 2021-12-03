@@ -10,10 +10,6 @@ const getAll = () => {
   return http.get<Array<StudentData>>("/student");
 };
 
-const getAllSkill = () => {
-  return http.get<Array<SkillData>>("/skill");
-};
-
 const getSkillCandidate = (id: string) => {
   return http.get<Array<SkillData>>(`student/${id}/skill`);
 };
@@ -103,7 +99,6 @@ const StudentService = {
   editProject, 
   addProject, 
   deleteProject,
-  getAllSkill,
   getSkillCandidate,
   addSkill,
   deleteSkill,

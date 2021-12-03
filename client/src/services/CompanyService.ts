@@ -1,5 +1,6 @@
 import http from "../http-common";
 import CompanyData from "../types/company";
+import JobData from "../types/job";
 
 const getAll = () => {
   return http.get<Array<CompanyData>>("/company");
@@ -8,6 +9,36 @@ const getAll = () => {
 const get = (id: any) => {
   return http.get<CompanyData>(`/company/${id}`);
 };
+
+const getJob = (id: any) => {
+  return http.get<Array<JobData>>(`/company/${id}/job`);
+};
+
+const addJob = (id: any, data : JobData) => {
+  return http.post<JobData>(`/company/${id}`,data);
+};
+
+
+const editJob = (id: any, data: JobData) => {
+  return http.put<JobData>(`/company/${id}/job/${data.job_id}`, data);
+};
+
+const deleteJob = (comp_id: string, id: string) => {
+  return http.delete<JobData>(`/company/${comp_id}/job/${id}`);
+};
+
+const getSkillJob = (id: string, jobId : string) => {
+  return http.get(`/company/${id}/job/${jobId}/skill`);
+};
+
+const addSkill = (data : any) => {
+  return http.post(`/company/${data.comp_id}/job/${data.job_id}`, data);
+};
+
+const deleteSkillJob = (id: string, jobId : string, skillId : string) => {
+  return http.delete(`/company/${id}/job/${jobId}/skill/${skillId}`);
+};
+
 
 const create = (data: CompanyData) => {
   return http.post<CompanyData>("/company", data);
@@ -32,6 +63,14 @@ const CompanyService = {
   update,
   remove,
   findByName,
+  getJob,
+  editJob,
+  deleteJob,
+  addJob,
+  getSkillJob,
+  deleteSkillJob,
+  addSkill,
+  
 };
 
 export default CompanyService;

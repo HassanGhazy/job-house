@@ -1,13 +1,11 @@
-export default interface CompanyData {
-    comp_id?: any | null,
-    job_id: number,
+export default interface JobData {
+    job_id?: string | null,
+    comp_id: string,
     job_title: string,
     description: string,
-    date_submit: Date,
+    date_submit: string,
     status: string,
-    image: string,
     salary: number,
     views: number,
-    unique_view: number,
     button_apply: number,
   }

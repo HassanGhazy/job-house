@@ -64,11 +64,11 @@ const StudentsList: React.FC = () => {
             tutorials.map((job, index) => (
                 <li>
                   <a id={job.job_id + ':' + job.job_title} href={'/candidate-profile/' + job.job_id} className="card">
-                      <img src={job.image ?? require('../../img/No-Image.png').default} className="card__image" alt={job.job_title} />
+                      {/* <img src={job.image ?? require('../../img/No-Image.png').default} className="card__image" alt={job.job_title} /> */}
                       <div className="card__overlay">
                       <div className="card__header">
                           <svg className="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                     
-                          <img className="card__thumb" src={job.image ?? require('../../img/No-Image.png').default} alt={job.job_title} />
+                          {/* <img className="card__thumb" src={job.image ?? require('../../img/No-Image.png').default} alt={job.job_title} /> */}
                           <div className="card__header-text">
                           <h3 className="card__title">{job.job_title}</h3>            
                           <span className="card__status">{job.status} until {job.date_submit}</span>

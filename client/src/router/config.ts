@@ -15,9 +15,9 @@ const routes = [
     component: "candidate/candidate-profile",
   },
   {
-    path: ["/company-profile/:id"],
+    path: ["/company-profile/:id?"],
     exact: true,
-    component: "company-profile",
+    component: "company/company-profile",
   },
   // {
   //   path: ["*"],

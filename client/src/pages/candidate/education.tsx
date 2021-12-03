@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Education from "../../types/education";
-import success from './my-swal';
+import success from '../global-widget/my-swal';
 
 
 type IDParams = { id: string };

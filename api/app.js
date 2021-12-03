@@ -77,8 +77,8 @@ app.get('/api/company', company.getAllCompanies);
 app.get('/api/company/:id', company.findCompanyById);
 app.get('/api/company/:id/job', company.getAllJobToCurrentComapny);
 app.get('/api/company/:id/job/:jobId', company.getSingleJobToCurrentComapny);
-app.get('/api/company/:id/job/:jobId/skill', company.getSkillSingleJobToCurrentComapny);
 app.get('/api/company/:id/job/:jobId/skill/:idSkill', company.getTitleSkillFromSingleJobToCurrentComapny);
+app.get('/api/company/:id/job/:jobId/skill', company.getSkillSingleJobToCurrentComapny);
 
 app.post('/api/company/', company.addNewCompany);
 app.post('/api/company/:id', company.addNewJobToCurrentCompany);
@@ -88,7 +88,7 @@ app.put('/api/company/:id', company.updateCurrentCompany);
 app.put('/api/company/:id/job/:jobId', company.updateCurrentJobFromCompany);
 
 app.delete('/api/company/:id', company.deleteCurrentCompany);
-app.delete('/api/company/:id/job/:jobId/skill', company.deleteAllSkillOfCurrentJob);
+app.delete('/api/company/:id/job/:jobId/skill/:skillId', company.deleteSkillOfCurrentJob);
 app.delete('/api/company/:id/job/:jobId', company.deleteJobFromCurrentCompany);
 
 app.get('/api/job', job.getAllJobs);

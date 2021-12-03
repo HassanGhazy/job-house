@@ -10,7 +10,7 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import success from './my-swal';
+import success from '../global-widget/my-swal';
 import SkillComp from './skill/skill';
 import EducationComp from './education';
 import ProjectComp from './project';
@@ -67,7 +67,7 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
             {currentCandidate ? (
                 <div className="edit-form">
 
-                    <h5 style={{ textAlign: "center" }}>Welcome Back {currentCandidate.name ?? "sir"}</h5>
+                    <p style={{ textAlign: "center" }}>Welcome Back {currentCandidate.name ?? "sir"}</p>
                     <hr />
                     <br />
                     <div style={{ width: "30%", float: "left" }}>
