@@ -9,6 +9,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import success from '../global-widget/my-swal';
 import Project from "../../types/project";
+import TitleWidget from '../global-widget/title-widget';
 
 type IDParams = { id: string };
 const ProjectComp = (props: IDParams) => {
@@ -120,8 +121,7 @@ const ProjectComp = (props: IDParams) => {
     }, [id])
     return (<>
         <div style={{ margin: "4%" }}></div>
-        <p>My Projects</p>
-
+        <TitleWidget title="My Projects"/>
         {project[0] ? (
             <Box key="Project Box" sx={{ flexGrow: 1 }}>
 

@@ -5,16 +5,16 @@ const getAll = () => {
   return http.get<Array<JobData>>("/job");
 };
 
-const get = (id: any) => {
-  return http.get<JobData>(`/job/${id}`);
-};
-
-const create = (data: JobData) => {
-  return http.post<JobData>("/job", data);
-};
-
 const update = (id: any, data: JobData) => {
   return http.put<any>(`/job/${id}`, data);
+};
+
+const updateView = (id: string, compId : string, data: any) => {
+  return http.put<any>(`/${compId}/job/view/${id}`, data);
+};
+
+const getView = (id: string, compId : string) => {
+  return http.get(`/${compId}/job/view/${id}`);
 };
 
 const remove = (id: any) => {
@@ -27,11 +27,11 @@ const findByName = (name: string) => {
 
 const JobService = {
   getAll,
-  get,
-  create,
   update,
   remove,
   findByName,
+  updateView,
+  getView,
 };
 
 export default JobService;

@@ -11,10 +11,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import success from '../global-widget/my-swal';
-import SkillComp from './skill/skill';
+import Skill from '../global-widget/skill';
 import EducationComp from './education';
 import ProjectComp from './project';
 import DangerZoneComp from './danger-zone';
+import TitleWidget from '../global-widget/title-widget';
+// import Footer from '../../components/Footer';
 
 type TParams = { id: string };
 const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
@@ -67,14 +69,16 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
             {currentCandidate ? (
                 <div className="edit-form">
 
-                    <p style={{ textAlign: "center" }}>Welcome Back {currentCandidate.name ?? "sir"}</p>
+                    <p style={{ textAlign: "center",paddingTop: "20px" }}>Welcome Back {currentCandidate.name ?? "sir"}</p>
                     <hr />
                     <br />
-                    <div style={{ width: "30%", float: "left" }}>
-                        <img style={{ width: 300, height: 300 }} src={currentCandidate.image ?? require('../../img/No-Image.png').default} alt={currentCandidate.name} />
+                    <div style={{ width: "30%", float: "left" , display: "flex", justifyContent: "center",flexWrap: "wrap" }}>
+                    <TitleWidget title="Profile Photo"/>
+                        <img style={{ width: 300, height: 300,borderRadius: "10px" }} src={currentCandidate.image ?? require('../../img/No-Image.png').default} alt={currentCandidate.name} />
                     </div>
                     <div style={{ width: "69%", float: "right" }}>
-                        <p>Personal Details</p>
+                    
+                        <TitleWidget title="Personal Details"/>
                         <form>
 
                             <Col>
@@ -204,7 +208,7 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
                         </form>
                         <EducationComp id={id} />
                         <ProjectComp id={id} />
-                        <SkillComp id={id} />
+                        <Skill id={id} type="candidate" />
                         <DangerZoneComp id={id} />
 
                         
@@ -221,7 +225,8 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
                 </div>
             )}
         </div>
-
+       
+              
     </>
     );
 };

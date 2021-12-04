@@ -19,6 +19,11 @@ const routes = [
     exact: true,
     component: "company/company-profile",
   },
+  {
+    path: ["/:compId?/job-profile/:id?"],
+    exact: true,
+    component: "job/job-profile",
+  },
   // {
   //   path: ["*"],
   //   exact: true,

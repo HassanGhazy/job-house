@@ -10,7 +10,7 @@ import { Row, Col } from "antd";
 import JobComp from "./job";
 import SkillJobComp from "./skill/skill-job";
 import Skill from "../global-widget/skill";
-
+import TitleWidget from '../global-widget/title-widget';
 type ID = { id: string };
 const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
     const id = match.params.id;
@@ -62,19 +62,22 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
             {currentCompany ? (
                 <div className="edit-form">
 
-                    <p style={{ textAlign: "center" }}>Welcome Back {currentCompany.name ?? "sir"}</p>
+                    <p style={{ textAlign: "center", paddingTop: "20px" }}>Welcome Back {currentCompany.name ?? "sir"}</p>
                     <hr />
                     <br />
-                    <div style={{ width: "30%", float: "left" }}>
-                        <p>Logo</p>
-                        <img style={{ width: 300, height: 300 }} src={currentCompany.logo ?? require('../../img/No-Image.png').default} alt={currentCompany.name} />
-                        <p>Video</p>
+                    <div style={{ width: "30%", float: "left", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
 
-                        {<video src={currentCompany.video}></video>}
+                        <TitleWidget title="Logo" />
+                        <img style={{ width: 300, height: 300, borderRadius: "20px" ,padding: "10px"}} src={currentCompany.logo ?? require('../../img/No-Image.png').default} alt={currentCompany.name} />
+
+                        <TitleWidget title="Video" />
+
+                        {currentCompany.video && <video src={currentCompany.video}></video>}
+                        {!currentCompany.video && <p style={{textAlign: "center"}}>No Video Exist</p>}
                     </div>
 
                     <div style={{ width: "69%", float: "right" }}>
-                        <p>Company Details</p>
+                        <TitleWidget title="Company Details" />
                         <form>
 
                             <Col>
@@ -191,8 +194,8 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
                         <br />
                         <JobComp id={id} />
                         <SkillJobComp id={id} />
-                        <Skill id={id} />
-                        
+                        <Skill id={id} type="company" />
+
                     </div>
 
                 </div>

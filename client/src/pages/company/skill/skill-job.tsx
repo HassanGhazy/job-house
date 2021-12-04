@@ -3,6 +3,7 @@ import CompanyService from "../../../services/CompanyService";
 import TextField from '@mui/material/TextField';
 import '../../global-widget/style.css';
 import Swal from 'sweetalert2';
+import TitleWidget from '../../global-widget/title-widget';
 
 type IDParams = { id: string }
 const SkillJobComp = (props: IDParams) => {
@@ -60,7 +61,8 @@ const SkillJobComp = (props: IDParams) => {
     }, [id, search])
 
     return (<>
-        <p>Looking for the Skills for any job</p>
+     <TitleWidget title="Looking for the Skills for any job"/>
+    
         <TextField
             style={{ width: 400 }}
             id="Search"

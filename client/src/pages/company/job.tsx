@@ -9,6 +9,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert, { AlertProps } from '@mui/material/Alert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DataGrid, GridColDef, GridCellEditCommitParams } from '@mui/x-data-grid';
+import TitleWidget from '../global-widget/title-widget';
 
 
 type IDParams = { id: string };
@@ -176,7 +177,8 @@ const JobComp = (props: IDParams) => {
     return (<>
 
         <div style={{ margin: "4%" }}></div>
-        <p>Our Job</p>
+        <TitleWidget title="Our Job"/>
+        
 
         {currentCompanyJob[0] ? (
             <>

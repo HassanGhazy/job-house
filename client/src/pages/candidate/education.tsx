@@ -9,6 +9,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Education from "../../types/education";
 import success from '../global-widget/my-swal';
+import TitleWidget from '../global-widget/title-widget';
 
 
 type IDParams = { id: string };
@@ -130,8 +131,8 @@ const EducationComp = (props: IDParams) => {
 
     return (<>
         <div style={{ margin: "4%" }}></div>
-        <p>My Education</p>
-
+       
+        <TitleWidget title="My Education"/>
         {education[0] ? (
             <Box key="Education Box" sx={{ flexGrow: 1 }}>
 

@@ -14,6 +14,11 @@ const getJob = (id: any) => {
   return http.get<Array<JobData>>(`/company/${id}/job`);
 };
 
+const getSingleJob = (id: string, idJob : string) => {
+  return http.get<JobData>(`/company/${id}/job/${idJob}`);
+};
+
+
 const addJob = (id: any, data : JobData) => {
   return http.post<JobData>(`/company/${id}`,data);
 };
@@ -70,6 +75,7 @@ const CompanyService = {
   getSkillJob,
   deleteSkillJob,
   addSkill,
+  getSingleJob
   
 };
 

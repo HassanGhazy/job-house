@@ -343,9 +343,9 @@ const updateCurrentJobFromCompany = (req, res) => {
         return res.status(400).json({ message: 'Please include a salary' });
     } 
 
-    const query = "UPDATE job_offer SET job_title = $1, description = $2, date_submit = $3, status = $4, salary = $5, image = $8, job_type = $9 WHERE comp_id = $6 and job_id = $7;";
+    const query = "UPDATE job_offer SET job_title = $1, description = $2, date_submit = $3, status = $4, salary = $5 WHERE comp_id = $6 and job_id = $7;";
 
-    pool.query(query, [currJob.job_title, currJob.description, currJob.date_submit, currJob.status, currJob.salary,id, jobId, currJob.image, currJob.job_type], (err, result) => {
+    pool.query(query, [currJob.job_title, currJob.description, currJob.date_submit, currJob.status, currJob.salary,id, jobId], (err, result) => {
         if (err) {
             return res.status(400).json({ message: `Error updating Job with id ${id}!`, error: err });
         }
