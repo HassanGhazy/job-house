@@ -142,9 +142,11 @@ const Skill = (props: IDParams) => {
 
         <div className="col-md-6">
             {(type === "candidate") ? <TitleWidget title="My Skills"/> : <TitleWidget title="Add Skills To Specific Job"/> }
-            {type === "candidate" && (skillCandidate[0].skill_id !== "" && skillCandidate[0].std_id !== "" && skillCandidate[0].title !== "") &&
-                skillCandidate.map((s) => <button id="custom-button" onClick={() => DeleteSkill(s.skill_id!)}><span className="skill">{s.title}</span></button>)}
+            {type === "candidate" &&
+                skillCandidate.map((s) => <button id="custom-button" onClick={() => DeleteSkill(s.skill_id)}><span className="skill">{s.title}</span></button>)}
             <br />
+            
+            {(type === "candidate") ? <TitleWidget title="Add New Skill"/> : null }
             <TextField
                 style={{ width: 400 }}
                 id="Search"

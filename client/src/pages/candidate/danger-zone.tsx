@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Swal from 'sweetalert2';
 import success from '../global-widget/my-swal';
-import TitleWidget from '../global-widget/title-widget';
+import TitleDangerWidget from './title-danget-widget';
 type IDParams = { id: string };
 const DangerZoneComp = (props: IDParams) => {
     const id = props.id;
@@ -93,7 +93,6 @@ const DangerZoneComp = (props: IDParams) => {
         })
     }
 
-    console.log(currentPassword);
     return (<>
         <div style={{ textAlign: "center" }}>
             <p style={{ color: "red" }}>
@@ -104,7 +103,7 @@ const DangerZoneComp = (props: IDParams) => {
         <form>
             <div style={{ textAlign: "start" }}>
 
-                <TitleWidget title="Change your Password" />
+                <TitleDangerWidget title="Change your Password" />
 
                 <TextField
                     style={{ width: 400 }}
@@ -139,7 +138,7 @@ const DangerZoneComp = (props: IDParams) => {
                 <br />
                 <br />
 
-                <TitleWidget title="Delete Account" />
+                <TitleDangerWidget title="Delete Account" />
                 <Button key="confirmDelete" onClick={confirmDelete} variant="outlined" color="error">
                     Delete
                 </Button>

@@ -15,6 +15,7 @@ import Skill from '../global-widget/skill';
 import EducationComp from './education';
 import ProjectComp from './project';
 import DangerZoneComp from './danger-zone';
+import StatusJobComp from './status-job';
 import TitleWidget from '../global-widget/title-widget';
 // import Footer from '../../components/Footer';
 
@@ -209,6 +210,8 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
                         <EducationComp id={id} />
                         <ProjectComp id={id} />
                         <Skill id={id} type="candidate" />
+                        <StatusJobComp id={id}/>
+                        <hr/>
                         <DangerZoneComp id={id} />
 
                         

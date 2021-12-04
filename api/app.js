@@ -79,13 +79,12 @@ app.get('/api/company/:id/job', company.getAllJobToCurrentComapny);
 app.get('/api/company/:id/job/:jobId', company.getSingleJobToCurrentComapny);
 app.get('/api/company/:id/job/:jobId/skill/:idSkill', company.getTitleSkillFromSingleJobToCurrentComapny);
 app.get('/api/company/:id/job/:jobId/skill', company.getSkillSingleJobToCurrentComapny);
-app.get('/api/:compId/job/view/:id', job.getView);
+app.get('/api/company/:id/request', company.getCandidateSubmitedJob);
 
 app.post('/api/company/', company.addNewCompany);
 app.post('/api/company/:id', company.addNewJobToCurrentCompany);
-app.post('/api/company/:id/job/:jobId', company.addSkillToJobToCurrentCompany);
+app.post('/api/company/:id/job/:jobId/skill', company.addSkillToJobToCurrentCompany);
 
-app.put('/api/:compId/job/view/:id', job.updateView);
 app.put('/api/company/:id', company.updateCurrentCompany);
 app.put('/api/company/:id/job/:jobId', company.updateCurrentJobFromCompany);
 
@@ -95,7 +94,16 @@ app.delete('/api/company/:id/job/:jobId', company.deleteJobFromCurrentCompany);
 
 app.get('/api/job', job.getAllJobs);
 app.get('/api/job/:id', job.findJobById);
+app.get('/api/:compId/job/view/:id', job.getView);
+app.get('/api/job/:stdId/status/', job.getstatusSubmitedJob);
+app.get('/api/job/:compId/apply/:jobId', job.getNumberOfApply);
 
+app.put('/api/job/:jobId/company/:id', job.updateButtonApply);
+app.put('/api/:compId/job/view/:id', job.updateView);
+app.put('/api/job/:compId/apply/:jobId', job.updateNumberOfApply);
+
+app.post('/api/job/:idComp/student/:jobId', job.submitJob);
+app.post('/api/job/:idComp/status/:jobId', job.statusSubmitJob);
 
 
 app.get('/api/student/page/:page', candidate.getAllCandidatesWithPage);

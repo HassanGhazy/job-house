@@ -3,7 +3,7 @@ import TutorialDataService from "../../services/JobService";
 import ITutorialData from '../../types/job';
 import { Row } from "antd";
 const StudentsList: React.FC = () => {
-  const [jobs, setTutorials] = useState<Array<ITutorialData>>([]);
+  const [jobs, setJobs] = useState<Array<ITutorialData>>([]);
   const [searchTitle, setSearchTitle] = useState<string>("");
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const StudentsList: React.FC = () => {
   const retrieveTutorials = () => {
     TutorialDataService.getAll()
       .then((response: any) => {
-        setTutorials(response.data);
+        setJobs(response.data);
       })
       .catch((e: Error) => {
         console.log(e);
@@ -29,7 +29,7 @@ const StudentsList: React.FC = () => {
   const findByTitle = () => {
     TutorialDataService.findByName(searchTitle)
       .then((response: any) => {
-        setTutorials(response.data);
+        setJobs(response.data);
       })
       .catch((e: Error) => {
         console.log(e);

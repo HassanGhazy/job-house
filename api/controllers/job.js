@@ -2,7 +2,7 @@ const pool = require('../config/pg');
 const getAllJobs = async (req, res) => {
     try {
         const response = await new Promise(function (resolve, reject) {
-            pool.query('SELECT * FROM job_offer limit 20', (error, results) => {
+            pool.query('SELECT * FROM job_offer where status = $1 limit 20',["A"], (error, results) => {
                 if (error) {
                     reject(error);
                 }
@@ -114,6 +114,122 @@ const getView = async (req, res) => {
     }
 }
 
+const submitJob = (req, res) => {
+    const id = req.params.idComp;
+    const jobId = req.params.jobId;
+
+    const requestJob = {
+        ...req.body,
+    };
+
+
+    const query = "insert into job_submit VALUES ($1, $2, $3, $4)";
+    pool.query(query, [requestJob.std_id, id, jobId, requestJob.date_submited ], (err, result) => {
+
+        if (err) {
+            return res.status(400).json({ message: 'Error requesting a job!', error: err });
+        }
+        res.json({ message: `request job has been done successfully!`, newSkill: requestJob });
+    });
+};
+
+const statusSubmitJob = (req, res) => {
+    const id = req.params.idComp;
+    const jobId = req.params.jobId;
+
+    const requestJob = {
+        ...req.body,
+    };
+
+
+    const query = "insert into status_submit_job VALUES ($1, $2, $3, $4)";
+    pool.query(query, [requestJob.std_id, id, jobId, requestJob.status ], (err, result) => {
+
+        if (err) {
+            return res.status(400).json({ message: 'Error requesting a job!', error: err });
+        }
+        res.json({ message: `Reply Status job has been sent successfully!`, newSkill: requestJob });
+    });
+};
+
+
+const updateButtonApply = (req, res) => {
+    const id = req.params.compId;
+    const jobId = req.params.id;
+
+    const currJob = {
+        ...req.body,
+    };
+
+    const query = "UPDATE job_offer SET button_apply = $1 WHERE comp_id = $2 and job_id = $3";
+
+    pool.query(query, [parseInt(currJob.button_apply) + 1, id, jobId], (err, result) => {
+        if (err) {
+            return res.status(400).json({ message: `Error updating Button Apply`, error: err });
+        }
+        res.json({ message: `The number of Apply was updated was updated!`, currJob: result });
+    });
+}
+
+const getstatusSubmitedJob = async (req, res) => {
+    const id = req.params.stdId;
+
+    const query = "select * from status_submit_job where std_id = $1";
+
+    try {
+        const response = await new Promise(function (resolve, reject) {
+            pool.query(query, [id], (error, results, q) => {
+                if (error) {
+                    reject(error);
+                }
+                resolve(results.rows);
+            });
+        });
+        res.status(200).send(response);
+    } catch (error_1) {
+        res.status(500).send(error_1);
+    }
+}
+
+const getNumberOfApply = async (req, res) => {
+    const id = req.params.jobId;
+    const compId = req.params.compId;
+
+    const query = "select button_apply from job_offer where job_id = $1 and comp_id = $2";
+
+    try {
+        const response = await new Promise(function (resolve, reject) {
+            pool.query(query, [id,compId], (error, results, q) => {
+                if (error) {
+                    reject(error);
+                }
+                resolve(results.rows);
+            });
+        });
+        res.status(200).send(response);
+    } catch (error_1) {
+        res.status(500).send(error_1);
+    }
+}
+
+const updateNumberOfApply = (req, res) => {
+    const id = req.params.jobId;
+    const compId = req.params.compId;
+
+    const currJob = {
+        ...req.body,
+    };
+
+    const query = "UPDATE job_offer SET button_apply = $1 WHERE comp_id = $2 and job_id = $3";
+
+    pool.query(query, [currJob.button_apply, compId, id], (err, result) => {
+        if (err) {
+            return res.status(400).json({ message: `Error updating Button Apply`, error: err });
+        }
+        res.json({ message: `The number of Apply was updated was updated!`, currJob: currJob });
+    });
+}
+
 module.exports = {
     getAllJobs,
     findJobById,
@@ -121,4 +237,10 @@ module.exports = {
     getAllJobsWithPage,
     updateView,
     getView,
+    submitJob,
+    updateButtonApply,
+    statusSubmitJob,
+    getstatusSubmitedJob,
+    getNumberOfApply,
+    updateNumberOfApply,
 }

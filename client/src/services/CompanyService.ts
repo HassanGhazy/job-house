@@ -1,6 +1,7 @@
 import http from "../http-common";
 import CompanyData from "../types/company";
 import JobData from "../types/job";
+import JobRequest from "../types/request-job";
 
 const getAll = () => {
   return http.get<Array<CompanyData>>("/company");
@@ -37,11 +38,15 @@ const getSkillJob = (id: string, jobId : string) => {
 };
 
 const addSkill = (data : any) => {
-  return http.post(`/company/${data.comp_id}/job/${data.job_id}`, data);
+  return http.post(`/company/${data.comp_id}/job/${data.job_id}/skill`, data);
 };
 
 const deleteSkillJob = (id: string, jobId : string, skillId : string) => {
   return http.delete(`/company/${id}/job/${jobId}/skill/${skillId}`);
+};
+
+const getJobRequests = (id: any) => {
+  return http.get<Array<JobRequest>>(`/company/${id}/request`);
 };
 
 
@@ -75,7 +80,8 @@ const CompanyService = {
   getSkillJob,
   deleteSkillJob,
   addSkill,
-  getSingleJob
+  getSingleJob,
+  getJobRequests
   
 };
 

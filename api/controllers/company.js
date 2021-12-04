@@ -274,6 +274,8 @@ const addSkillToJobToCurrentCompany = (req, res) => {
     });
 };
 
+
+
 const deleteSkillOfCurrentJob = (req, res) => {
     const id = req.params.id;
     const jobId = req.params.jobId;
@@ -308,6 +310,25 @@ const getTitleSkillFromSingleJobToCurrentComapny = async(req, res) => {
         res.status(500).send(error_1);
     }
 };
+
+const getCandidateSubmitedJob = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        const response = await new Promise(function (resolve, reject) {
+            pool.query('select * from job_submit where comp_id = $1', [id], (error, results, q) => {
+                if (error) {
+                    reject(error);
+                }
+                resolve(results.rows);
+            });
+        });
+        res.status(200).send(response);
+    } catch (error_1) {
+        res.status(500).send(error_1);
+    }
+};
+
 
 const deleteJobFromCurrentCompany = (req, res) => {
     const id = req.params.id;
@@ -354,6 +375,7 @@ const updateCurrentJobFromCompany = (req, res) => {
 };
 
 
+
 module.exports = {
     getAllCompanies,
     getAllCompaniesWithPage,
@@ -371,5 +393,7 @@ module.exports = {
     deleteJobFromCurrentCompany,
     updateCurrentJobFromCompany,
     findCompanyByName,
+    getCandidateSubmitedJob,
+    
 
 }

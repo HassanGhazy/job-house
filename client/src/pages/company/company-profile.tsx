@@ -11,6 +11,7 @@ import JobComp from "./job";
 import SkillJobComp from "./skill/skill-job";
 import Skill from "../global-widget/skill";
 import TitleWidget from '../global-widget/title-widget';
+import ReplyJob from './reply-job';
 type ID = { id: string };
 const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
     const id = match.params.id;
@@ -29,6 +30,10 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
         logo: "",
     };
 
+
+   
+
+
     const [currentCompany, setCurrentCompany] = useState<CompanyData>(initialCompanyState);
 
 
@@ -42,6 +47,9 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
             });
     };
 
+   
+
+   
 
     const updateCompany = () => {
         CompanyService.update(currentCompany.comp_id, currentCompany)
@@ -68,12 +76,12 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
                     <div style={{ width: "30%", float: "left", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
 
                         <TitleWidget title="Logo" />
-                        <img style={{ width: 300, height: 300, borderRadius: "20px" ,padding: "10px"}} src={currentCompany.logo ?? require('../../img/No-Image.png').default} alt={currentCompany.name} />
+                        <img style={{ width: 300, height: 300, borderRadius: "20px", padding: "10px" }} src={currentCompany.logo ?? require('../../img/No-Image.png').default} alt={currentCompany.name} />
 
                         <TitleWidget title="Video" />
 
                         {currentCompany.video && <video src={currentCompany.video}></video>}
-                        {!currentCompany.video && <p style={{textAlign: "center"}}>No Video Exist</p>}
+                        {!currentCompany.video && <p style={{ textAlign: "center" }}>No Video Exist</p>}
                     </div>
 
                     <div style={{ width: "69%", float: "right" }}>
@@ -195,7 +203,8 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
                         <JobComp id={id} />
                         <SkillJobComp id={id} />
                         <Skill id={id} type="company" />
-
+                        <ReplyJob id={id} />
+                        
                     </div>
 
                 </div>
