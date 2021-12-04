@@ -133,7 +133,7 @@ const JobProfile = ({ match }: RouteComponentProps<TParams>) => {
                         <p>{currentJob.description}</p>
                         <p>Deadline: {currentJob.date_submit.split("T")[0]}</p>
                         <hr/>
-                        <p style={{fontSize: 14, color: "#505050"}}>The number who was applied is: {currentJob.button_apply}</p>
+                        <p style={{fontSize: 14, color: "#ddd"}}>The number who was applied is: {currentJob.button_apply}</p>
                         {currentJob.status === "A" ? <div style={{ display: "flex", justifyContent: "center" }}>
                             <Button onClick={RequestJob} key="applyJob" variant="contained" color="success">
                                 Apply

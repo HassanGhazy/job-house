@@ -11,7 +11,7 @@ const TeamMember = (props: any) => {
         <div className="col-md-4 col-sm-6 border">
             <div className="card">
                 <div className="card-header">
-                    {/* <img style={{ maxWidth: '100%' }} src={require(props.info.img).default} alt={props.info.name} /> */}
+                    <img style={{ maxWidth: '100%' }} src={props.info.img} alt={props.info.name} />
                 </div>
                 <div className="card-body">
                     <h2>{props.info.name}</h2>

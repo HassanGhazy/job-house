@@ -22,6 +22,8 @@ const EducationComp = (props: IDParams) => {
         university_major: "",
     }];
 
+    const isAuthed = true;
+
     const [education, setEducation] = useState(initialEducationState);
 
     const getCandidateEducation = (id: string) => {
@@ -131,8 +133,8 @@ const EducationComp = (props: IDParams) => {
 
     return (<>
         <div style={{ margin: "4%" }}></div>
-       
-        <TitleWidget title="My Education"/>
+
+        <TitleWidget title="My Education" />
         {education[0] ? (
             <Box key="Education Box" sx={{ flexGrow: 1 }}>
 
@@ -161,9 +163,14 @@ const EducationComp = (props: IDParams) => {
         )}
         <br />
 
-        <Button key="addNewEdu" onClick={addNewEdu} variant="contained" color="success">
-            Add new Education
-        </Button>
+
+        {
+            isAuthed && (
+                <Button key="addNewEdu" onClick={addNewEdu} variant="contained" color="success">
+                    Add new Education
+                </Button>
+            )
+        }
         <br />
     </>);
 

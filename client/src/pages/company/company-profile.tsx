@@ -30,10 +30,6 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
         logo: "",
     };
 
-
-   
-
-
     const [currentCompany, setCurrentCompany] = useState<CompanyData>(initialCompanyState);
 
 

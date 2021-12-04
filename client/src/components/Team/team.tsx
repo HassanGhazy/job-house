@@ -8,7 +8,7 @@ const Team = () => {
             <TeamMember
                 info={{
                     name: 'Mohammed Al-Habbash',
-                    img: '../../../img/Mohammed.jpg',
+                    img: '/img/Mohammed.jpg',
                     position: 'Palestin-Gaza',
                     phone: '+972 59-775-5839',
                     email: 'MohammedAl-Habbash@gmail.com',
@@ -17,7 +17,7 @@ const Team = () => {
             <TeamMember
                 info={{
                     name: 'Abdallah Abo Abdo',
-                    img: '../img/Abdallah.jpg',
+                    img: '/img/Abdallah.jpg',
                     position: 'Palestin-Gaza',
                     phone: '+972 59-835-2395',
                     email: 'Abdallahaboabdo5@gmail.com',
@@ -26,7 +26,7 @@ const Team = () => {
             <TeamMember
                 info={{
                     name: 'Hassan Sammour',
-                    img: '../../img/Hassan.jpg',
+                    img: '/img/Hassan.jpg',
                     position: 'Palestin-Gaza',
                     phone: '+972 59-716-1584',
                     email: 'HassanSammour@gmail.com',
