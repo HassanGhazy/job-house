@@ -82,7 +82,7 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
                         <br />
                         <div style={{ width: "30%", float: "left", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
                             <TitleWidget title="Profile Photo" />
-                            <img style={{ width: 300, height: 300, borderRadius: "10px" }} src={currentCandidate.image ?? require('../../img/No-Image.png').default} alt={currentCandidate.name} />
+                            <img style={{ width: 300, height: 300, borderRadius: "10px" }} src={currentCandidate.image ?? '/img/No-Image.png'} alt={currentCandidate.name} />
                         </div>
                         <div style={{ width: "69%", float: "right" }}>
 

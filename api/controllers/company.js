@@ -119,12 +119,6 @@ const updateCurrentCompany = (req, res) => {
         return res.status(400).json({ message: 'Please include a Company name' });
     } else if (!currCompany.email) {
         return res.status(400).json({ message: 'Please include a Company email' });
-    } else if (!currCompany.country) {
-        return res.status(400).json({ message: 'Please include a Company country' });
-    } else if (!currCompany.city) {
-        return res.status(400).json({ message: 'Please include a Company city' });
-    } else if (!currCompany.phone) {
-        return res.status(400).json({ message: 'Please include a Company phone' });
     } else if (!currCompany.description) {
         return res.status(400).json({ message: 'Please include a Company description' });
     }

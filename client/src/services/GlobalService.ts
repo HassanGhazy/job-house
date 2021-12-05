@@ -6,10 +6,8 @@ const getAllSkill = () => {
 };
 
 
-
 const GlobalService = {
     getAllSkill,
-
 };
 
 export default GlobalService;
