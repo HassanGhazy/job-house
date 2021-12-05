@@ -55,7 +55,7 @@ const ProjectComp = (props: IDParams) => {
     async function updataAndDeleteProject(project: Project) {
         const result_2 = await Swal.fire({
             title: 'Do you want to do changes?',
-            html: `<input value=${project.name_proj} type="text" id="name_proj" class="swal2-input" placeholder="Name of the project"><input type="text" value=${project.description_project} id="description_project" class="swal2-input" placeholder="Description">`,
+            html: `<input value="${project.name_proj}" type="text" id="name_proj" class="swal2-input" placeholder="Name of the project"><input type="text" value="${project.description_project}" id="description_project" class="swal2-input" placeholder="Description">`,
             showDenyButton: true,
             showCancelButton: true,
             confirmButtonText: 'Update',

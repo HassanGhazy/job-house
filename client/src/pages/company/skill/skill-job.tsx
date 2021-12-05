@@ -5,6 +5,7 @@ import '../../global-widget/style.css';
 import Swal from 'sweetalert2';
 import TitleWidget from '../../global-widget/title-widget';
 
+
 type IDParams = { id: string }
 const SkillJobComp = (props: IDParams) => {
     const id = props.id;
@@ -15,7 +16,7 @@ const SkillJobComp = (props: IDParams) => {
         title: "",
         skill_id: "",
     }];
-    
+
     const [currentSkillJob, setCurrentSkillJob] = useState(initialSkillJobState);
     const [search, setSearch] = useState("");
 
@@ -36,7 +37,7 @@ const SkillJobComp = (props: IDParams) => {
     }
 
     async function DeleteSkill(skill_id: string, job_id: string) {
-      
+
         if (skill_id) {
             const result_2 = await Swal.fire({
                 title: 'Do you want to do changes?',
@@ -47,7 +48,7 @@ const SkillJobComp = (props: IDParams) => {
 
             });
             if (result_2.isDenied) {
-                CompanyService.deleteSkillJob(id,job_id, skill_id).then(res => console.log(res));
+                CompanyService.deleteSkillJob(id, job_id, skill_id).then(res => console.log(res));
                 Swal.fire('The Skills was deleted successfully', '', 'success');
             }
             refreshSkillJob(id);
@@ -61,8 +62,8 @@ const SkillJobComp = (props: IDParams) => {
     }, [id, search])
 
     return (<>
-     <TitleWidget title="Looking for the Skills for any job"/>
-    
+        <TitleWidget title="Looking for the Skills for any job" />
+
         <TextField
             style={{ width: 400 }}
             id="Search"
@@ -70,10 +71,10 @@ const SkillJobComp = (props: IDParams) => {
             value={search}
             onChange={e => { setSearch(e.target.value) }}
         />
-        <br/>
+        <br />
         {currentSkillJob &&
-            currentSkillJob.map((s) => <button id="custom-button" onClick={() => DeleteSkill(s.skill_id,s.job_id)}><span className="skill">{s.title}</span></button>)}
-        <br/>
+            currentSkillJob.map((s) => <button id="custom-button" onClick={() => DeleteSkill(s.skill_id, s.job_id)}><span className="skill">{s.title}</span></button>)}
+        <br />
         {!currentSkillJob[0] && <p>No Skills was added yet</p>}
         <br />
 

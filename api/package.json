@@ -19,6 +19,7 @@
     "morgan": "~1.9.1",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
+    "request": "^2.88.2",
     "sequelize": "^6.7.0",
     "supertokens-node": "^8.2.0"
   },

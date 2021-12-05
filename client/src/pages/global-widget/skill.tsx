@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import GlobalService from "../../services/GlobalService";
 import CompanyService from "../../services/CompanyService";
 import TextField from '@mui/material/TextField';
@@ -8,10 +8,28 @@ import CandidateService from "../../services/StudentService";
 import Swal from 'sweetalert2';
 import './style.css';
 import TitleWidget from '../global-widget/title-widget';
+// import Chip from '@mui/material/Chip';
+// import Select, { SelectChangeEvent } from '@mui/material/Select';
+// import Box from '@mui/material/Box';
+// import OutlinedInput from '@mui/material/OutlinedInput';
+// import MenuItem from '@mui/material/MenuItem';
+import SkillType from '../../types/skill';
+
+// const ITEM_HEIGHT = 48;
+// const ITEM_PADDING_TOP = 8;
+// const MenuProps = {
+//     PaperProps: {
+//         style: {
+//             maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+//             width: 250,
+//         },
+//     },
+// };
 
 // This class for company and candidate
 type IDParams = { id: string, type: string }
 const Skill = (props: IDParams) => {
+
     const id = props.id;
     const type = props.type;
     const initialSkillState = [{
@@ -38,8 +56,8 @@ const Skill = (props: IDParams) => {
 
 
     const [newSkill, setNewSkill] = useState(initialnewSkillState);
-    const [search, setSearch] = useState("");
-    const [skillData, setSkillData] = useState(initialSkillState);
+    const search = useRef("");
+    const [skillData, setSkillData] = useState<SkillType[]>(initialSkillState);
     const [selectedSkill, setSelectedSkill] = useState(initialSelectedSkillState);
     const [job_id, setJob_id] = useState("");
     const [skillCandidate, setSkillCandidate] = useState(initialSkillCandidateState);
@@ -56,7 +74,7 @@ const Skill = (props: IDParams) => {
     };
 
     const getSkill = () => {
-
+        console.log("getSkill called");
         GlobalService.getAllSkill()
             .then((response: any) => {
                 setSkillData(response.data);
@@ -81,7 +99,6 @@ const Skill = (props: IDParams) => {
     };
 
     const refreshSkill = () => {
-        getSkill();
         if (type === "candidate") getSkillCurrentCandidate(id);
     }
 
@@ -132,31 +149,48 @@ const Skill = (props: IDParams) => {
         refreshSkill();
     }
 
+    // const handleChange = (event: SelectChangeEvent<string[]>) => {
+    //     const {
+    //         target: { value },
+    //     } = event;
+    //     // if (typeof value === 'array') {
+    //         const skillTitles =
+    //             (value as string[]).map((s) => skillData.find((sd) => sd.title === s)) as {
+    //                 skill_id: string;
+    //                 title: string;
+    //             }[];
+
+    //         setSkillCandidate(skillTitles.map(s => ({...s, std_id: id})));
+    //     // }
+    // };
+
+
     useEffect(() => {
-         getSkill();
+        getSkill();
+
         if (type === "candidate") getSkillCurrentCandidate(id);
-    }, [job_id, selectedSkill, id, type])
+    }, [job_id, selectedSkill, id, type, search])
 
 
     return (<>
 
         <div className="col-md-6">
-            {(type === "candidate") ? <TitleWidget title="My Skills"/> : <TitleWidget title="Add Skills To Specific Job"/> }
+            {(type === "candidate") ? <TitleWidget title="My Skills" /> : <TitleWidget title="Add Skills To Specific Job" />}
             {type === "candidate" &&
                 skillCandidate.map((s) => <button id="custom-button" onClick={() => DeleteSkill(s.skill_id)}><span className="skill">{s.title}</span></button>)}
             <br />
-            
-            {(type === "candidate") ? <TitleWidget title="Add New Skill"/> : null }
+
+            {(type === "candidate") ? <TitleWidget title="Add New Skill" /> : null}
             <TextField
                 style={{ width: 400 }}
                 id="Search"
                 label="Search"
-                value={search}
-                onChange={e => { setSearch(e.target.value); setSkillData(skillData.filter(skill => skill.title.toLowerCase().includes(search.toLowerCase()))); if (search === "") getSkill() }}
+                value={search.current}
+                onChange={e => { search.current = (e.target.value); setSkillData(skillData.filter(skill => skill.title.toLowerCase().includes(search.current.toLowerCase()))); if (search.current === "") getSkill() }}
             />
 
             <div className="container">
-                <select multiple className="select" onChange={onChangeHandler} >
+                <select  multiple className="select" onChange={onChangeHandler} >
                     {skillData.map((e) => <option value={e.skill_id! + ":" + e.title!}>{e.title}</option>)}
                 </select>
                 {selectedSkill &&
@@ -186,6 +220,35 @@ const Skill = (props: IDParams) => {
 
         </div>
         <br />
+
+
+        {/* <Select
+            labelId="demo-multiple-chip-label"
+            id="demo-multiple-chip"
+            fullWidth={true}
+            multiple
+            value={skillCandidate.map(s => s.title)}
+            onChange={handleChange}
+            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+            renderValue={(selected) => (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((value) => (
+                        <Chip label={value} />
+                    ))}
+                </Box>
+            )}
+            // MenuProps={MenuProps}
+        >
+            {skillData.map((s) => (
+                <MenuItem
+                    key={s.skill_id}
+                    value={s.title}
+                // style={getStyles(s, personName, theme)}
+                >
+                    {s.title}
+                </MenuItem>
+            ))}
+        </Select> */}
 
     </>);
 }
