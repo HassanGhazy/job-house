@@ -5,6 +5,7 @@ import AboutContent from "../../content/AboutContent.json";
 import MissionContent from "../../content/MissionContent.json";
 import ProductContent from "../../content/ProductContent.json";
 import ContactContent from "../../content/ContactContent.json";
+import { Fade } from "react-awesome-reveal";
 import '../../components/Team/style.css'
 
 const Contact = lazy(() => import("../../components/ContactForm"));
@@ -54,11 +55,15 @@ const Home = () => {
         icon="waving.svg"
         id="product"
       />
-      <div className="text-center" style={{backgroundColor: "#212529",borderRadius: ".25rem"}}>
-            <h2  style={{color: "#fff",padding: 15}}>Our Team</h2>
-      </div>
-      
-      <Team/>
+
+      <Fade direction="left">
+        <div className="text-center" style={{ backgroundColor: "#212529", borderRadius: ".25rem" }}>
+          <h2 style={{ color: "#fff", padding: 15 }}>Our Team</h2>
+        </div>
+      </Fade>
+
+
+      <Team />
       <Contact
         title={ContactContent.title}
         content={ContactContent.text}
