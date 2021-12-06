@@ -72,7 +72,7 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
                     <div style={{ width: "30%", float: "left", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
 
                         <TitleWidget title="Logo" />
-                        <img style={{ width: 300, height: 300, borderRadius: "20px", padding: "10px" }} src={currentCompany.logo ?? require('../../img/No-Image.png').default} alt={currentCompany.name} />
+                        <img style={{ width: 300, height: 300, borderRadius: "20px", padding: "10px" }} src={currentCompany.logo ?? '/img/No-Image.png'} alt={currentCompany.name} />
 
                         <TitleWidget title="Video" />
 

@@ -12,11 +12,34 @@ SuperTokens.init({
     recipeList: [
         ThirdPartyEmailPassword.init({
             signInAndUpFeature: {
+                signUpForm: {
+                    formFields: [{
+                        id: "name",
+                        label: "Full name",
+                        placeholder: "First name and last name"
+                    },
+                    {
+                        id: "description",
+                        label: "Description",
+                        placeholder: "Enter something about you"
+                    },
+                    {
+                        id: "type",
+                        label: "Type",
+                        placeholder: "Enter Candidate or Company",
+                        validate: async (value : string) => {
+                            if (value.toLowerCase() === "candidate" || value.toLowerCase() === "company") {
+                                return undefined; // means that there is no error
+                            }
+                            return "You must be entered Candidate or Company";
+                        }
+                    }
+                    ]
+                },
                 providers: [
                     Github.init(),
                     Google.init(),
                     Facebook.init(),
-
                 ]
             }
         }),

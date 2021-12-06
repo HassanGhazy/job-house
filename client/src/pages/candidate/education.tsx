@@ -22,7 +22,7 @@ const EducationComp = (props: IDParams) => {
         university_major: "",
     }];
 
-    const isAuthed = true;
+
 
     const [education, setEducation] = useState(initialEducationState);
 
@@ -62,8 +62,8 @@ const EducationComp = (props: IDParams) => {
     async function updataAndDeleteEdu(edu: Education) {
         const result_2 = await Swal.fire({
             title: 'Do you want to do changes?',
-            html: `<input value=${edu.degree} type="text" id="degree" class="swal2-input" placeholder="Degree">
-            <input type="text" value=${edu.university_major} id="university_major" class="swal2-input" placeholder="University Major">`,
+            html: `<input value="${edu.degree}" type="text" id="degree" class="swal2-input" placeholder="Degree">
+            <input type="text" value="${edu.university_major}" id="university_major" class="swal2-input" placeholder="University Major">`,
             showDenyButton: true,
             showCancelButton: true,
             confirmButtonText: 'Update',
@@ -163,14 +163,11 @@ const EducationComp = (props: IDParams) => {
         )}
         <br />
 
+            <Button key="addNewEdu" onClick={addNewEdu} variant="contained" color="success">
+                Add new Education
+            </Button>
 
-        {
-            isAuthed && (
-                <Button key="addNewEdu" onClick={addNewEdu} variant="contained" color="success">
-                    Add new Education
-                </Button>
-            )
-        }
+        
         <br />
     </>);
 

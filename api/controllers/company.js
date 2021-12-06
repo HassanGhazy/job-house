@@ -23,7 +23,7 @@ const getAllCompaniesWithPage = async (req, res) => {
     const offset = req.params.page * 20;
     try {
         const response = await new Promise(function (resolve, reject) {
-            pool.query('SELECT * FROM company limit 20 offset $1', [offset] ,(error, results) => {
+            pool.query('SELECT * FROM company limit 20 offset $1', [offset], (error, results) => {
                 if (error) {
                     reject(error);
                 }
@@ -61,16 +61,16 @@ const findCompanyById = async (req, res) => {
 };
 
 
-const findCompanyByName = async(req, res) => {
+const findCompanyByName = async (req, res) => {
     const name = req.query.name;
     try {
-        const response = await new Promise(function(resolve, reject) {
+        const response = await new Promise(function (resolve, reject) {
             pool.query('SELECT * FROM company where name like $1 limit 20', ['%' + name + '%'], (error, results, q) => {
                 if (error) {
                     reject(error);
                 }
                 resolve(results.rows.map(e => {
-                    const {password,...res } = e;
+                    const { password, ...res } = e;
                     return res;
                 }));
             });
@@ -93,24 +93,18 @@ const addNewCompany = (req, res) => {
         return res.status(400).json({ message: 'Please include a Company email' });
     } else if (!newCompany.password) {
         return res.status(400).json({ message: 'Please include a Company password' });
-    } else if (!newCompany.country) {
-        return res.status(400).json({ message: 'Please include a Company country' });
-    } else if (!newCompany.city) {
-        return res.status(400).json({ message: 'Please include a Company city' });
-    } else if (!newCompany.phone) {
-        return res.status(400).json({ message: 'Please include a Company phone' });
     } else if (!newCompany.description) {
         return res.status(400).json({ message: 'Please include a Company description' });
     }
 
 
     const query = "insert into company (name, email, password, country, city, street, phone, website, description, video, logo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)";
-    pool.query(query, [newCompany.name, newCompany.email, md5(newCompany.password), newCompany.country, newCompany.city, newCompany.street, newCompany.phone, newCompany.website, newCompany.video, newCompany.logo ], (err, result) => {
+    pool.query(query, [newCompany.name, newCompany.email, md5(newCompany.password), newCompany.country, newCompany.city, newCompany.street, newCompany.phone, newCompany.website,newCompany.description, newCompany.video, newCompany.logo], (err, result) => {
 
         if (err) {
             return res.status(400).json({ message: 'Error adding Company!', error: err });
         }
-        res.json({ message: `Candidate with the id ${newCompany.comp_id} was inserted!`, newCompany: newCompany });
+        res.json({ message: `new Company was inserted!`, newCompany: newCompany });
     });
 };
 
@@ -125,12 +119,6 @@ const updateCurrentCompany = (req, res) => {
         return res.status(400).json({ message: 'Please include a Company name' });
     } else if (!currCompany.email) {
         return res.status(400).json({ message: 'Please include a Company email' });
-    } else if (!currCompany.country) {
-        return res.status(400).json({ message: 'Please include a Company country' });
-    } else if (!currCompany.city) {
-        return res.status(400).json({ message: 'Please include a Company city' });
-    } else if (!currCompany.phone) {
-        return res.status(400).json({ message: 'Please include a Company phone' });
     } else if (!currCompany.description) {
         return res.status(400).json({ message: 'Please include a Company description' });
     }
@@ -146,7 +134,7 @@ const updateCurrentCompany = (req, res) => {
 };
 
 const deleteCurrentCompany = (req, res) => {
-    
+
     const currCompany = {
         comp_id: req.params.id,
         ...req.body,
@@ -156,7 +144,7 @@ const deleteCurrentCompany = (req, res) => {
 
     pool.query(query, [currCompany.comp_id], (err, result) => {
         if (err) {
-            return res.status(400).json({ message: `Error deleteing company with the id ${currCompany.comp_id}!` ,error : err});
+            return res.status(400).json({ message: `Error deleteing company with the id ${currCompany.comp_id}!`, error: err });
         }
         res.json({ message: `Company with the id ${currCompany.comp_id} was deleted!`, left: currCompany });
     });
@@ -187,7 +175,7 @@ const getSkillSingleJobToCurrentComapny = async (req, res) => {
     const jobId = req.params.jobId;
     try {
         const response = await new Promise(function (resolve, reject) {
-            pool.query('SELECT * FROM skill_request natural join skill where comp_id = $1 and job_id = $2', [id,jobId], (error, results) => {
+            pool.query('SELECT * FROM skill_request natural join skill where comp_id = $1 and job_id = $2', [id, jobId], (error, results) => {
                 if (error) {
                     reject(error);
                 }
@@ -208,7 +196,7 @@ const getSingleJobToCurrentComapny = async (req, res) => {
     const jobId = req.params.jobId;
     try {
         const response = await new Promise(function (resolve, reject) {
-            pool.query('SELECT * FROM job_offer where comp_id = $1 and job_id = $2', [id,jobId], (error, results) => {
+            pool.query('SELECT * FROM job_offer where comp_id = $1 and job_id = $2', [id, jobId], (error, results) => {
                 if (error) {
                     reject(error);
                 }
@@ -241,10 +229,10 @@ const addNewJobToCurrentCompany = (req, res) => {
         return res.status(400).json({ message: 'Please include a status' });
     } else if (!newJob.salary) {
         return res.status(400).json({ message: 'Please include a salary' });
-    } 
+    }
 
     const query = "insert into job_offer VALUES ($1, Default, $2, $3, $4, $5, $6, $7, $8)";
-    pool.query(query, [id, newJob.job_title, newJob.description, newJob.date_submit, newJob.status, newJob.salary, newJob.views, newJob.button_apply ], (err, result) => {
+    pool.query(query, [id, newJob.job_title, newJob.description, newJob.date_submit, newJob.status, newJob.salary, newJob.views, newJob.button_apply], (err, result) => {
 
         if (err) {
             return res.status(400).json({ message: 'Error adding job!', error: err });
@@ -263,9 +251,9 @@ const addSkillToJobToCurrentCompany = (req, res) => {
 
     if (!newSkill.skill_id) {
         return res.status(400).json({ message: 'Please include a skill id' });
-    } 
+    }
     const query = "insert into skill_request VALUES ($1, $2, $3)";
-    pool.query(query, [newSkill.skill_id, id, jobId ], (err, result) => {
+    pool.query(query, [newSkill.skill_id, id, jobId], (err, result) => {
 
         if (err) {
             return res.status(400).json({ message: 'Error adding Skill!', error: err });
@@ -282,15 +270,15 @@ const deleteSkillOfCurrentJob = (req, res) => {
     const skillId = req.params.skillId;
     const query = "DELETE FROM skill_request WHERE comp_id = $1 and job_id = $2 and skill_id = $3";
 
-    pool.query(query, [id,jobId,skillId], (err, result) => {
+    pool.query(query, [id, jobId, skillId], (err, result) => {
         if (err) {
-            return res.status(400).json({ message: `Error deleteing The Skills from the company with the id ${id}!` ,error : err});
+            return res.status(400).json({ message: `Error deleteing The Skills from the company with the id ${id}!`, error: err });
         }
-        res.json({ message: `Skills ${skillId} for the company with the id ${id} was deleted successfully!`});
+        res.json({ message: `Skills ${skillId} for the company with the id ${id} was deleted successfully!` });
     });
 };
 
-const getTitleSkillFromSingleJobToCurrentComapny = async(req, res) => {
+const getTitleSkillFromSingleJobToCurrentComapny = async (req, res) => {
     const idSkill = req.params.idSkill;
 
     try {
@@ -311,7 +299,7 @@ const getTitleSkillFromSingleJobToCurrentComapny = async(req, res) => {
     }
 };
 
-const getCandidateSubmitedJob = async(req, res) => {
+const getCandidateSubmitedJob = async (req, res) => {
     const id = req.params.id;
 
     try {
@@ -335,11 +323,11 @@ const deleteJobFromCurrentCompany = (req, res) => {
     const jobId = req.params.jobId;
     const query = "DELETE FROM job_offer WHERE comp_id = $1 and job_id = $2";
 
-    pool.query(query, [id,jobId], (err, result) => {
+    pool.query(query, [id, jobId], (err, result) => {
         if (err) {
-            return res.status(400).json({ message: `Error deleteing The Job from the company with the id ${id}!` ,error : err});
+            return res.status(400).json({ message: `Error deleteing The Job from the company with the id ${id}!`, error: err });
         }
-        res.json({ message: `The Job of the company with the id ${id} was deleted successfully!`});
+        res.json({ message: `The Job of the company with the id ${id} was deleted successfully!` });
     });
 };
 
@@ -362,11 +350,11 @@ const updateCurrentJobFromCompany = (req, res) => {
         return res.status(400).json({ message: 'Please include a status' });
     } else if (!currJob.salary) {
         return res.status(400).json({ message: 'Please include a salary' });
-    } 
+    }
 
     const query = "UPDATE job_offer SET job_title = $1, description = $2, date_submit = $3, status = $4, salary = $5 WHERE comp_id = $6 and job_id = $7;";
 
-    pool.query(query, [currJob.job_title, currJob.description, currJob.date_submit, currJob.status, currJob.salary,id, jobId], (err, result) => {
+    pool.query(query, [currJob.job_title, currJob.description, currJob.date_submit, currJob.status, currJob.salary, id, jobId], (err, result) => {
         if (err) {
             return res.status(400).json({ message: `Error updating Job with id ${id}!`, error: err });
         }
@@ -394,6 +382,6 @@ module.exports = {
     updateCurrentJobFromCompany,
     findCompanyByName,
     getCandidateSubmitedJob,
-    
+
 
 }

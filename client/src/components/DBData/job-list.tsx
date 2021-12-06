@@ -1,13 +1,13 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
-import TutorialDataService from "../../services/JobService";
-import ITutorialData from '../../types/job';
+import JobService from "../../services/JobService";
+import JobData from '../../types/job';
 import { Row } from "antd";
 const StudentsList: React.FC = () => {
-  const [jobs, setJobs] = useState<Array<ITutorialData>>([]);
+  const [jobs, setJobs] = useState<Array<JobData>>([]);
   const [searchTitle, setSearchTitle] = useState<string>("");
 
   useEffect(() => {
-    retrieveTutorials();
+    getAllJobs();
   }, []);
 
   const onChangeSearchTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,8 +15,8 @@ const StudentsList: React.FC = () => {
     setSearchTitle(searchTitle);
   };
 
-  const retrieveTutorials = () => {
-    TutorialDataService.getAll()
+  const getAllJobs = () => {
+    JobService.getAll()
       .then((response: any) => {
         setJobs(response.data);
       })
@@ -27,7 +27,7 @@ const StudentsList: React.FC = () => {
 
 
   const findByTitle = () => {
-    TutorialDataService.findByName(searchTitle)
+    JobService.findByName(searchTitle)
       .then((response: any) => {
         setJobs(response.data);
       })
@@ -61,7 +61,7 @@ const StudentsList: React.FC = () => {
 
       <ul className="timeline">
         {jobs &&
-          jobs.map((job, index) => (
+          jobs.map((job) => (
 
             <li>
               <a href={job.comp_id + '/job-profile/' + job.job_id}>{job.job_title}</a>
@@ -78,45 +78,6 @@ const StudentsList: React.FC = () => {
           ))}
       </ul>
 
-
-
-      {/* <div className="col-md-6">
-        {currentTutorial ? (
-          <div>
-            <h4>Tutorial</h4>
-            <div>
-              <label>
-                <strong>Title:</strong>
-              </label>{" "}
-              {currentTutorial.email}
-            </div>
-            <div>
-              <label>
-                <strong>Description:</strong>
-              </label>{" "}
-              {currentTutorial.gender}
-            </div>
-            <div>
-              <label>
-                <strong>Status:</strong>
-              </label>{" "}
-              {currentTutorial.birthday}
-            </div>
-
-            <Link
-              to={"/student/" + currentTutorial.std_id}
-              className="badge badge-warning"
-            >
-              Edit
-            </Link>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a Tutorial...</p>
-          </div>
-        )}
-      </div> */}
     </>
   );
 };

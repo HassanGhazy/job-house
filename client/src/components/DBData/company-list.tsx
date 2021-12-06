@@ -1,13 +1,13 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
-import TutorialDataService from "../../services/CompanyService";
-import ITutorialData from '../../types/company';
+import CompanyService from "../../services/CompanyService";
+import CompanyData from '../../types/company';
 import { Row} from "antd";
 const CompaniesList: React.FC = () => {
-  const [tutorials, setTutorials] = useState<Array<ITutorialData>>([]);
+  const [companies, setCompanies] = useState<Array<CompanyData>>([]);
   const [searchTitle, setSearchTitle] = useState<string>("");
 
   useEffect(() => {
-    retrieveTutorials();
+    getAllCompanies();
   }, []);
 
   const onChangeSearchTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,10 +15,10 @@ const CompaniesList: React.FC = () => {
     setSearchTitle(searchTitle);
   };
 
-  const retrieveTutorials = () => {
-    TutorialDataService.getAll()
+  const getAllCompanies = () => {
+    CompanyService.getAll()
       .then((response: any) => {
-        setTutorials(response.data);
+        setCompanies(response.data);
         console.log(response.data);
       })
       .catch((e: Error) => {
@@ -26,16 +26,11 @@ const CompaniesList: React.FC = () => {
       });
   };
 
-//   const setActiveTutorial = (tutorial: ITutorialData, index: number) => {
-//     setCurrentTutorial(tutorial);
-//     setCurrentIndex(index);
-//   };
-
 
   const findByTitle = () => {
-    TutorialDataService.findByName(searchTitle)
+    CompanyService.findByName(searchTitle)
       .then((response: any) => {
-        setTutorials(response.data);
+        setCompanies(response.data);
       })
       .catch((e: Error) => {
         console.log(e);
@@ -66,15 +61,15 @@ const CompaniesList: React.FC = () => {
       </div>
       <div className="col-md-16" style={{width: "100%"}}>
         <ul className="cards">
-          {tutorials &&
-            tutorials.map((company, index) => (
+          {companies &&
+            companies.map((company) => (
                 <li>
                 <a id={company.comp_id + company.name} href={'/company-profile/' + company.comp_id} className="card">
-                {company.video == null ? <img src={require('../../img/No-Image.png').default} className="card__image" alt={company.name} />  : <video controls> <source src={company.video} type="video/mp4"/> Your browser does not support the video tag. </video> }  
+                {company.video == null ? <img src={'/img/No-Image.png'} className="card__image" alt={company.name} />  : <video controls> <source src={company.video} type="video/mp4"/> Your browser does not support the video tag. </video> }  
                     <div className="card__overlay">
                     <div className="card__header">
                         <svg className="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                     
-                        <img className="card__thumb" src={company.logo ?? require('../../img/No-Image.png').default} alt={company.name} />
+                        <img className="card__thumb" src={company.logo ?? '/img/No-Image.png'} alt={company.name} />
                         <div className="card__header-text">
                         <h3 className="card__title">{company.name}</h3>            
                         <span className="card__status">{company.country}</span>
