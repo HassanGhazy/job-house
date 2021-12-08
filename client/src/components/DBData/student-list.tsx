@@ -61,7 +61,6 @@ const StudentsList: React.FC = () => {
           </div>
         </div>
       </div>
-
       <div className="col-md-16">
         <ul className="cards">
           {Candidate &&

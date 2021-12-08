@@ -19,6 +19,8 @@ const get = (id: any) => {
   return http.get<StudentData>(`/student/${id}`);
 };
 
+
+
 const getEducation = (id: any) => {
   return http.get<Array<Education>>(`/student/${id}/education`);
 };
@@ -102,7 +104,8 @@ const StudentService = {
   getSkillCandidate,
   addSkill,
   deleteSkill,
-  checkPassword
+  checkPassword,
+
 };
 
 export default StudentService;
