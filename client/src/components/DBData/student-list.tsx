@@ -61,13 +61,7 @@ const StudentsList: React.FC = () => {
           </div>
         </div>
       </div>
-<<<<<<< HEAD
-      
-      <div style={{width: "100%"}} className="col-md-16">
-=======
-
       <div className="col-md-16">
->>>>>>> 343f4012de8846ae7bbd46ba9908f596a71ccd19
         <ul className="cards">
           {Candidate &&
             Candidate.map((student, index) => (

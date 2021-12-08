@@ -56,19 +56,7 @@ const Home = () => {
         id="product"
       />
 
-<<<<<<< HEAD
-      <Team/>
-      
-=======
-      <Fade direction="left">
-        <div className="text-center" style={{ backgroundColor: "#212529", borderRadius: ".25rem" }}>
-          <h2 style={{ color: "#fff", padding: 15 }}>Our Team</h2>
-        </div>
-      </Fade>
-
-
       <Team />
->>>>>>> 343f4012de8846ae7bbd46ba9908f596a71ccd19
       <Contact
         title={ContactContent.title}
         content={ContactContent.text}
