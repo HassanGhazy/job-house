@@ -7,6 +7,7 @@ const candidate = require('./controllers/candidate');
 const company = require('./controllers/company');
 const job = require('./controllers/job');
 const cors = require("cors");
+const { verifySession } = require("supertokens-node/recipe/session/framework/express");
 
 const { middleware } = require("supertokens-node/framework/express");
 let supertokens = require("supertokens-node");
@@ -40,6 +41,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/api/student', candidate.getAllCandidates);
+app.get("/api/get-user-info", verifySession(), candidate.getUserByEmail);
 
 app.get('/api/student/project', candidate.getAllProjects);
 app.get('/api/student/education', candidate.getAllEducations);

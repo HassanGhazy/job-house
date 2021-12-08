@@ -1,6 +1,11 @@
 import SuperTokens from "supertokens-auth-react";
 import ThirdPartyEmailPassword, { Github, Google, Facebook } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import Session from "supertokens-auth-react/recipe/session";
+// import http from "../http-common";
+
+// const getUser = () => {
+//     return http.get(`/get-user-info`);
+// };
 
 SuperTokens.init({
     appInfo: {
@@ -11,6 +16,16 @@ SuperTokens.init({
     },
     recipeList: [
         ThirdPartyEmailPassword.init({
+            onHandleEvent: async (context) => {
+                if (context.action === "SESSION_ALREADY_EXISTS") {
+                    // TODO:
+                } else {
+                    console.log('context', context.action);
+                    if (context.action === "SUCCESS") {
+                        return window.location.href = '/browse-job';
+                    }
+                }
+            },
             signInAndUpFeature: {
                 signUpForm: {
                     formFields: [{
@@ -27,7 +42,7 @@ SuperTokens.init({
                         id: "type",
                         label: "Type",
                         placeholder: "Enter Candidate or Company",
-                        validate: async (value : string) => {
+                        validate: async (value: string) => {
                             if (value.toLowerCase() === "candidate" || value.toLowerCase() === "company") {
                                 return undefined; // means that there is no error
                             }

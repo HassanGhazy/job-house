@@ -1,5 +1,7 @@
 const pool = require('../config/pg');
 const md5 = require("blueimp-md5");
+const ThirdPartyEmailPassword = require("supertokens-node/recipe/thirdpartyemailpassword");
+
 const getAllCandidates = async (req, res) => {
     try {
         const response = await new Promise(function (resolve, reject) {
@@ -117,7 +119,7 @@ const updateCurrentCandidate = (req, res) => {
     }
     const query = "UPDATE student SET name = $1, description = $2, email = $3, country = $4, city = $5, phone = $6, gender = $7, birthday = $8, image = $9, cv = $10 WHERE std_id = $11;";
 
-    pool.query(query, [currCandidate.name, currCandidate.description ?? req.body.description, currCandidate.email, currCandidate.country ?? req.body.country, currCandidate.city, currCandidate.phone, currCandidate.gender !== undefined ? (currCandidate.gender.toLowerCase() === 'male') ? 'M' : 'F' : null, currCandidate.birthday, currCandidate.image, currCandidate.cv, currCandidate.std_id], (err, result) => {
+    pool.query(query, [currCandidate.name, currCandidate.description, currCandidate.email, currCandidate.country, currCandidate.city, currCandidate.phone, currCandidate.gender !== undefined ? (currCandidate.gender === 'Male') ? 'M' : 'F' : null, currCandidate.birthday, currCandidate.image, currCandidate.cv, currCandidate.std_id], (err, result) => {
         if (err) {
             return res.status(400).json({ message: `Error updating student with id ${currCandidate.std_id}!`, error: err });
         }
@@ -280,7 +282,7 @@ const updateCurrentProjectForCandidate = (req, res) => {
     }
 
     const query = "UPDATE project_std SET name_proj = $1, description_project = $2 WHERE name_proj = $3;";
-    console.log(currProject);
+    
     pool.query(query, [currProject.name_proj, currProject.description_project, currProject.name_proj], (err, result) => {
         if (err) {
 
@@ -516,11 +518,11 @@ const checkPassword = async (req, res) => {
                 if (error) {
                     reject(error);
                 }
-                if(md5(pass.password) === results.rows[0].password){
-                    res.status(200).send({"message" : true});
+                if (md5(pass.password) === results.rows[0].password) {
+                    res.status(200).send({ "message": true });
 
                 } else {
-                    res.status(200).send({"message" : false});
+                    res.status(200).send({ "message": false });
                 }
             });
         });
@@ -533,11 +535,11 @@ const deleteSkillFromCurrentCandidate = async (req, res) => {
     const id = req.params.id;
     const skillId = req.params.skillId;
     const query = "DELETE FROM skill_std WHERE skill_id = $1 and std_id = $2";
-    pool.query(query, [skillId,id], (err, result) => {
+    pool.query(query, [skillId, id], (err, result) => {
         if (err) {
             return res.status(400).json({ message: `Error deleteing Skill with the id ${id}!`, error: err });
         }
-        res.json({ message: `The Skill has been deleted successfully!`});
+        res.json({ message: `The Skill has been deleted successfully!` });
     });
 };
 
@@ -593,6 +595,46 @@ const addSkillsToCurrentProject = async (req, res) => {
 }
 
 
+const getUserByEmail = async (req, res) => {
+    let userId = req.session.userId;
+    console.log(req.session);
+    const data = await ThirdPartyEmailPassword.getUserById(userId);
+    let usersInfo = await ThirdPartyEmailPassword.getUsersByEmail(data.email);
+
+    try {
+        const CompanyResponse = await new Promise(function (resolve, reject) {
+            pool.query('SELECT * FROM company where email = $1 limit 1', [data.email], (error, results) => {
+                if (error) {
+                    reject(error);
+                }
+                resolve(results.rows.map(e => {
+                    const { password, ...res } = e;
+                    return res;
+                }));
+            });
+        });
+        if (CompanyResponse.length !== 0) {
+            return res.status(200).json({ "user": CompanyResponse, "type": "Company","accessToken": req.session.accessToken });
+        }
+
+        const candidateResponse = await new Promise(function (resolve, reject) {
+            pool.query('SELECT * FROM student where email = $1 limit 1', [data.email], (error, results) => {
+                if (error) {
+                    reject(error);
+                }
+                resolve(results.rows.map(e => {
+                    const { password, ...res } = e;
+                    return res;
+                }));
+            });
+        });
+        return res.status(200).json({ "user": candidateResponse, "type": "Candidate" ,"accessToken": req.session.accessToken });
+    } catch (error_1) {
+        res.status(500).send(error_1);
+    }
+    return res.status(500).json({ "message": "Something is wrong!" });
+}
+
 module.exports = {
     getAllCandidates,
     getAllCandidatesWithPage,
@@ -622,6 +664,7 @@ module.exports = {
     getSkillSingleProject,
     findCandidateByName,
     changePasswordCurrentCandidate,
-    checkPassword
+    checkPassword,
+    getUserByEmail
 
 }

@@ -54,11 +54,9 @@ const Home = () => {
         icon="waving.svg"
         id="product"
       />
-      <div className="text-center" style={{backgroundColor: "#212529",borderRadius: ".25rem"}}>
-            <h2  style={{color: "#fff",padding: 15}}>Our Team</h2>
-      </div>
-      
+
       <Team/>
+      
       <Contact
         title={ContactContent.title}
         content={ContactContent.text}

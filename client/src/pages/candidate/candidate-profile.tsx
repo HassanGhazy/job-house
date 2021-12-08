@@ -17,8 +17,6 @@ import ProjectComp from './project';
 import DangerZoneComp from './danger-zone';
 import StatusJobComp from './status-job';
 import TitleWidget from '../global-widget/title-widget';
-import { ThirdPartyEmailPasswordAuth } from 'supertokens-auth-react/recipe/thirdpartyemailpassword';
-import { useSessionContext } from 'supertokens-auth-react/recipe/session';
 
 
 type TParams = { id: string };
@@ -41,10 +39,6 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
 
     const [currentCandidate, setCurrentCandidate] = useState<CandidateData>(initialCandidateState);
 
-    let { userId, accessTokenPayload } = useSessionContext();
-    let role = accessTokenPayload.role;
-    console.log("role", role);
-    console.log("accessTokenPayload", accessTokenPayload);
     const getCandidate = (id: string) => {
         CandidateService.get(id)
             .then((response: any) => {
@@ -70,7 +64,7 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
     }, [id])
 
     return (<>
-        <ThirdPartyEmailPasswordAuth>
+       
 
 
             <div>
@@ -235,7 +229,7 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
                     </div>
                 )}
             </div>
-        </ThirdPartyEmailPasswordAuth>
+        {/*ThirdPartyEmailPasswordAuth </ThirdPartyEmailPasswordAuth> */}
 
     </>
     );

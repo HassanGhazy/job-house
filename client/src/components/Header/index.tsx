@@ -10,7 +10,7 @@ import {
   Span,
 } from "./styles";
 
-const HeaderJob = () => {
+const Header = () => {
 
   const MenuItem = () => {
     const scrollTo = (id: string) => {
@@ -57,4 +57,4 @@ const HeaderJob = () => {
   );
 };
 
-export default HeaderJob;
+export default Header;

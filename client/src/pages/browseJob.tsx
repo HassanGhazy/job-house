@@ -1,9 +1,8 @@
-// import React from 'react';  <link rel="stylesheet" href="style/style.css" />
 import '../styles/browsestyle.css'
-// import Footer from "../components/Footer";
 import StudentList from '../components/DBData/student-list'
 import CompanyList from '../components/DBData/company-list'
 import JobList from '../components/DBData/job-list'
+import SideBar from '../components/Sidebar';
 (function () {
     const link = document.createElement("link");
     link.href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css";
@@ -45,10 +44,10 @@ const browseJob = () => {
             <StudentList />
         </div>
 
-
         <div id="sidebar">
             <div className="title-sidebar">Filter</div>
-            <div className="card">
+        <SideBar />
+            {/* <div className="card">
                 <article className="filter-group">
                     <article className="filter-group">
                         <header className="card-header">
@@ -168,9 +167,9 @@ const browseJob = () => {
                     </article>
 
                     <button className="btn btn-block btn-primary">Apply</button>
-                </article>
-            </div>
-        </div>
+                </article>*/}
+           
+        </div> 
     </>;
 };
 

@@ -74,7 +74,6 @@ const Skill = (props: IDParams) => {
     };
 
     const getSkill = () => {
-        console.log("getSkill called");
         GlobalService.getAllSkill()
             .then((response: any) => {
                 setSkillData(response.data);

@@ -77,9 +77,6 @@ supertokens.init({
                             if (originalImplementation.emailPasswordSignUpPOST === undefined) {
                                 throw Error("Should never come here");
                             }
-
-                            // TODO: some pre sign up logic
-
                             let response = await originalImplementation.emailPasswordSignUpPOST(input);
                             if (response.status === "OK") {
                                 const res = input.formFields;
@@ -92,18 +89,15 @@ supertokens.init({
                             return response;
                         },
 
-                        // override the email password sign in API
                         emailPasswordSignInPOST: async function (input) {
                             if (originalImplementation.emailPasswordSignInPOST === undefined) {
                                 throw Error("Should never come here");
                             }
-
-                            // TODO: some pre sign in logic
-
                             let response = await originalImplementation.emailPasswordSignInPOST(input);
 
                             if (response.status === "OK") {
-                                // TODO: some post sign in logic
+                               console.log('response',response);
+                               
                             }
 
                             return response;
