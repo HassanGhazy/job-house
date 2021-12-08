@@ -4,10 +4,17 @@ import { Fade } from "react-awesome-reveal";
 const Team = () => {
 
     return (
+<<<<<<< HEAD
         <Fade direction="left">
             <div className="text-center" style={{ backgroundColor: "#212529", borderRadius: ".25rem" }}>
                 <h2 style={{ color: "#fff", padding: 15 }}>Our Team</h2>
             </div>
+=======
+
+
+        <Fade direction="left">
+
+>>>>>>> 343f4012de8846ae7bbd46ba9908f596a71ccd19
             <div className="row">
 
                 <TeamMember
@@ -38,7 +45,15 @@ const Team = () => {
                     }}
                 />
             </div>
+<<<<<<< HEAD
         </Fade>
+=======
+
+
+        </Fade>
+
+
+>>>>>>> 343f4012de8846ae7bbd46ba9908f596a71ccd19
     )
 }
 

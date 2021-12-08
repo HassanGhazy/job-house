@@ -1,4 +1,4 @@
-import { Row} from "antd";
+import { Row } from "antd";
 import Container from "../../common/Container";
 import { SvgIcon } from "../../common/SvgIcon";
 import { Button } from "../../common/Button";
@@ -20,24 +20,24 @@ const Header = () => {
       });
     };
     return (<>
-     <CustomNavLinkSmall onClick={() => scrollTo("about")}>
-          <Span>{"About"}</Span>
-        </CustomNavLinkSmall>
-        <CustomNavLinkSmall onClick={() => scrollTo("mission")}>
-          <Span>{"Mission"}</Span>
-        </CustomNavLinkSmall>
-        <CustomNavLinkSmall onClick={() => scrollTo("product")}>
-          <Span>{"Work"}</Span>
-        </CustomNavLinkSmall>
-        <CustomNavLinkSmall
-          style={{ width: "180px" }}
-          onClick={() => scrollTo("contact")}
-        >
-          <Span>
-            <Button>{"Contact"}</Button>
-          </Span>
-        </CustomNavLinkSmall>
-      </>
+      <CustomNavLinkSmall onClick={() => scrollTo("about")}>
+        <Span>{"About"}</Span>
+      </CustomNavLinkSmall>
+      <CustomNavLinkSmall onClick={() => scrollTo("mission")}>
+        <Span>{"Mission"}</Span>
+      </CustomNavLinkSmall>
+      <CustomNavLinkSmall onClick={() => scrollTo("product")}>
+        <Span>{"Work"}</Span>
+      </CustomNavLinkSmall>
+      <CustomNavLinkSmall
+        style={{ width: "180px" }}
+        onClick={() => scrollTo("contact")}
+      >
+        <Span>
+          <Button>{"Contact"}</Button>
+        </Span>
+      </CustomNavLinkSmall>
+    </>
     );
   };
 

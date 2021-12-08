@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import StudentService from "../../services/StudentService";
 import StudentData from '../../types/student';
-import { Row} from "antd";
+import { Row } from "antd";
 import { Link } from "react-router-dom";
 const StudentsList: React.FC = () => {
   const [Candidate, setCandidate] = useState<Array<StudentData>>([]);
@@ -40,7 +40,7 @@ const StudentsList: React.FC = () => {
   };
 
   return (
-    <div style={{margin: "0 auto",width: "80%"}} className="list row">
+    <div style={{ margin: "0 auto", width: "80%" }} className="list row">
       <div className="col-md-8">
         <div className="input-group mb-3">
           <input
@@ -61,34 +61,39 @@ const StudentsList: React.FC = () => {
           </div>
         </div>
       </div>
+<<<<<<< HEAD
       
       <div style={{width: "100%"}} className="col-md-16">
+=======
+
+      <div className="col-md-16">
+>>>>>>> 343f4012de8846ae7bbd46ba9908f596a71ccd19
         <ul className="cards">
           {Candidate &&
             Candidate.map((student, index) => (
-                <li key={student.std_id+ student.name + index}>
-                  <Link id={student.std_id} to={'/candidate-profile/' + student.std_id} className="card">
-                      <img src={student.image ?? '/img/No-Image.png'} className="card__image" alt={student.name} />
-                      <div className="card__overlay">
-                      <div className="card__header">
-                          <svg className="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                     
-                          <img className="card__thumb" src={student.image ?? '/img/No-Image.png'} alt={student.name} />
-                          <div className="card__header-text">
-                          <h3 className="card__title">{student.name}</h3>            
-                          <span className="card__status">{student.country}</span>
-                          </div>
+              <li key={student.std_id + student.name + index}>
+                <Link id={student.std_id} to={'/candidate-profile/' + student.std_id} className="card">
+                  <img src={student.image ?? '/img/No-Image.png'} className="card__image" alt={student.name} />
+                  <div className="card__overlay">
+                    <div className="card__header">
+                      <svg className="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>
+                      <img className="card__thumb" src={student.image ?? '/img/No-Image.png'} alt={student.name} />
+                      <div className="card__header-text">
+                        <h3 className="card__title">{student.name}</h3>
+                        <span className="card__status">{student.country}</span>
                       </div>
-                      <Row justify="space-between">
-                          <p className="card__description">{student.description}</p>
-                          <a className="card__description" href={student.cv ?? '#'}>{student.cv == null ? "The CV is not available" : 'CV'}</a>
-                      </Row>
-                      </div>
-                  </Link>      
-                </li>  
-            
+                    </div>
+                    <Row justify="space-between">
+                      <p className="card__description">{student.description}</p>
+                      <a className="card__description" href={student.cv ?? '#'}>{student.cv == null ? "The CV is not available" : 'CV'}</a>
+                    </Row>
+                  </div>
+                </Link>
+              </li>
+
             ))}
-            </ul>
-     
+        </ul>
+
       </div>
 
     </div>
