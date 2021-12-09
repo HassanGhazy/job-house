@@ -43,7 +43,7 @@ const Footer = () => {
               <Language>{"Contact"}</Language>
 
               <Large>
-                <a onClick={() => window.location.href = "contact-us.html"} href="contact-us.html" >Tell us everything</a>
+                <a onClick={() => window.location.href = "/contact-us"} href="/contact-us" >Tell us everything</a>
               </Large>
               <Para>
                 {`Do you have any question? Feel free to reach out.`}
@@ -66,7 +66,7 @@ const Footer = () => {
                 <a onClick={() => window.location.href = "about.html"} href="about.html" >About</a>
               </Large>
               <Large left="false">
-                <a onClick={() => window.location.href = "contact-us.html"} href="contact-us.html" >Contact</a>
+                <a onClick={() => window.location.href = "/contact-us"} href="/contact-us" >Contact</a>
               </Large>
 
               <Large to="/browse-job">

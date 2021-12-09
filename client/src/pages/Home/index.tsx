@@ -5,7 +5,6 @@ import AboutContent from "../../content/AboutContent.json";
 import MissionContent from "../../content/MissionContent.json";
 import ProductContent from "../../content/ProductContent.json";
 import ContactContent from "../../content/ContactContent.json";
-import { Fade } from "react-awesome-reveal";
 import '../../components/Team/style.css'
 
 const Contact = lazy(() => import("../../components/ContactForm"));

@@ -8,8 +8,9 @@ import Block from "../Block";
 import Input from "../../common/Input";
 import TextArea from "../../common/TextArea";
 import { ContactContainer, FormGroup, Span, ButtonContainer } from "./styles";
-
-const Contact = ({ title, content, id}: ContactProps) => {
+import emailjs from 'emailjs-com';
+import Swal from 'sweetalert2';
+const Contact = ({ title, content, id }: ContactProps) => {
   const { values, errors, handleChange, handleSubmit } = useForm(
     validate
   ) as any;
@@ -22,6 +23,25 @@ const Contact = ({ title, content, id}: ContactProps) => {
       </Zoom>
     );
   };
+
+  const sendEmail = () => {
+   
+    emailjs.send(
+      process.env.REACT_APP_EMAIL_ID!, process.env.REACT_APP_EMAIL_TEMPLATE_ID!,
+      { message: values.message, from_name: values.name, reply_to: values.email }, process.env.REACT_APP_EMAIL_USER_ID!
+    ).then(res => {
+      values.name = "";
+      values.message = "";
+      values.email = "";
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Your message has been sent!',
+        showConfirmButton: false,
+        timer: 1500
+    })
+    })
+  }
 
   return (
     <ContactContainer id={id}>
@@ -64,7 +84,7 @@ const Contact = ({ title, content, id}: ContactProps) => {
                 <ValidationType type="message" />
               </Col>
               <ButtonContainer>
-                <Button name="submit">{"Submit"}</Button>
+                <Button onClick={sendEmail} name="submit">{"Submit"}</Button>
               </ButtonContainer>
             </FormGroup>
           </Slide>

@@ -32,7 +32,7 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
         city: "",
         phone: "",
         gender: "",
-        birthday: "",
+        birthday: new Date(),
         image: "",
         cv: "",
     };
@@ -50,11 +50,14 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
     };
 
     const updateCandidate = () => {
+        console.log(currentCandidate);
+        
         CandidateService.update(currentCandidate.std_id, currentCandidate)
             .then((response: any) => {
                 success();
             })
             .catch((e: Error) => {
+                console.log(e.message);
                 console.log(e);
             });
     };
@@ -163,6 +166,7 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
 
                                     </Row>
                                     <br />
+                                    {console.log("currentCandidate.birthday",currentCandidate.birthday)}
                                     <Row justify="space-around" align="middle">
 
                                         <TextField
@@ -170,8 +174,8 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
                                             id="birthday"
                                             label="Birthday"
                                             type="date"
-                                            defaultValue={currentCandidate.birthday}
-                                            onChange={e => setCurrentCandidate({ ...currentCandidate, birthday: e.target.value ?? "" })}
+                                            value={currentCandidate.birthday && currentCandidate.birthday.toString().split("T")[0] as unknown}
+                                            onChange={e => setCurrentCandidate({ ...currentCandidate, birthday: new Date (e.target.value) })}
                                             sx={{ width: 220 }}
                                             InputLabelProps={{
                                                 shrink: true,

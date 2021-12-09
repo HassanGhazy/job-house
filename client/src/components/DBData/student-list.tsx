@@ -61,7 +61,7 @@ const StudentsList: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="col-md-16">
+      <div style={{width: "100%"}} className="col-md-16">
         <ul className="cards">
           {Candidate &&
             Candidate.map((student, index) => (
