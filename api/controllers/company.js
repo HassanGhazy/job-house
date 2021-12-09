@@ -6,6 +6,7 @@ const getAllCompanies = async (req, res) => {
             pool.query('SELECT * FROM company limit 20', (error, results) => {
                 if (error) {
                     reject(error);
+                    console.log(error)
                 }
                 resolve(results.rows.map(e => {
                     const { password, ...res } = e;
@@ -15,6 +16,7 @@ const getAllCompanies = async (req, res) => {
         });
         res.status(200).send(response);
     } catch (error_1) {
+        console.log("\n\n\n",error_1)
         res.status(500).send(error_1);
     }
 }

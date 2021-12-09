@@ -2,6 +2,7 @@
 
 # dependencies
 **/api/node_modules
+**/api/.env
 **/client/node_modules
 **/client/.pnp
 **/client/.pnp.js
@@ -25,4 +26,3 @@
 
 #private
 **/api/config
-**/client/src/private
