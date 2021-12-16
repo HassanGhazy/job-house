@@ -6,6 +6,7 @@
 **/client/node_modules
 **/client/.pnp
 **/client/.pnp.js
+/config
 
 # testing
 **/client/coverage
@@ -25,4 +26,4 @@
 **/client/yarn-error.log*
 
 #private
-**/api/config
+config/
