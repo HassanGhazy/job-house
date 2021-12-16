@@ -24,6 +24,16 @@ const routes = [
     exact: true,
     component: "job/job-profile",
   },
+  {
+    path: ["/contact-us"],
+    exact: true,
+    component: "contact-us",
+  },
+  {
+    path: ["/search"],
+    exact: true,
+    component: "search/search-page",
+  },
   // {
   //   path: ["*"],
   //   exact: true,

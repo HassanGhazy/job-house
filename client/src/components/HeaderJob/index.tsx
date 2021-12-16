@@ -17,7 +17,7 @@ const HeaderJob = () => {
     city: "",
     phone: "",
     gender: "",
-    birthday: "",
+    birthday: new Date(),
     image: "",
     cv: "",
   };
@@ -41,6 +41,7 @@ const HeaderJob = () => {
   const [currentCandidate, setCurrentCandidate] = useState<CandidateData>(initialCandidateState);
 
   const getUser = () => {
+    console.log("got user");
     GlobalService.getUser()
       .then((response: any) => {
         if (response.data[0].type === "Candidate") {
@@ -69,7 +70,7 @@ const HeaderJob = () => {
           <ul>
             <li><a href="/">HOME</a></li>
             <li><a href="/about.html">ABOUT US</a></li>
-            <li><a href="/contact-us.html">CONTACTS</a></li>
+            <li><a href="/contact-us">CONTACTS</a></li>
             <li><a href="/browse-job">BROWSE JOB</a></li>
           </ul>
         </div><button onClick={() => onLogout()}>Logout</button>

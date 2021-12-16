@@ -6,7 +6,7 @@ import HeaderJob from "../components/HeaderJob";
 import routes from "./config";
 import { Styles } from "../styles/styles";
 //const Headers =()=> (window.location.href === "http://localhost:3000/candidate-profile" || window.location.href === "http://localhost:3000/company-profile"  || window.location.href === "http://localhost:3000/browse-job") ? <HeaderJob /> :  <Header /> ;
-import '../services/login';
+import '../services/LoginService';
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react"; 
 
 

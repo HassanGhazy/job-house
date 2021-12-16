@@ -6,8 +6,10 @@ const port = 8000;
 const candidate = require('./controllers/candidate');
 const company = require('./controllers/company');
 const job = require('./controllers/job');
+const global = require('./controllers/global');
 const cors = require("cors");
 const { verifySession } = require("supertokens-node/recipe/session/framework/express");
+require("dotenv").config();
 
 const { middleware } = require("supertokens-node/framework/express");
 let supertokens = require("supertokens-node");
@@ -116,6 +118,7 @@ app.get('/api/job/page/:page', job.getAllJobsWithPage);
 app.get('/api/search/job/', job.findJobByName);
 app.get('/api/search/student/', candidate.findCandidateByName);
 app.get('/api/search/company', company.findCompanyByName);
+app.get('/api/search/all', global.getSearchResult);
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)

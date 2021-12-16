@@ -55,8 +55,7 @@ const Home = () => {
         id="product"
       />
 
-      <Team/>
-      
+      <Team />
       <Contact
         title={ContactContent.title}
         content={ContactContent.text}

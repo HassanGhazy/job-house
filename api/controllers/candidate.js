@@ -8,6 +8,7 @@ const getAllCandidates = async (req, res) => {
             pool.query('SELECT * FROM student limit 20', (error, results) => {
                 if (error) {
                     reject(error);
+                    console.log(error)
                 }
                 resolve(results.rows.map(e => {
                     const { password, ...res } = e;
@@ -112,15 +113,20 @@ const updateCurrentCandidate = (req, res) => {
         std_id: req.params.id,
         ...req.body,
     };
+    console.log(currCandidate);
     if (!currCandidate.name) {
         return res.status(400).json({ message: 'Please include a student name' });
     } else if (!currCandidate.email) {
         return res.status(400).json({ message: 'Please include a student email' });
     }
+    if(currCandidate.birthday !== null){
+        currCandidate.birthday = currCandidate.birthday.toString().split("T")[0];
+    }
     const query = "UPDATE student SET name = $1, description = $2, email = $3, country = $4, city = $5, phone = $6, gender = $7, birthday = $8, image = $9, cv = $10 WHERE std_id = $11;";
 
-    pool.query(query, [currCandidate.name, currCandidate.description, currCandidate.email, currCandidate.country, currCandidate.city, currCandidate.phone, currCandidate.gender !== undefined ? (currCandidate.gender === 'Male') ? 'M' : 'F' : null, currCandidate.birthday, currCandidate.image, currCandidate.cv, currCandidate.std_id], (err, result) => {
+    pool.query(query, [currCandidate.name, currCandidate.description, currCandidate.email, currCandidate.country, currCandidate.city, currCandidate.phone, currCandidate.gender, currCandidate.birthday, currCandidate.image, currCandidate.cv, currCandidate.std_id], (err, result) => {
         if (err) {
+            console.log(err);
             return res.status(400).json({ message: `Error updating student with id ${currCandidate.std_id}!`, error: err });
         }
         res.json({ message: `Student with the id ${currCandidate.std_id} was updated!`, newStudent: currCandidate });

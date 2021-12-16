@@ -8,7 +8,7 @@ export default interface StudentData {
     city: string,
     phone: string,
     gender: string,
-    birthday: string,
+    birthday: Date,
     image: string,
     cv: string,
   }

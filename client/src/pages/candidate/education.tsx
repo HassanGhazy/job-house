@@ -27,6 +27,7 @@ const EducationComp = (props: IDParams) => {
     const [education, setEducation] = useState(initialEducationState);
 
     const getCandidateEducation = (id: string) => {
+        console.log("Got Edu");
         CandidateService.getEducation(id)
             .then((response: any) => {
                 setEducation(response.data);
