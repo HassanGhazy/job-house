@@ -14,11 +14,10 @@ import success from '../global-widget/my-swal';
 import Skill from '../global-widget/skill';
 import EducationComp from './education';
 import ProjectComp from './project';
-import DangerZoneComp from './danger-zone';
+import DangerZoneComp from '../global-widget/danger-zone';
 import StatusJobComp from './status-job';
 import TitleWidget from '../global-widget/title-widget';
 import { InlineWidget } from "react-calendly";
-
 
 type TParams = { id: string };
 const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
@@ -68,8 +67,6 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
     }, [id])
 
     return (<>
-       
-{console.log(currentCandidate.calendly)}
 
             <div>
                 {currentCandidate ? (
@@ -82,12 +79,11 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
                             <TitleWidget title="Profile Photo" />
                             <img style={{ width: 300, height: 300, borderRadius: "10px" }} src={currentCandidate.image ?? '/img/No-Image.png'} alt={currentCandidate.name} />
 
-                            <TitleWidget title="Calendar" />
-                   
-
-                        {/* { <InlineWidget url={currentCandidate.calendly ?? ""} />} */}
-                        {!currentCandidate.calendly && <p>You Don't have account yet</p> }
-
+                            <br />
+                            <br />
+                            <TitleWidget title="My Calender" />
+                           {currentCandidate.calendly && <InlineWidget url={currentCandidate.calendly} />}
+                           {!currentCandidate.calendly &&  <p>You don't have account in Calendly yet</p>}
 
                         </div>
                         <div style={{ width: "69%", float: "right" }}>
@@ -210,18 +206,22 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
 
 
                                     </Row>
+
+                                    <br />
+                            
                                     <Row justify="space-around" align="middle">
-
                                     <TextField
-                                        style={{ width: 400 }}
-                                        id="Calendly"
-                                        label="your Calendly"
-                                        value={currentCandidate.calendly}
-                                        onChange={e => setCurrentCandidate({ ...currentCandidate, calendly: e.target.value ?? "" })}
+                                            style={{ width: 400 }}
+                                            id="calendly"
+                                            label="your Calendly"
+                                            value={currentCandidate.calendly}
+                                            onChange={e => setCurrentCandidate({ ...currentCandidate, calendly: e.target.value })} sx={{ width: 220 }}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                        />
+                                        </Row>
 
-                                    />
-
-                                </Row>
                                 </Col>
                                 <br />
                                 <Col key="updateCandidateCol">
@@ -238,7 +238,7 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
                             <Skill id={id} type="candidate" />
                             <StatusJobComp id={id} />
                             <hr />
-                            <DangerZoneComp id={id} />
+                            <DangerZoneComp type={"student"} id={id} />
 
 
                         </div>
@@ -254,7 +254,6 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
                     </div>
                 )}
             </div>
-        {/*ThirdPartyEmailPasswordAuth </ThirdPartyEmailPasswordAuth> */}
 
     </>
     );

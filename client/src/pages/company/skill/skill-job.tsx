@@ -4,20 +4,14 @@ import TextField from '@mui/material/TextField';
 import '../../global-widget/style.css';
 import Swal from 'sweetalert2';
 import TitleWidget from '../../global-widget/title-widget';
+import SkillJobData from "../../../types/skill-job";
 
 
 type IDParams = { id: string }
 const SkillJobComp = (props: IDParams) => {
     const id = props.id;
 
-    const initialSkillJobState = [{
-        job_id: "",
-        comp_id: "",
-        title: "",
-        skill_id: "",
-    }];
-
-    const [currentSkillJob, setCurrentSkillJob] = useState(initialSkillJobState);
+    const [currentSkillJob, setCurrentSkillJob] = useState<SkillJobData[]>([]);
     const [search, setSearch] = useState("");
 
 
@@ -75,7 +69,6 @@ const SkillJobComp = (props: IDParams) => {
         {currentSkillJob &&
             currentSkillJob.map((s) => <button id="custom-button" onClick={() => DeleteSkill(s.skill_id, s.job_id)}><span className="skill">{s.title}</span></button>)}
         <br />
-        {!currentSkillJob[0] && <p>No Skills was added yet</p>}
         <br />
 
         

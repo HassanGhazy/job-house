@@ -7,6 +7,7 @@ const SideBar = () => {
     const [proj, setProj] = useState("");
     const [desc, setDesc] = useState("");
     const [skill, setSkill] = useState("");
+    const [type, setType] = useState("");
 
     function openTabFilter(id: string, num: number) {
         var i, tabcontent;
@@ -22,10 +23,17 @@ const SideBar = () => {
         document.getElementById(id)!.style.display = "block";
         backgroundTab[num].style.background = "#428bca";
         backgroundTab[num].style.color = "#fff";
+        if (num === 0) {
+            setType("Candidate")
+        } else setType("Company");
+
     }
 
     const goToSearchPage = () => {
-        window.location.href = `/search?edu=${edu}&proj=${proj}&skill=${skill}&desc=${desc}&type=`;
+        if (type.toLowerCase() === 'candidate') {
+            window.location.href = `/search?edu=${edu}&proj=${proj}&skill=${skill}&desc=${desc}&type=${type}`;
+        } else
+            window.location.href = `/search?skill=${skill}&desc=${desc}&type=${type}`;
     }
     return (<>
         {/* search By Education */}
@@ -41,11 +49,11 @@ const SideBar = () => {
             <br />
             <br />
 
-            <div id="CandidateFilter" style={{display: "none"}} className="tabcontentFilter">
+            <div id="CandidateFilter" style={{ display: "none" }} className="tabcontentFilter">
                 <header className="card-header">
                     <h6 className="title" >Education </h6>
                 </header>
-               
+
                 <TextField
                     id="filled-search"
                     label="Search By Education"
@@ -60,7 +68,7 @@ const SideBar = () => {
                 <header className="card-header">
                     <h6 className="title" >Projects </h6>
                 </header>
-               
+
                 <TextField
                     id="filled-search"
                     label="Search By Project"
@@ -75,7 +83,7 @@ const SideBar = () => {
                 <header className="card-header">
                     <h6 className="title" >Description </h6>
                 </header>
-               
+
                 <TextField
                     id="filled-search"
                     label="Search By Description"
@@ -90,7 +98,7 @@ const SideBar = () => {
                 <header className="card-header">
                     <h6 className="title" >Skill </h6>
                 </header>
-              
+
                 <TextField
                     id="filled-search"
                     label="Search By Skill"
@@ -99,9 +107,12 @@ const SideBar = () => {
                     type="search"
                     fullWidth
                 />
+                <br />
+                <br />
+                <button onClick={goToSearchPage} className="btn btn-block btn-primary">Apply</button>
             </div>
-           
-            <div style={{display: "none"}} id="CompaniesFilter" className="tabcontentFilter">
+
+            <div style={{ display: "none" }} id="CompaniesFilter" className="tabcontentFilter">
                 <header className="card-header">
                     <h6 className="title" >Description </h6>
                 </header>
@@ -114,12 +125,27 @@ const SideBar = () => {
                     type="search"
                     fullWidth
                 />
+                <br />
+                <br />
+                <header className="card-header">
+                    <h6 className="title" >Skill </h6>
+                </header>
+
+                <TextField
+                    id="filled-search"
+                    label="Search By Skill"
+                    value={skill}
+                    onChange={(e) => setSkill(e.target.value)}
+                    type="search"
+                    fullWidth
+                /><br />
+                <br />
+                <button onClick={goToSearchPage} className="btn btn-block btn-primary">Apply</button>
             </div>
 
 
-            <br />
-            <br />
-            <button onClick={goToSearchPage} className="btn btn-block btn-primary">Apply</button>
+
+
         </div>
     </>);
 }

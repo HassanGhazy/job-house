@@ -125,9 +125,9 @@ const updateCurrentCompany = (req, res) => {
         return res.status(400).json({ message: 'Please include a Company description' });
     }
 
-    const query = "UPDATE company SET name = $1, email = $2, country = $3, city = $4, street = $5, phone = $6, website = $7, description = $8, video = $9, logo = $10 WHERE comp_id = $11;";
+    const query = "UPDATE company SET name = $1, email = $2, country = $3, city = $4, street = $5, phone = $6, website = $7, description = $8, video = $9, logo = $10, calendly = $12 WHERE comp_id = $11;";
 
-    pool.query(query, [currCompany.name, currCompany.email, currCompany.country, currCompany.city, currCompany.street, currCompany.phone, currCompany.website, currCompany.description, currCompany.video, currCompany.logo, currCompany.comp_id], (err, result) => {
+    pool.query(query, [currCompany.name, currCompany.email, currCompany.country, currCompany.city, currCompany.street, currCompany.phone, currCompany.website, currCompany.description, currCompany.video, currCompany.logo, currCompany.comp_id, currCompany.calendly], (err, result) => {
         if (err) {
             return res.status(400).json({ message: `Error updating Company with id ${currCompany.comp_id}!`, error: err });
         }
@@ -365,6 +365,63 @@ const updateCurrentJobFromCompany = (req, res) => {
 };
 
 
+const checkPassword = async (req, res) => {
+    const id = req.params.id;
+    const pass = {
+        ...req.body
+    }
+    try {
+        const response = await new Promise(function (resolve, reject) {
+            pool.query('select password from company where comp_id = $1 ', [id], (error, results) => {
+                if (error) {
+                    reject(error);
+                }
+                if (md5(pass.password) === results.rows[0].password) {
+                    res.status(200).send({ "message": true });
+
+                } else {
+                    res.status(200).send({ "message": false });
+                }
+            });
+        });
+    } catch (error_1) {
+        res.status(500).send(error_1);
+    }
+}
+
+const changePasswordCurrentCompany = async (req, res) => {
+
+    const currCompany = {
+        old_password: req.body.old_password,
+        new_password: req.body.new_password
+    };
+
+    if (!currCompany.new_password || !currCompany.old_password) {
+        return res.status(400).json({ message: 'Please include a company password' });
+    }
+    const response = await new Promise(function (resolve, reject) {
+        pool.query('select password from company where comp_id = $1', [req.params.id], (error, results) => {
+            if (error) {
+                console.log('error', error)
+                reject(error);
+            }
+            resolve(results.rows[0]);
+        });
+    });
+    const password = response.password;
+    if (md5(currCompany.old_password) != password) {
+        return res.status(400).json({ message: 'The Password doesn\'t match ' });
+    }
+    const query = "UPDATE company SET password = $1 WHERE comp_id = $2";
+    pool.query(query, [md5(currCompany.new_password), req.params.id], (err, result) => {
+        if (err) {
+                alert(err);
+                return res.status(400).json({ message: `Error updating password with id ${req.params.id}!`, error: err });
+        }
+        res.json({ message: `The password of the Company with the id ${req.params.id} was updated!`, currCompany: currCompany });
+    });
+};
+
 
 module.exports = {
     getAllCompanies,
@@ -384,6 +441,8 @@ module.exports = {
     updateCurrentJobFromCompany,
     findCompanyByName,
     getCandidateSubmitedJob,
+    checkPassword,
+    changePasswordCurrentCompany
 
 
 }

@@ -1,10 +1,14 @@
 const pool = require('../config/pg');
 const getSearchResult = async (req, res) => {
-    const edu = req.query.edu ?? "";
-    const proj = req.query.proj ?? "";
-    const desc = req.query.desc ?? "";
-    const skill = req.query.skill ?? "";
-    const query = ` SELECT
+	const edu = req.query.edu ?? "";
+	const proj = req.query.proj ?? "";
+	const desc = req.query.desc ?? "";
+	const skill = req.query.skill ?? "";
+	const type = req.query.type ?? "";
+	let query = '';
+	if (type.toLowerCase() === 'candidate') {
+
+		query = ` SELECT
 	*
 FROM
 	student s
@@ -60,27 +64,55 @@ WHERE
 		)
 	AND
 	s.description ILIKE '%${desc}%'; `;
-    try {
+	} else {
+		query = ` SELECT
+	*
+FROM
+	company s
+WHERE
+	EXISTS(
+	SELECT
+		skill_id
+	FROM
+	skill_request ss
+	WHERE
+			ss.comp_id = s.comp_id
+		AND 
+			(
+				EXISTS(
+				SELECT
+					skill_id
+				FROM 
+							skill s
+				WHERE
+					s.title ILIKE '%${skill}%'
+				)
+			)
+		)
+	AND
+	s.description ILIKE '%${desc}%'; `;
+	};
+	try {
 
-        const response = await new Promise(function (resolve, reject) {
-            pool.query(query, (error, results) => {
-                if (error) {
-                    reject(error);
+		const response = await new Promise(function (resolve, reject) {
+			pool.query(query, (error, results) => {
+				if (error) {
+					reject(error);
 					console.log(error);
-                }
-                resolve(results.rows.map(e => {
-                    const { password, ...res } = e;
-                    return res;
-                }));
-            });
-        });
-        res.status(200).send(response);
-    } catch (error_1) {
-        res.status(500).send(error_1);
-    }
+				}
+				resolve(results.rows.map(e => {
+					const { password, ...res } = e;
+					return res;
+				}));
+			});
+		});
+		res.status(200).send(response);
+	} catch (error_1) {
+		res.status(500).send(error_1);
+	}
 }
 
 module.exports = {
-    getSearchResult
+	getSearchResult
 
 }

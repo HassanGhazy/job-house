@@ -88,9 +88,11 @@ app.get('/api/company/:id/request', company.getCandidateSubmitedJob);
 app.post('/api/company/', company.addNewCompany);
 app.post('/api/company/:id', company.addNewJobToCurrentCompany);
 app.post('/api/company/:id/job/:jobId/skill', company.addSkillToJobToCurrentCompany);
+app.post('/api/company/:id/password', company.checkPassword);
 
 app.put('/api/company/:id', company.updateCurrentCompany);
 app.put('/api/company/:id/job/:jobId', company.updateCurrentJobFromCompany);
+app.put('/api/company/password/:id', company.changePasswordCurrentCompany);
 
 app.delete('/api/company/:id', company.deleteCurrentCompany);
 app.delete('/api/company/:id/job/:jobId/skill/:skillId', company.deleteSkillOfCurrentJob);

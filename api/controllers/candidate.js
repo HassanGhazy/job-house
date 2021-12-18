@@ -122,9 +122,9 @@ const updateCurrentCandidate = (req, res) => {
     if(currCandidate.birthday !== null){
         currCandidate.birthday = currCandidate.birthday.toString().split("T")[0];
     }
-    const query = "UPDATE student SET name = $1, description = $2, email = $3, country = $4, city = $5, phone = $6, gender = $7, birthday = $8, image = $9, cv = $10 WHERE std_id = $11;";
+    const query = "UPDATE student SET name = $1, description = $2, email = $3, country = $4, city = $5, phone = $6, gender = $7, birthday = $8, image = $9, cv = $10, calendly = $12 WHERE std_id = $11;";
 
-    pool.query(query, [currCandidate.name, currCandidate.description, currCandidate.email, currCandidate.country, currCandidate.city, currCandidate.phone, currCandidate.gender, currCandidate.birthday, currCandidate.image, currCandidate.cv, currCandidate.std_id], (err, result) => {
+    pool.query(query, [currCandidate.name, currCandidate.description, currCandidate.email, currCandidate.country, currCandidate.city, currCandidate.phone, currCandidate.gender, currCandidate.birthday, currCandidate.image, currCandidate.cv, currCandidate.std_id, currCandidate.calendly], (err, result) => {
         if (err) {
             console.log(err);
             return res.status(400).json({ message: `Error updating student with id ${currCandidate.std_id}!`, error: err });

@@ -44,23 +44,14 @@ const Skill = (props: IDParams) => {
         std_id: "",
     }];
 
-    const initialSelectedSkillState = [{
-        skill_id: "",
-        title: "",
-    }];
-    const initialSkillCandidateState = [{
-        skill_id: "",
-        std_id: "",
-        title: "",
-    }];
-
-
     const [newSkill, setNewSkill] = useState(initialnewSkillState);
     const search = useRef("");
-    const [skillData, setSkillData] = useState<SkillType[]>(initialSkillState);
-    const [selectedSkill, setSelectedSkill] = useState(initialSelectedSkillState);
+    const [skill, setSkill] = useState<SkillType[]>(initialSkillState);
+    const [SkillData, setSkillData] = useState<SkillType[]>([]);
+    const [selectedSkill, setSelectedSkill] = useState<SkillType[]>([]);
     const [job_id, setJob_id] = useState("");
-    const [skillCandidate, setSkillCandidate] = useState(initialSkillCandidateState);
+    const [skillCandidate, setSkillCandidate] = useState<SkillType[]>([]);
+
 
     const getSkillCurrentCandidate = (id: string) => {
 
@@ -73,15 +64,7 @@ const Skill = (props: IDParams) => {
             });
     };
 
-    const getSkill = () => {
-        GlobalService.getAllSkill()
-            .then((response: any) => {
-                setSkillData(response.data);
-            })
-            .catch((e: Error) => {
-                console.log(e);
-            });
-    };
+
 
     const onChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedOptions = event.currentTarget.selectedOptions;
@@ -165,6 +148,18 @@ const Skill = (props: IDParams) => {
 
 
     useEffect(() => {
+        const getSkill = () => {
+            console.log('getSkill');
+            GlobalService.getAllSkill()
+                .then((response: any) => {
+                    setSkill(response.data);
+                    setSkillData(skill);
+    
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                });
+        };
         getSkill();
 
         if (type === "candidate") getSkillCurrentCandidate(id);
@@ -172,25 +167,26 @@ const Skill = (props: IDParams) => {
 
 
     return (<>
-
+        {console.log("SkillData", SkillData)}
         <div className="col-md-6">
             {(type === "candidate") ? <TitleWidget title="My Skills" /> : <TitleWidget title="Add Skills To Specific Job" />}
-            {type === "candidate" &&
-                skillCandidate.map((s) => <button id="custom-button" onClick={() => DeleteSkill(s.skill_id)}><span className="skill">{s.title}</span></button>)}
+            {type === 'candidate' && skillCandidate.length === 0 && <p>You didn't add any skills yet</p>}
+            {type === "candidate" && skillCandidate &&
+                skillCandidate.map((s) => <button id="custom-button" onClick={() => DeleteSkill(s.skill_id!)}><span className="skill">{s.title!}</span></button>)}
             <br />
 
             {(type === "candidate") ? <TitleWidget title="Add New Skill" /> : null}
             <TextField
                 style={{ width: 400 }}
                 id="Search"
-                label="Search"
+                label="Search" 
                 value={search.current}
-                onChange={e => { search.current = (e.target.value); setSkillData(skillData.filter(skill => skill.title.toLowerCase().includes(search.current.toLowerCase()))); if (search.current === "") getSkill() }}
+                onChange={e => { search.current = (e.target.value); setSkillData(skill.filter(skill => skill.title!.toLowerCase().includes(search.current.toLowerCase()))); if (search.current === "") setSkillData(skill) }}
             />
 
             <div className="container">
-                <select  multiple className="select" onChange={onChangeHandler} >
-                    {skillData.map((e) => <option value={e.skill_id! + ":" + e.title!}>{e.title}</option>)}
+                <select multiple className="select" onChange={onChangeHandler} >
+                    {SkillData.map((e) => <option value={e.skill_id! + ":" + e.title!}>{e.title}</option>)}
                 </select>
                 {selectedSkill &&
                     selectedSkill.map((s) => <span className="skill">{s.title}</span>)}

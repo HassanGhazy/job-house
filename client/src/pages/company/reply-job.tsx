@@ -10,15 +10,8 @@ import TitleWidget from '../global-widget/title-widget';
 type IDParams = { id: string }
 const ReplyJob = (props: IDParams) => {
     const id = props.id;
-    const initialRequestedJobState = [{
-        std_id: "",
-        comp_id: "",
-        job_id: "",
-        date_submited: new Date(),
-    }];
 
-
-    const [currentrequestedJob, setCurrentrequestedJob] = useState<RequestJobData[]>(initialRequestedJobState);
+    const [currentrequestedJob, setCurrentrequestedJob] = useState<RequestJobData[]>([]);
 
 
     const getRequestedJob = (id: string) => {
@@ -49,7 +42,7 @@ const ReplyJob = (props: IDParams) => {
         <TitleWidget title="Requested Job" />
 
 
-        {currentrequestedJob && currentrequestedJob.map(e => {
+        {currentrequestedJob.length !== 0 && currentrequestedJob.map(e => {
             const date = e.date_submited.toString().split("T");
             return <>
                 <p>There is a request Job from this <a style={{ color: "red" }} rel="noreferrer" target="_blank" href={"/candidate-profile/" + e.std_id}>Candidate</a> for the <a style={{ color: "red" }} rel="noreferrer" href={"/" + e.comp_id + "/job-profile/" + e.job_id} target="_blank">job</a> with ID {e.job_id}</p>

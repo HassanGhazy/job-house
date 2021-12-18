@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import GlobalService from "../../services/GlobalService";
 import { Row } from "antd";
 import { Link } from "react-router-dom";
+import SideBar from '../../components/Sidebar';
 (function () {
     const link = document.createElement("link");
     link.href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css";
@@ -15,43 +16,29 @@ const SearchPage = () => {
     const skill = urlParams.get('skill');
     const proj = urlParams.get('proj');
     const desc = urlParams.get('desc');
+    const type = urlParams.get('type');
 
-    const initialCandidateState = [{
-        std_id: null,
-        name: "",
-        description: "",
-        email: "",
-        password: "",
-        country: "",
-        city: "",
-        phone: "",
-        gender: "",
-        birthday: new Date(),
-        image: "",
-        cv: "",
-    }];
-    const [Candidate, setCandidate] = useState<any>(initialCandidateState);
-
+    const [result, setResult] = useState<any[]>([]);
 
     useEffect(() => {
         const getSearchResult = () => {
-            GlobalService.getSearchResult(edu ?? "", proj ?? "", desc ?? "", skill ?? "")
+            GlobalService.getSearchResult(edu ?? "", proj ?? "", desc ?? "", skill ?? "", type ?? "")
                 .then((response: any) => {
                     console.log(response);
-                    setCandidate(response.data);
+                    setResult(response.data);
                 })
                 .catch((e: Error) => {
                     console.log(e);
                 });
         };
         getSearchResult();
-    }, [edu, proj, desc, skill])
+    }, [edu, proj, desc, skill, type])
     return (<>
         <div style={{ margin: "0 auto", width: "80%" }} className="list row">
             <div style={{ width: "100%" }} className="col-md-16">
                 <ul className="cards">
-                    {Candidate &&
-                        Candidate.map((student: any) => (
+                    {result &&
+                        result.map((student: any) => (
                             <li key={student.std_id + student.name}>
                                 <Link id={student.std_id} to={'/candidate-profile/' + student.std_id} className="card">
                                     <img src={student.image ?? '/img/No-Image.png'} className="card__image" alt={student.name} />
@@ -66,7 +53,6 @@ const SearchPage = () => {
                                         </div>
                                         <Row justify="space-between">
                                             <p className="card__description">{student.description}</p>
-                                            <a className="card__description" href={student.cv ?? '#'}>{student.cv == null ? "The CV is not available" : 'CV'}</a>
                                         </Row>
                                     </div>
                                 </Link>
@@ -77,6 +63,15 @@ const SearchPage = () => {
 
             </div>
         </div>
+        <SideBar />
+
+        {result.length === 0 &&
+            <div>
+                <br />
+                <p style={{ textAlign: "center" }}>No Results</p>
+            </div>
+        }
+
 
     </>);
 }
