@@ -113,7 +113,6 @@ const updateCurrentCandidate = (req, res) => {
         std_id: req.params.id,
         ...req.body,
     };
-    console.log(currCandidate);
     if (!currCandidate.name) {
         return res.status(400).json({ message: 'Please include a student name' });
     } else if (!currCandidate.email) {

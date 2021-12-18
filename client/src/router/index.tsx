@@ -10,8 +10,8 @@ import '../services/LoginService';
 import { getSuperTokensRoutesForReactRouterDom } from "supertokens-auth-react"; 
 
 
-const Headers =()=> (window.location.href === "/" || window.location.href === "http://localhost:3000/") ? <Header /> : <HeaderJob />;
-const Footers =()=> (window.location.href === "/" || window.location.href === "http://localhost:3000/") ? <Footer /> : <></>;
+const Headers =()=> (window.location.href === "/" || window.location.href === "http://localhost:3000/" || window.location.href === "http://192.168.56.1:3000/" ) ? <Header /> : <HeaderJob />;
+const Footers =()=> (window.location.href === "/" || window.location.href === "http://localhost:3000/" || window.location.href === "http://192.168.56.1:3000/") ? <Footer /> : <></>;
 const Router = () => {
   
   return (

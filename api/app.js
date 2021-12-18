@@ -17,17 +17,23 @@ let { errorHandler } = require("supertokens-node/framework/express");
 
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "http://192.168.56.1:3000",
     allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
     credentials: true,
 }));
+
+// app.use(cors({
+//     origin: "http://192.168.56.1:3000",
+//     allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
+//     credentials: true,
+// }));
 
 app.use(middleware());
 app.use(express.json());
 app.use(errorHandler());
 
 var corsOptions = {
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000","http://192.168.56.1:3000/"],
     allowedHeaders: ["Content-Type", ...supertokens.getAllCORSHeaders()],
     credentials: true,
     allowMethods: "GET,POST,PUT,DELETE,OPTIONS",
