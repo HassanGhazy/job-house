@@ -1,20 +1,20 @@
 
-import { useState, useEffect } from "react";
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { Col, Row } from "antd";
+import { useEffect, useState } from "react";
+import { InlineWidget } from "react-calendly";
+import { RouteComponentProps } from "react-router-dom";
 import CompanyService from "../../services/CompanyService";
 import CompanyData from '../../types/company';
-import { RouteComponentProps } from "react-router-dom";
+import DangerZoneComp from '../global-widget/danger-zone';
 import success from '../global-widget/my-swal';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import { Row, Col } from "antd";
-import JobComp from "./job";
-import SkillJobComp from "./skill/skill-job";
 import Skill from "../global-widget/skill";
 import TitleWidget from '../global-widget/title-widget';
+import JobComp from "./job";
 import ReplyJob from './reply-job';
+import SkillJobComp from "./skill/skill-job";
 
-import DangerZoneComp from '../global-widget/danger-zone';
-import { InlineWidget } from "react-calendly";
 
 type ID = { id: string };
 const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
@@ -85,10 +85,10 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
                         {!currentCompany.video && <p style={{ textAlign: "center" }}>No Video Exist</p>}
 
                         <br />
-                            <br />
-                            <TitleWidget title="My Calender" />
-                           {currentCompany.calendly && <InlineWidget url={currentCompany.calendly} />}
-                           {!currentCompany.calendly &&  <p>You don't have account in Calendly yet</p>}
+                        <br />
+                        <TitleWidget title="My Calender" />
+                        {currentCompany.calendly && <InlineWidget url={currentCompany.calendly} />}
+                        {!currentCompany.calendly && <p>You don't have account in Calendly yet</p>}
 
                     </div>
 
@@ -198,19 +198,19 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
                                 </Row>
 
                                 <br />
-                            
-                                    <Row justify="space-around" align="middle">
+
+                                <Row justify="space-around" align="middle">
                                     <TextField
-                                            style={{ width: 400 }}
-                                            id="calendly"
-                                            label="your Calendly"
-                                            value={currentCompany.calendly}
-                                            onChange={e => setCurrentCompany({ ...currentCompany, calendly: e.target.value })} sx={{ width: 220 }}
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                        />
-                                        </Row>
+                                        style={{ width: 400 }}
+                                        id="calendly"
+                                        label="your Calendly"
+                                        value={currentCompany.calendly}
+                                        onChange={e => setCurrentCompany({ ...currentCompany, calendly: e.target.value })} sx={{ width: 220 }}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
+                                </Row>
                             </Col>
                             <br />
                             <Col key="updateCandidateCol">
@@ -229,7 +229,7 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
                         <ReplyJob id={id} />
 
                         <hr />
-                            <DangerZoneComp type={"company"} id={id} />
+                        <DangerZoneComp type={"company"} id={id} />
 
                     </div>
 
