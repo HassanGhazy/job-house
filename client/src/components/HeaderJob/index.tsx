@@ -1,9 +1,10 @@
-import './style.css'
-import { useState, useEffect } from "react";
-import GlobalService from "../../services/GlobalService";
-import CandidateData from '../../types/student';
-import CompanyData from '../../types/company';
+import { Avatar } from "@mui/material";
+import { useEffect, useState } from "react";
 import { signOut } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
+import GlobalService from "../../services/GlobalService";
+import CompanyData from '../../types/company';
+import CandidateData from '../../types/student';
+import './style.css';
 
 const HeaderJob = () => {
 
@@ -39,32 +40,42 @@ const HeaderJob = () => {
     calendly: "",
   };
 
+
   const [currentCompany, setCurrentCompany] = useState<CompanyData>(initialCompanyState);
   const [currentCandidate, setCurrentCandidate] = useState<CandidateData>(initialCandidateState);
 
+  console.log("currentCandidate", currentCandidate);
+  console.log("currentCompany", currentCompany);
+
   const getUser = () => {
-    console.log("got user");
     GlobalService.getUser()
       .then((response: any) => {
-        if (response.data[0].type === "Candidate") {
-          setCurrentCandidate(response.data[0].user[0]);
-        } else {
-          setCurrentCompany(response.data[0].user[0]);
+        if (!response.data.user.length) {
+          return;
         }
 
+        if (response.data.type === "Candidate") {
+          setCurrentCandidate(response.data.user[0]);
+        } else {
+          setCurrentCompany(response.data.user[0]);
+        }
       })
       .catch((e: Error) => {
-        console.log(e);
+        console.error(e);
       });
   };
+
   useEffect(() => {
-    getUser();
-  }, [currentCompany, currentCandidate])
+    if (currentCandidate.std_id === null && currentCompany.comp_id === null) {
+      getUser();
+    }
+  }, [currentCandidate, currentCompany])
 
   async function onLogout() {
     await signOut();
     window.location.href = "/";
   }
+
   return (
     <div className="divNav">
       <nav className="nav">
@@ -75,14 +86,20 @@ const HeaderJob = () => {
             <li><a href="/contact-us">CONTACTS</a></li>
             <li><a href="/browse-job">BROWSE JOB</a></li>
           </ul>
-        </div><button onClick={() => onLogout()}>Logout</button>
+        </div>
+
         <div className="buttonsLogin">
-          {(currentCompany.comp_id === null && currentCandidate.std_id === null) ? (<>
-            <button onClick={() => window.location.href = "/auth"}>Sign Up</button>
-            <button onClick={() => window.location.href = "/auth"}>Sign In</button>
-          </>) : (<> <button onClick={() => onLogout()}>Logout</button> {(currentCompany.comp_id !== null) ?
-            <img alt={currentCompany.name} src={currentCompany.logo} /> :
-            <img alt={currentCandidate.name} src={currentCandidate.image} />} </>)}
+          <button onClick={() => onLogout()}>Logout</button>
+          {(currentCompany.comp_id === null && currentCandidate.std_id === null) ? (
+            <button onClick={() => window.location.href = "/auth"}>Register</button>
+          ) : (
+            <>
+              {(currentCompany.comp_id !== null) ?
+                <Avatar alt={currentCompany.name} src={currentCompany.logo} /> :
+                <Avatar alt={currentCandidate.name} src={currentCandidate.image} />
+              }
+            </>
+          )}
         </div>
       </nav>
     </div>

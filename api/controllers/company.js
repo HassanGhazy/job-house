@@ -1,5 +1,8 @@
 const pool = require('../config/pg');
 const md5 = require("blueimp-md5");
+const { getUserById } = require('supertokens-node/recipe/thirdpartyemailpassword');
+const Session = require("supertokens-node/recipe/session");
+
 const getAllCompanies = async (req, res) => {
     try {
         const response = await new Promise(function (resolve, reject) {
@@ -16,7 +19,7 @@ const getAllCompanies = async (req, res) => {
         });
         res.status(200).send(response);
     } catch (error_1) {
-        console.log("\n\n\n",error_1)
+        console.log("\n\n\n", error_1)
         res.status(500).send(error_1);
     }
 }
@@ -101,7 +104,7 @@ const addNewCompany = (req, res) => {
 
 
     const query = "insert into company (name, email, password, country, city, street, phone, website, description, video, logo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)";
-    pool.query(query, [newCompany.name, newCompany.email, md5(newCompany.password), newCompany.country, newCompany.city, newCompany.street, newCompany.phone, newCompany.website,newCompany.description, newCompany.video, newCompany.logo], (err, result) => {
+    pool.query(query, [newCompany.name, newCompany.email, md5(newCompany.password), newCompany.country, newCompany.city, newCompany.street, newCompany.phone, newCompany.website, newCompany.description, newCompany.video, newCompany.logo], (err, result) => {
 
         if (err) {
             return res.status(400).json({ message: 'Error adding Company!', error: err });
@@ -136,20 +139,22 @@ const updateCurrentCompany = (req, res) => {
 };
 
 const deleteCurrentCompany = (req, res) => {
+    const session = req.session;
+    const userId = session?.userId;
 
-    const currCompany = {
-        comp_id: req.params.id,
-        ...req.body,
-    };
+    const query = "DELETE FROM company WHERE lower(email) = $1";
+    getUserById(userId).then((user) => {
+        const userEmail = user.email;
+        pool.query(query, [userEmail], (err, result) => {
+            if (err) {
+                return res.status(400).json({ message: `Error deleting company with the email: "${userEmail}"!`, error: err });
+            }
 
-    const query = "DELETE FROM company WHERE comp_id = $1";
-
-    pool.query(query, [currCompany.comp_id], (err, result) => {
-        if (err) {
-            return res.status(400).json({ message: `Error deleteing company with the id ${currCompany.comp_id}!`, error: err });
-        }
-        res.json({ message: `Company with the id ${currCompany.comp_id} was deleted!`, left: currCompany });
-    });
+            Session.revokeAllSessionsForUser(userId).then(() => {
+                res.json({ message: `Company with the email: "${userEmail}" was deleted!`, left: userEmail });
+            });
+        });
+    }).catch((e) => res.status(500).send(e));
 };
 
 const getAllJobToCurrentComapny = async (req, res) => {
@@ -367,8 +372,8 @@ const updateCurrentJobFromCompany = (req, res) => {
 
 const checkPassword = async (req, res) => {
     const id = req.params.id;
-    const pass = {
-        ...req.body
+    const data = {
+        ...req.body.data
     }
     try {
         const response = await new Promise(function (resolve, reject) {
@@ -376,7 +381,8 @@ const checkPassword = async (req, res) => {
                 if (error) {
                     reject(error);
                 }
-                if (md5(pass.password) === results.rows[0].password) {
+
+                if (md5(md5(data.password)) === results.rows[0].password) {
                     res.status(200).send({ "message": true });
 
                 } else {
@@ -415,8 +421,8 @@ const changePasswordCurrentCompany = async (req, res) => {
     const query = "UPDATE company SET password = $1 WHERE comp_id = $2";
     pool.query(query, [md5(currCompany.new_password), req.params.id], (err, result) => {
         if (err) {
-                alert(err);
-                return res.status(400).json({ message: `Error updating password with id ${req.params.id}!`, error: err });
+            alert(err);
+            return res.status(400).json({ message: `Error updating password with id ${req.params.id}!`, error: err });
         }
         res.json({ message: `The password of the Company with the id ${req.params.id} was updated!`, currCompany: currCompany });
     });
@@ -443,6 +449,5 @@ module.exports = {
     getCandidateSubmitedJob,
     checkPassword,
     changePasswordCurrentCompany
-
 
 }
