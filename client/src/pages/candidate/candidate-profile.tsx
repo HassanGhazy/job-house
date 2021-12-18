@@ -17,6 +17,7 @@ import ProjectComp from './project';
 import DangerZoneComp from './danger-zone';
 import StatusJobComp from './status-job';
 import TitleWidget from '../global-widget/title-widget';
+import { InlineWidget } from "react-calendly";
 
 
 type TParams = { id: string };
@@ -35,6 +36,7 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
         birthday: new Date(),
         image: "",
         cv: "",
+        calendly: "",
     };
 
     const [currentCandidate, setCurrentCandidate] = useState<CandidateData>(initialCandidateState);
@@ -42,6 +44,7 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
     const getCandidate = (id: string) => {
         CandidateService.get(id)
             .then((response: any) => {
+                console.log(response.data[0]);
                 setCurrentCandidate(response.data[0]);
             })
             .catch((e: Error) => {
@@ -49,9 +52,7 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
             });
     };
 
-    const updateCandidate = () => {
-        console.log(currentCandidate);
-        
+    const updateCandidate = () => {        
         CandidateService.update(currentCandidate.std_id, currentCandidate)
             .then((response: any) => {
                 success();
@@ -68,7 +69,7 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
 
     return (<>
        
-
+{console.log(currentCandidate.calendly)}
 
             <div>
                 {currentCandidate ? (
@@ -80,6 +81,14 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
                         <div style={{ width: "30%", float: "left", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
                             <TitleWidget title="Profile Photo" />
                             <img style={{ width: 300, height: 300, borderRadius: "10px" }} src={currentCandidate.image ?? '/img/No-Image.png'} alt={currentCandidate.name} />
+
+                            <TitleWidget title="Calendar" />
+                   
+
+                        {/* { <InlineWidget url={currentCandidate.calendly ?? ""} />} */}
+                        {!currentCandidate.calendly && <p>You Don't have account yet</p> }
+
+
                         </div>
                         <div style={{ width: "69%", float: "right" }}>
 
@@ -201,6 +210,18 @@ const CandidateProfile = ({ match }: RouteComponentProps<TParams>) => {
 
 
                                     </Row>
+                                    <Row justify="space-around" align="middle">
+
+                                    <TextField
+                                        style={{ width: 400 }}
+                                        id="Calendly"
+                                        label="your Calendly"
+                                        value={currentCandidate.calendly}
+                                        onChange={e => setCurrentCandidate({ ...currentCandidate, calendly: e.target.value ?? "" })}
+
+                                    />
+
+                                </Row>
                                 </Col>
                                 <br />
                                 <Col key="updateCandidateCol">

@@ -11,4 +11,5 @@ export default interface CompanyData {
     description: string,
     video: string,
     logo: string,
+    calendly: string,
   }

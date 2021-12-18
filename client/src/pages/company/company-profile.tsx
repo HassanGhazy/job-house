@@ -12,6 +12,8 @@ import SkillJobComp from "./skill/skill-job";
 import Skill from "../global-widget/skill";
 import TitleWidget from '../global-widget/title-widget';
 import ReplyJob from './reply-job';
+import { InlineWidget } from "react-calendly";
+
 type ID = { id: string };
 const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
     const id = match.params.id;
@@ -28,6 +30,7 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
         description: "",
         video: "",
         logo: "",
+        calendly: "",
     };
 
     const [currentCompany, setCurrentCompany] = useState<CompanyData>(initialCompanyState);
@@ -43,9 +46,9 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
             });
     };
 
-   
 
-   
+
+
 
     const updateCompany = () => {
         CompanyService.update(currentCompany.comp_id, currentCompany)
@@ -78,6 +81,15 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
 
                         {currentCompany.video && <video src={currentCompany.video}></video>}
                         {!currentCompany.video && <p style={{ textAlign: "center" }}>No Video Exist</p>}
+                        <TitleWidget title="Calendar" />
+                        <br />
+                        <br />
+
+                        {currentCompany.calendly && <InlineWidget url={currentCompany.calendly} />}
+                        {!currentCompany.calendly && <p>You Don't have account yet</p> }
+
+                        <br />
+
                     </div>
 
                     <div style={{ width: "69%", float: "right" }}>
@@ -184,6 +196,18 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
 
                                     />
                                 </Row>
+                                <Row justify="space-around" align="middle">
+
+                                    <TextField
+                                        style={{ width: 400 }}
+                                        id="Calendly"
+                                        label="your Calendly"
+                                        value={currentCompany.calendly}
+                                        onChange={e => setCurrentCompany({ ...currentCompany, calendly: e.target.value ?? "" })}
+
+                                    />
+
+                                </Row>
                             </Col>
                             <br />
                             <Col key="updateCandidateCol">
@@ -200,7 +224,7 @@ const CompanyProfile = ({ match }: RouteComponentProps<ID>) => {
                         <SkillJobComp id={id} />
                         <Skill id={id} type="company" />
                         <ReplyJob id={id} />
-                        
+
                     </div>
 
                 </div>

@@ -11,5 +11,6 @@ export default interface StudentData {
     birthday: Date,
     image: string,
     cv: string,
+    calendly: string,
   }
   

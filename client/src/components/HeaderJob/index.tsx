@@ -20,6 +20,7 @@ const HeaderJob = () => {
     birthday: new Date(),
     image: "",
     cv: "",
+    calendly: "",
   };
 
   const initialCompanyState = {
@@ -35,6 +36,7 @@ const HeaderJob = () => {
     description: "",
     video: "",
     logo: "",
+    calendly: "",
   };
 
   const [currentCompany, setCurrentCompany] = useState<CompanyData>(initialCompanyState);

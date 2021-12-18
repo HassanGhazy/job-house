@@ -26,16 +26,16 @@ const DangerZoneComp = (props: IDParams) => {
         })
     }
 
-    const updatePassword = () => {
-        GlobalService.updatePassword(id, type, currentPassword)
-            .then((response: any) => {
-                success();
-            })
-            .catch((e: Error) => {
-                confirmPassword();
-                console.log(e);
-            });
-    };
+    // const updatePassword = () => {
+    //     GlobalService.updatePassword(id, type, currentPassword)
+    //         .then((response: any) => {
+    //             success();
+    //         })
+    //         .catch((e: Error) => {
+    //             confirmPassword();
+    //             console.log(e);
+    //         });
+    // };
     const deleteUser = () => {
         GlobalService.remove(id , type)
             .then((response: any) => {
@@ -69,17 +69,17 @@ const DangerZoneComp = (props: IDParams) => {
             preConfirm: () => {
                 const pass = (Swal.getPopup()!.querySelector('#pass')! as HTMLInputElement).value;
                 new Promise(async (resolve, reject) => {
-                    let res = await GlobalService.checkPassword(id, type, { 'password': pass });
+                    // let res = await GlobalService.checkPassword(id, type, { 'password': pass });
 
-                    if (res.data.message) {
-                        return deleteUser();
-                    } else {
-                        return swalWithBootstrapButtons.fire(
-                            'Failed',
-                            'The Password is not correct',
-                            'error'
-                        );
-                    }
+                    // if (res.data.message) {
+                    //     return deleteUser();
+                    // } else {
+                    //     return swalWithBootstrapButtons.fire(
+                    //         'Failed',
+                    //         'The Password is not correct',
+                    //         'error'
+                    //     );
+                    // }
                 });
 
 
@@ -136,7 +136,7 @@ const DangerZoneComp = (props: IDParams) => {
                 />
                 <br />
                 <br />
-                <Button key="updatePassword" onClick={updatePassword} variant="contained" color="success">
+                <Button key="updatePassword"  variant="contained" color="success">{/**updatePassword */}
                     Update Password
                 </Button>
 
