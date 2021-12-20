@@ -1,18 +1,17 @@
 
 import Button from '@mui/material/Button';
-import { signOut } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import Swal from 'sweetalert2';
-import GlobalService from "../../services/GlobalService";
-import TitleDangerWidget from '../candidate/title-danget-widget';
+import CandidateService from "../../services/StudentService";
+import TitleDangerWidget from './title-danget-widget';
+import { signOut } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 
-type IDParams = { id: string, type: string };
+type IDParams = { id: string };
 
 const DangerZoneComp = (props: IDParams) => {
     const id = props.id;
-    const type = props.type;
 
-    const deleteUser = () => {
-        GlobalService.remove(type,id)
+    const deleteCandidate = () => {
+        CandidateService.remove()
             .then((response: any) => {
                 signOut().then(() => {
                     window.location.href = "/";
@@ -44,10 +43,9 @@ const DangerZoneComp = (props: IDParams) => {
             preConfirm: () => {
                 const pass = (Swal.getPopup()!.querySelector('#pass')! as HTMLInputElement).value;
                 new Promise(async (resolve, reject) => {
-                    let res = await GlobalService.checkPassword(id, type, { password: pass });
-                    console.log("res ",res);
+                    const res = await CandidateService.checkPassword(id, { password: pass });
                     if (res.data.message) {
-                        return deleteUser();
+                        return deleteCandidate();
                     } else {
                         return swalWithBootstrapButtons.fire(
                             'Failed',
@@ -82,6 +80,7 @@ const DangerZoneComp = (props: IDParams) => {
         </div>
         <form>
             <div style={{ textAlign: "start" }}>
+
                 <TitleDangerWidget title="Change your Password" />
 
                 <Button key="updatePassword" onClick={() => window.location.href = "/auth/reset-password"} variant="contained" color="success">

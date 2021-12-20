@@ -17,7 +17,8 @@ const SkillJobComp = (props: IDParams) => {
 
 
     const getSkillJob = (id: string, idJob: string) => {
-        if (idJob) CompanyService.getSkillJob(id, idJob)
+        console.log("getSkillJob", idJob);
+        if (idJob.length !== 0) CompanyService.getSkillJob(id, idJob)
             .then((response: any) => {
                 setCurrentSkillJob(response.data);
             })

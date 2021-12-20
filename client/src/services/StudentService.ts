@@ -53,15 +53,15 @@ const deleteProject = (std_id: string, name: string) => {
   return http.delete<Project>(`/student/${std_id}/project/${decodeURIComponent(name)}`);
 };
 
-const addSkill = (data : SkillStudentData) => {
+const addSkill = (data: SkillStudentData) => {
   return http.post<SkillStudentData>(`/student/${data.std_id}/skill`, data);
 };
 
-const checkPassword = (id : string, data : {password:string}) => {
+const checkPassword = (id: string, data: { password: string }) => {
   return http.post(`/student/${id}/password`, data);
 };
 
-const deleteSkill = (data : {std_id : string, skill_id : string}) => {
+const deleteSkill = (data: { std_id: string, skill_id: string }) => {
   return http.delete(`/student/${data.std_id}/skill/${data.skill_id}`);
 };
 
@@ -77,8 +77,8 @@ const updatePassword = (id: any, data: PasswordData) => {
   return http.put<any>(`/student/password/${id}`, data);
 };
 
-const remove = (id: any) => {
-  return http.delete<any>(`/student/${id}`);
+const remove = () => {
+  return http.delete<{ message: string }>(`/student`);
 };
 
 const findByName = (name: string) => {
@@ -96,10 +96,10 @@ const StudentService = {
   getEducation,
   addEducation,
   editEducation,
-  deleteEducation, 
-  getProject, 
-  editProject, 
-  addProject, 
+  deleteEducation,
+  getProject,
+  editProject,
+  addProject,
   deleteProject,
   getSkillCandidate,
   addSkill,

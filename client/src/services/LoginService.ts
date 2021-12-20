@@ -1,11 +1,6 @@
 import SuperTokens from "supertokens-auth-react";
-import ThirdPartyEmailPassword, { Github, Google, Facebook } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 import Session from "supertokens-auth-react/recipe/session";
-// import http from "../http-common";
-
-// const getUser = () => {
-//     return http.get(`/get-user-info`);
-// };
+import ThirdPartyEmailPassword, { Facebook, Github, Google } from "supertokens-auth-react/recipe/thirdpartyemailpassword";
 
 SuperTokens.init({
     appInfo: {
@@ -36,7 +31,7 @@ SuperTokens.init({
                     {
                         id: "description",
                         label: "Description",
-                        placeholder: "Enter something about you"
+                        placeholder: "Enter something about you",
                     },
                     {
                         id: "type",
@@ -46,7 +41,7 @@ SuperTokens.init({
                             if (value.toLowerCase() === "candidate" || value.toLowerCase() === "company") {
                                 return undefined; // means that there is no error
                             }
-                            return "You must be entered Candidate or Company";
+                            return "You must enter Candidate or Company";
                         }
                     }
                     ]
@@ -56,7 +51,10 @@ SuperTokens.init({
                     Google.init(),
                     Facebook.init(),
                 ]
-            }
+            },
+            palette: {
+                primary: '#0d9bf9',
+            },
         }),
         Session.init()
     ]

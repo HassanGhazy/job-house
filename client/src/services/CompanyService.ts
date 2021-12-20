@@ -62,9 +62,9 @@ const remove = (id: any) => {
   return http.delete<any>(`/company/${id}`);
 };
 
-const checkPassword = (id : string, data : {password:string}) => {
-  return http.post(`/company/${id}/password`, data);
-};
+// const checkPassword = (id : string, data : {password:string}) => {
+//   return http.post(`/company/${id}/password`, data);
+// };
 
 const findByName = (name: string) => {
   return http.get<Array<CompanyData>>(`/search/company?name=${name}`);
@@ -86,8 +86,7 @@ const CompanyService = {
   addSkill,
   getSingleJob,
   getJobRequests,
-  checkPassword
-  
+
 };
 
 export default CompanyService;

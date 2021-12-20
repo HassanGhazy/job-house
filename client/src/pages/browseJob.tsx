@@ -28,19 +28,19 @@ const browseJob = () => {
     }
 
     return <>
-        <div className="tab">
+        <div  className="tab mobile">
             <button className="tablinks" onClick={() => showTab('Jobs', 0)}>Jobs</button>
             <button className="tablinks" onClick={() => showTab('Companies', 1)}>Companies</button>
             <button className="tablinks" onClick={() => showTab('Candidates', 2)}>Candidates</button>
         </div>
-        <div id="Jobs" className="tabcontent">
+        <div id="Jobs" className="tabcontent mobile">
             <JobList />
         </div>
-        <div id="Companies" className="tabcontent">
+        <div id="Companies" className="tabcontent mobile">
             <CompanyList />
         </div>
 
-        <div id="Candidates" className="tabcontent">
+        <div id="Candidates" className="tabcontent mobile">
             <StudentList />
         </div>
 

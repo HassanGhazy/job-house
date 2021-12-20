@@ -82,7 +82,7 @@ supertokens.init({
                                 const res = input.formFields;
                                 let data = {};
                                 res.map(e => (e.id !== "type") ? data[`${e.id}`] = e.value : null);
-                                data.password = md5(data.password); 
+                                // data.password = md5(data.password); 
                                 insertNewUser(data,input.formFields[4].value);
                             }
 

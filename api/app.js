@@ -17,7 +17,7 @@ let { errorHandler } = require("supertokens-node/framework/express");
 
 
 app.use(cors({
-    origin: "http://192.168.56.1:3000",
+    origin: "http://localhost:3000",
     allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
     credentials: true,
 }));
@@ -79,7 +79,7 @@ app.put('/api/student/:id', candidate.updateCurrentCandidate);
 app.delete('/api/student/:id/project/:name', candidate.deleteProjectFromCurrentCandidate);
 app.delete('/api/student/:std_id/education/:id', candidate.deleteEducateFromCurrentCandidate);
 app.delete('/api/student/:id/skill/:skillId', candidate.deleteSkillFromCurrentCandidate);
-app.delete('/api/student/:id', candidate.deleteCurrentCandidate);
+app.delete('/api/student', verifySession(), candidate.deleteCurrentCandidate);
 
 app.get('/api/skill', candidate.getAllSkills);
 
@@ -92,15 +92,15 @@ app.get('/api/company/:id/job/:jobId/skill', company.getSkillSingleJobToCurrentC
 app.get('/api/company/:id/request', company.getCandidateSubmitedJob);
 
 app.post('/api/company/', company.addNewCompany);
-app.post('/api/company/:id', company.addNewJobToCurrentCompany);
 app.post('/api/company/:id/job/:jobId/skill', company.addSkillToJobToCurrentCompany);
 app.post('/api/company/:id/password', company.checkPassword);
+app.post('/api/company/:id', company.addNewJobToCurrentCompany);
 
 app.put('/api/company/:id', company.updateCurrentCompany);
 app.put('/api/company/:id/job/:jobId', company.updateCurrentJobFromCompany);
 app.put('/api/company/password/:id', company.changePasswordCurrentCompany);
 
-app.delete('/api/company/:id', company.deleteCurrentCompany);
+app.delete('/api/company/:id', verifySession(), company.deleteCurrentCompany);
 app.delete('/api/company/:id/job/:jobId/skill/:skillId', company.deleteSkillOfCurrentJob);
 app.delete('/api/company/:id/job/:jobId', company.deleteJobFromCurrentCompany);
 

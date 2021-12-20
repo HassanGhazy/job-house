@@ -37,7 +37,7 @@ const SideBar = () => {
     }
     return (<>
         {/* search By Education */}
-        <div id="sidebar">
+        <div className="mobile" id="sidebar">
             <div className="title-sidebar">Filter</div>
             <br />
             <div style={{ paddingLeft: 50, width: "100%" }} className="tab">

@@ -32,10 +32,7 @@ const Skill = (props: IDParams) => {
 
     const id = props.id;
     const type = props.type;
-    const initialSkillState = [{
-        skill_id: null,
-        title: "",
-    }];
+
 
     const initialnewSkillState = [{
         comp_id: "",
@@ -46,7 +43,7 @@ const Skill = (props: IDParams) => {
 
     const [newSkill, setNewSkill] = useState(initialnewSkillState);
     const search = useRef("");
-    const [skill, setSkill] = useState<SkillType[]>(initialSkillState);
+    const [skill, setSkill] = useState<SkillType[]>([]);
     const [SkillData, setSkillData] = useState<SkillType[]>([]);
     const [selectedSkill, setSelectedSkill] = useState<SkillType[]>([]);
     const [job_id, setJob_id] = useState("");
@@ -101,6 +98,7 @@ const Skill = (props: IDParams) => {
                     }
                     done = true;
                     setSelectedSkill([]);
+                    search.current = "";
                     refreshSkill();
                 } catch (x) {
                     console.log(x);
@@ -149,7 +147,6 @@ const Skill = (props: IDParams) => {
 
     useEffect(() => {
         const getSkill = () => {
-            console.log('getSkill');
             GlobalService.getAllSkill()
                 .then((response: any) => {
                     setSkill(response.data);
@@ -163,11 +160,12 @@ const Skill = (props: IDParams) => {
         getSkill();
 
         if (type === "candidate") getSkillCurrentCandidate(id);
+        // eslint-disable-next-line
     }, [job_id, selectedSkill, id, type, search])
 
 
     return (<>
-        {console.log("SkillData", SkillData)}
+        
         <div className="col-md-6">
             {(type === "candidate") ? <TitleWidget title="My Skills" /> : <TitleWidget title="Add Skills To Specific Job" />}
             {type === 'candidate' && skillCandidate.length === 0 && <p>You didn't add any skills yet</p>}
@@ -179,7 +177,7 @@ const Skill = (props: IDParams) => {
             <TextField
                 style={{ width: 400 }}
                 id="Search"
-                label="Search" 
+                label="Add new Skill" 
                 value={search.current}
                 onChange={e => { search.current = (e.target.value); setSkillData(skill.filter(skill => skill.title!.toLowerCase().includes(search.current.toLowerCase()))); if (search.current === "") setSkillData(skill) }}
             />

@@ -142,4 +142,13 @@ export const Styles = createGlobalStyle`
         z-index: 400;
         
     }
+
+    @media screen and (max-width: 900px) {
+        .mobile {
+        float: none !important;
+        width: initial !important;
+        padding: 20px;
+        }
+    }
+
 `;
