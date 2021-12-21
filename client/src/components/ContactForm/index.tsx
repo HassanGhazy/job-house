@@ -15,6 +15,7 @@ const Contact = ({ title, content, id }: ContactProps) => {
     validate
   ) as any;
 
+
   const ValidationType = ({ type }: ValidationTypeProps) => {
     const ErrorMessage = errors[type];
     return (
@@ -25,7 +26,7 @@ const Contact = ({ title, content, id }: ContactProps) => {
   };
 
   const sendEmail = () => {
-   
+
     emailjs.send(
       process.env.REACT_APP_EMAIL_ID!, process.env.REACT_APP_EMAIL_TEMPLATE_ID!,
       { message: values.message, from_name: values.name, reply_to: values.email }, process.env.REACT_APP_EMAIL_USER_ID!
@@ -39,7 +40,7 @@ const Contact = ({ title, content, id }: ContactProps) => {
         title: 'Your message has been sent!',
         showConfirmButton: false,
         timer: 1500
-    })
+      })
     })
   }
 
