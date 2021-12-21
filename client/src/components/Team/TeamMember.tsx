@@ -25,3 +25,12 @@ const TeamMember = (props: any) => {
 }
 
 export default TeamMember;
+
+
+/*
+React Props
+
+It is an object which stores the value of attributes of a tag and work similar to the HTML attributes.
+It gives a way to pass data from one component to other components. It is similar to function arguments. 
+Props are passed to the component in the same way as arguments passed in a function.
+*/
