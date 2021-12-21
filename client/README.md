@@ -14,7 +14,7 @@ You must be installed all of these libraries {express, sequelize, mysql2, body-p
 that by write "npm install"
 and you must be have folder config from api folder and client folder 
 
-
+<!-- \\ to run project -->
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -82,6 +82,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 ### Deployment
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
 
 
 ### `npm run build` fails to minify
