@@ -9,6 +9,8 @@ const SideBar = () => {
     const [skill, setSkill] = useState("");
     const [type, setType] = useState("");
 
+
+
     function openTabFilter(id: string, num: number) {
         var i, tabcontent;
         tabcontent = document.getElementsByClassName("tabcontentFilter") as HTMLCollectionOf<HTMLElement>;
