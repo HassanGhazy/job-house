@@ -41,11 +41,11 @@ const SearchPage = () => {
                         result.map((student: any) => (
                             <li key={student.std_id + student.name}>
                                 <Link id={student.std_id} to={'/candidate-profile/' + student.std_id} className="card">
-                                    <img src={student.image ?? '/img/No-Image.png'} className="card__image" alt={student.name} />
+                                    {/* <img src={student.image ?? '/img/No-Image.png'} className="card__image" alt={student.name} /> */}
                                     <div className="card__overlay">
                                         <div className="card__header">
                                             <svg className="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>
-                                            <img className="card__thumb" src={student.image ?? '/img/No-Image.png'} alt={student.name} />
+                                            <img style={{height: 300, width: 250}} className="card__thumb" src={student.image ?? '/img/No-Image.png'} alt={student.name} />
                                             <div className="card__header-text">
                                                 <h3 className="card__title">{student.name}</h3>
                                                 <span className="card__status">{student.country}</span>

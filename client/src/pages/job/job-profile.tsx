@@ -73,7 +73,7 @@ const JobProfile = ({ match }: RouteComponentProps<TParams>) => {
     const RequestJob = () => {
         const today = new Date();
         //TODO: get the std_id
-        JobService.requestJob({ "comp_id": compId, "job_id": id, "std_id": 4, "date_submited": today }).then((response: any) => {
+        JobService.requestJob({ "comp_id": compId, "job_id": id, "std_id": 2, "date_submited": today }).then((response: any) => {
             UpdateNumberOfApply();
             success();
 

@@ -236,6 +236,7 @@ const addNewProjectToCurrentCandidate = async (req, res) => {
 
 
         if (err) {
+            console.log(err);
             return res.status(400).json({ message: `Error Adding new project to candidate ${id}!`, error: err });
         }
         res.json({ message: `new Project has been added successfully`, newProject: newProject });
